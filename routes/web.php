@@ -6,14 +6,24 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {  
-    return view('auth.login');  
-})->middleware('guest');
+    return view('front.index');  
+});
 
-Route::post('/login', [LoginController::class, 'handleLogin'])->name('login')->middleware('guest');
-  
+Route::get('/login', function () {  
+    return view('auth.login');  
+})->name('login')->middleware('guest');
+
+Route::post('/login', [LoginController::class, 'handleLogin'])->middleware('guest');
+
+Route::get('/program-kegiatan', [FrontController::class, 'program']);
+Route::get('/berita-artikel', [FrontController::class, 'artikel']);
+Route::get('/detail-proker/{id}', [FrontController::class, 'detailProker']);
+Route::get('/detail-artikel/{id}', [FrontController::class, 'detailArtikel']);
+Route::get('/detail-kegiatan/{id}', [FrontController::class, 'detailKegiatan']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

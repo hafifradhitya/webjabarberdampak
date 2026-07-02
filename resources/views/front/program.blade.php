@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Program & Aktivitas - Jabar Berdampak</title>
   <meta name="description" content="Program kerja dan aktivitas yang telah dilaksanakan oleh Jabar Berdampak." />
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     .page-header {
       background: var(--primary-green);
@@ -144,9 +144,9 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="program.html" class="active">Program & Aktivitas</a></li>
-          <li><a href="artikel.html">Artikel</a></li>
+          <li><a href="{{ url('/') }}">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}" class="active">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
         </ul>
       </nav>
     </div>
@@ -162,49 +162,21 @@
   <section class="container">
     <div class="program-grid">
       
-      <!-- Program 1 -->
+      @forelse($prokers as $proker)
       <div class="program-card">
-        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600" alt="Leadership Training" class="program-img">
+        <img src="{{ $proker->gambar ? asset('storage/' . $proker->gambar) : 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600' }}" alt="{{ $proker->nama_proker }}" class="program-img">
         <div class="program-content">
-          <span class="program-category">KEPEMIMPINAN</span>
-          <h3 class="program-title">Leadership Training</h3>
-          <p class="program-desc">Kegiatan pengembangan diri yang bertujuan meningkatkan kemampuan kepemimpinan, komunikasi, kerja sama tim, serta pengambilan keputusan bagi peserta. Melalui penyampaian materi, diskusi, simulasi, dan berbagai aktivitas interaktif, program ini diharapkan dapat membentuk individu yang bertanggung jawab dan percaya diri.</p>
-          <a href="detail-proker.html" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
+          <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
+          <h3 class="program-title">{{ $proker->nama_proker }}</h3>
+          <p class="program-desc">{{ $proker->deskripsi }}</p>
+          <a href="{{ url('/detail-proker', $proker->id) }}" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
         </div>
       </div>
-
-      <!-- Program 2 -->
-      <div class="program-card">
-        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600" alt="Program Penghijauan" class="program-img">
-        <div class="program-content">
-          <span class="program-category">LINGKUNGAN</span>
-          <h3 class="program-title">Program Penghijauan</h3>
-          <p class="program-desc">Mendorong masyarakat agar dapat menjaga alam dengan melatih masyarakat untuk pembuatan pupuk organik yang terfermentasi dari limbah dapur. Dan menanamkan jiwa tanggung jawab ke alam sekitar dengan mengadakan pelatihan daur ulang sampah plastik menjadi hal-hal yang bermanfaat seperti BAHAN BAKAR lewat proses penyulingan dan aksesoris.</p>
-          <a href="detail-proker.html" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
-        </div>
+      @empty
+      <div class="col-12 text-center py-5">
+        <p>Belum ada program kerja yang ditambahkan.</p>
       </div>
-
-      <!-- Program 3 -->
-      <div class="program-card">
-        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80&w=600" alt="Program Ekonomi Kreatif" class="program-img">
-        <div class="program-content">
-          <span class="program-category">EKONOMI</span>
-          <h3 class="program-title">Program Ekonomi Kreatif</h3>
-          <p class="program-desc">Kegiatan yang bertujuan mengembangkan kreativitas dan jiwa kewirausahaan peserta melalui pemanfaatan ide, keterampilan, serta inovasi untuk menghasilkan produk atau jasa yang bernilai ekonomi. Diharapkan dapat meningkatkan kemampuan peserta dalam menciptakan peluang usaha yang berkelanjutan.</p>
-          <a href="detail-proker.html" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
-        </div>
-      </div>
-
-      <!-- Program 4 -->
-      <div class="program-card">
-        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600" alt="Pelatihan Sidang" class="program-img">
-        <div class="program-content">
-          <span class="program-category">EDUKASI</span>
-          <h3 class="program-title">Pelatihan Sidang</h3>
-          <p class="program-desc">Kegiatan yang bertujuan membekali peserta dengan pemahaman mengenai tata cara persidangan, etika berbicara, penyusunan argumentasi, serta mekanisme pengambilan keputusan dalam forum resmi. Melalui penyampaian materi dan simulasi sidang, peserta diharapkan mampu memimpin jalannya persidangan secara tertib.</p>
-          <a href="detail-proker.html" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
-        </div>
-      </div>
+      @endforelse
 
     </div>
   </section>
@@ -216,44 +188,28 @@
       <p class="section-subtitle">Dokumentasi dari berbagai kegiatan dan program kerja yang sukses kami selenggarakan.</p>
       
       <div class="activity-grid">
-        <!-- Placeholder Activity 1 -->
-        <a href="detail-kegiatan.html" style="display: block;">
+        @forelse($kegiatans as $index => $kegiatan)
+        <a href="{{ url('/detail-kegiatan', $kegiatan->id) }}" class="activity-item" style="display: {{ $index < 3 ? 'block' : 'none' }};">
           <div class="activity-card">
-            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600" alt="Aktivitas 1">
+            <img src="{{ $kegiatan->thumbnail ? asset('storage/' . $kegiatan->thumbnail) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600' }}" alt="{{ $kegiatan->nama_kegiatan }}">
             <div class="activity-overlay">
-              <h3 class="activity-title">Pelatihan Daur Ulang Plastik Desa X</h3>
-              <span class="activity-date">12 Mei 2024</span>
+              <h3 class="activity-title">{{ $kegiatan->nama_kegiatan }}</h3>
+              <span class="activity-date">{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</span>
             </div>
           </div>
         </a>
-
-        <!-- Placeholder Activity 2 -->
-        <a href="detail-kegiatan.html" style="display: block;">
-          <div class="activity-card">
-            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=600" alt="Aktivitas 2">
-            <div class="activity-overlay">
-              <h3 class="activity-title">Leadership Camp Angkatan I</h3>
-              <span class="activity-date">20 Juni 2024</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Placeholder Activity 3 -->
-        <a href="detail-kegiatan.html" style="display: block;">
-          <div class="activity-card">
-            <img src="https://images.unsplash.com/photo-1531206715590-269c3a6e01a4?auto=format&fit=crop&q=80&w=600" alt="Aktivitas 3">
-            <div class="activity-overlay">
-              <h3 class="activity-title">Bazar Produk Ekonomi Kreatif</h3>
-              <span class="activity-date">15 Agustus 2024</span>
-            </div>
-          </div>
-        </a>
+        @empty
+        <div class="col-12 text-center py-5">
+          <p>Belum ada aktivitas yang ditambahkan.</p>
+        </div>
+        @endforelse
       </div>
       
+      @if(count($kegiatans) > 3)
       <div style="text-align: center; margin-top: 40px; padding-bottom: 60px;">
-        <!-- Area ini dikosongkan/disiapkan untuk penambahan aktivitas lebih lanjut oleh klien -->
-        <button class="btn btn-primary" style="opacity: 0.7; pointer-events: none;">Muat Lebih Banyak Aktivitas (Coming Soon)</button>
+        <button id="loadMoreBtn" class="btn btn-primary" onclick="loadMoreActivities()">Muat Lebih Banyak Aktivitas</button>
       </div>
+      @endif
 
     </div>
   </section>
@@ -269,9 +225,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>
@@ -297,5 +253,14 @@
     </div>
   </footer>
   <script type="module" src="./main.js"></script>
+  <script>
+    function loadMoreActivities() {
+        const hiddenItems = document.querySelectorAll('.activity-item[style*="display: none"]');
+        hiddenItems.forEach(item => {
+            item.style.display = 'block';
+        });
+        document.getElementById('loadMoreBtn').style.display = 'none';
+    }
+  </script>
 </body>
 </html>

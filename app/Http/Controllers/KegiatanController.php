@@ -40,7 +40,7 @@ class KegiatanController extends Controller
         $request->validate([
             'nama_kegiatan' => 'required',
             'tanggal_kegiatan' => 'required|date',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($id);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Program Kerja - Jabar Berdampak</title>
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     /* CSS Khusus Detail */
     .detail-hero {
@@ -95,46 +95,43 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="program.html" class="active">Program & Aktivitas</a></li>
-          <li><a href="artikel.html">Artikel</a></li>
+          <li><a href="{{ url('/') }}">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}" class="active">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Hero Image -->
-  <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200" alt="Program Kerja" class="detail-hero">
+  <img src="{{ $proker->gambar ? asset('storage/' . $proker->gambar) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200' }}" alt="{{ $proker->nama_proker }}" class="detail-hero">
 
   <!-- Main Content -->
   <main class="container">
     <div class="detail-container">
-      <span class="badge-status badge-planning">PLANNING</span>
-      <h1 class="detail-title">Penanaman Pohon dan Edukasi Lingkungan di Jawa Barat</h1>
+      <span class="badge-status badge-ongoing">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
+      <h1 class="detail-title">{{ $proker->nama_proker }}</h1>
       
       <div class="meta-grid">
         <div class="meta-item">
           <h4>Tanggal Pelaksanaan</h4>
-          <p>01 Juli 2026 - 10 Juli 2026</p>
+          <p>{{ $proker->tanggal_mulai ? $proker->tanggal_mulai->format('d M Y') : '-' }} - {{ $proker->tanggal_selesai ? $proker->tanggal_selesai->format('d M Y') : '-' }}</p>
         </div>
         <div class="meta-item">
           <h4>Penanggung Jawab</h4>
-          <p>Hasanuddin</p>
+          <p>{{ $proker->penanggung_jawab ?? '-' }}</p>
         </div>
         <div class="meta-item">
           <h4>Anggaran</h4>
-          <p>Rp 10.000.000</p>
+          <p>Rp {{ number_format($proker->anggaran ?? 0, 0, ',', '.') }}</p>
         </div>
       </div>
 
       <div class="detail-content">
-        <p>Program kerja ini diinisiasi sebagai respons terhadap meningkatnya lahan kritis di beberapa kabupaten di Jawa Barat. Kami berkomitmen untuk melakukan penghijauan secara bertahap dengan melibatkan pemuda dan masyarakat setempat.</p>
-        
-        <h3>Tujuan Program</h3>
-        <p>Tujuan utama dari penanaman ini adalah untuk mencegah erosi dan tanah longsor saat musim hujan, sekaligus mengedukasi masyarakat tentang pentingnya menjaga kelestarian hutan dan daerah resapan air. Selain itu, kami juga memberikan materi edukasi pengelolaan sampah plastik pasca kegiatan tanam.</p>
+        {!! nl2br(e($proker->deskripsi)) !!}
         
         <br><br>
-        <a href="program.html" class="btn btn-outline-green">&larr; Kembali ke Program</a>
+        <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Program</a>
       </div>
     </div>
   </main>
@@ -150,9 +147,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>

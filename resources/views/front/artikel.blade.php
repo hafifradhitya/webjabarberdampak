@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artikel Edukasi - Jabar Berdampak</title>
   <meta name="description" content="Baca artikel terbaru dari Jabar Berdampak tentang lingkungan, pendidikan, dan aksi kepemudaan." />
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     .page-header {
       background: var(--primary-green);
@@ -179,9 +179,9 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="program.html">Program & Aktivitas</a></li>
-          <li><a href="artikel.html" class="active">Artikel</a></li>
+          <li><a href="{{ url('/') }}">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}" class="active">Artikel</a></li>
         </ul>
       </nav>
     </div>
@@ -204,45 +204,48 @@
         </button>
       </div>
 
+      @php
+          $featuredArtikel = $artikels->first();
+          $gridArtikels = $artikels->slice(1);
+      @endphp
+
       <!-- Featured Article -->
+      @if($featuredArtikel)
       <article class="featured-article">
-        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800" alt="Hutan Indonesia" class="featured-img">
+        <img src="{{ $featuredArtikel->gambar ? asset('storage/' . $featuredArtikel->gambar) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800' }}" alt="{{ $featuredArtikel->judul }}" class="featured-img">
         <div class="featured-content">
           <div class="article-meta">
-            <span class="category" style="color: var(--accent-green); font-weight: 600;">Konservasi</span>
-            <span class="date">15 Mar 2024</span>
+            <span class="category" style="color: var(--accent-green); font-weight: 600;">{{ $featuredArtikel->kategori }}</span>
+            <span class="date">{{ $featuredArtikel->tanggal_publish ? $featuredArtikel->tanggal_publish->format('d M Y') : '-' }}</span>
           </div>
-          <h2 class="featured-title">Menjaga Paru-Paru Nusantara: Tantangan Restorasi Lahan di 2024</h2>
-          <p style="color: var(--text-muted); margin-bottom: 20px;">Melihat lebih dekat upaya kolaboratif antara komunitas lokal dan pemerintah dalam memulihkan ekosistem kritis melalui program penghijauan masif dan edukasi kesadaran lingkungan bagi generasi muda.</p>
-          <a href="detail-artikel.html" class="btn btn-primary">Baca Selengkapnya</a>
+          <h2 class="featured-title">{{ $featuredArtikel->judul }}</h2>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">{{ Str::limit(strip_tags($featuredArtikel->konten), 150) }}</p>
+          <a href="{{ url('/detail-artikel', $featuredArtikel->id) }}" class="btn btn-primary">Baca Selengkapnya</a>
         </div>
       </article>
+      @endif
 
       <!-- Article Grid -->
       <div class="article-grid">
+        @forelse($gridArtikels as $artikel)
         <article class="article-card">
-          <img src="https://images.unsplash.com/photo-1618477461853-cf6ed80fbfc9?auto=format&fit=crop&q=80&w=400" alt="Zero Waste" class="card-img">
+          <img src="{{ $artikel->gambar ? asset('storage/' . $artikel->gambar) : 'https://images.unsplash.com/photo-1618477461853-cf6ed80fbfc9?auto=format&fit=crop&q=80&w=400' }}" alt="{{ $artikel->judul }}" class="card-img">
           <div class="card-content">
             <div class="article-meta">
-              <span style="color: var(--accent-green); font-weight: 600;">Edukasi</span>
+              <span style="color: var(--accent-green); font-weight: 600;">{{ $artikel->kategori }}</span>
             </div>
-            <h3 class="card-title">Panduan Praktis Zero Waste untuk Pemula</h3>
-            <p class="card-excerpt">Langkah kecil namun berdampak besar yang bisa Anda lakukan di rumah setiap hari untuk mengurangi jejak karbon.</p>
-            <a href="detail-artikel.html" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
+            <h3 class="card-title">{{ $artikel->judul }}</h3>
+            <p class="card-excerpt">{{ Str::limit(strip_tags($artikel->konten), 100) }}</p>
+            <a href="{{ url('/detail-artikel', $artikel->id) }}" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
           </div>
         </article>
-
-        <article class="article-card">
-          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=400" alt="Energi Terbarukan" class="card-img">
-          <div class="card-content">
-            <div class="article-meta">
-              <span style="color: var(--accent-green); font-weight: 600;">Teknologi</span>
-            </div>
-            <h3 class="card-title">Energi Terbarukan: Masa Depan Desa Mandiri</h3>
-            <p class="card-excerpt">Bagaimana teknologi panel surya sederhana mulai mengubah wajah ekonomi pedesaan di Jawa Barat.</p>
-            <a href="detail-artikel.html" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
+        @empty
+          @if(!$featuredArtikel)
+          <div class="col-12 text-center py-5">
+            <p>Belum ada artikel yang dipublikasikan.</p>
           </div>
-        </article>
+          @endif
+        @endforelse
       </div>
 
     </div>
@@ -261,9 +264,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>
@@ -296,42 +299,19 @@
       <h3 style="color: var(--primary-green); margin-bottom: 24px;">Pilih Kategori</h3>
       
       <div class="category-checkboxes" style="display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
+        @forelse($kategoris as $kategori)
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Edukasi" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Edukasi
+          <input type="checkbox" class="cat-filter" value="{{ $kategori }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> {{ $kategori }}
         </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Konservasi" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Konservasi
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Lifestyle Hijau" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Lifestyle Hijau
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Teknologi" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Teknologi Inovasi
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Kegiatan" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Kegiatan Komunitas
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Pengolahan Sampah" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Pengolahan Sampah
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Pertanian Organik" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Pertanian Organik
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Kebijakan Publik" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Kebijakan Publik
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Aksi Relawan" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Aksi Relawan
-        </label>
-        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="Diskusi Pemuda" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> Diskusi Pemuda
-        </label>
+        @empty
+        <p style="color: var(--text-muted);">Belum ada kategori.</p>
+        @endforelse
       </div>
       
       <button class="btn btn-primary" id="applyCategoryBtn" style="width: 100%;">Terapkan Filter</button>
     </div>
   </div>
 
-  <script type="module" src="./main.js"></script>
+  
 </body>
 </html>

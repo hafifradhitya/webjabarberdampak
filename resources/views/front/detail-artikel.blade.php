@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Artikel - Jabar Berdampak</title>
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     /* CSS Khusus Detail Artikel */
     .article-container {
@@ -124,9 +124,9 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="program.html">Program & Aktivitas</a></li>
-          <li><a href="artikel.html" class="active">Artikel</a></li>
+          <li><a href="{{ url('/') }}">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}" class="active">Artikel</a></li>
         </ul>
       </nav>
     </div>
@@ -136,33 +136,27 @@
   <main class="container">
     <article class="article-container">
       <div class="article-meta">
-        <span class="article-category">Rakai</span>
-        <span class="article-date">01 Juli 2026</span>
+        <span class="article-category">{{ $artikel->kategori }}</span>
+        <span class="article-date">{{ $artikel->tanggal_publish ? $artikel->tanggal_publish->format('d M Y') : '-' }}</span>
       </div>
       
-      <h1 class="article-title">Menggerakkan Pemuda Jabar: Inisiatif Hijau dari Sudut Kota</h1>
+      <h1 class="article-title">{{ $artikel->judul }}</h1>
       
       <div class="article-author">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150" alt="Penulis" class="author-img">
+        <img src="https://ui-avatars.com/api/?name={{ urlencode($artikel->penulis) }}&background=0E3B21&color=fff" alt="Penulis" class="author-img">
         <div class="author-info">
-          <h4>woioqeowrj</h4>
+          <h4>{{ $artikel->penulis }}</h4>
           <p>Penulis Kontributor</p>
         </div>
       </div>
 
-      <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80" alt="Cover Artikel" class="article-cover">
+      <img src="{{ $artikel->gambar ? asset('storage/' . $artikel->gambar) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80' }}" alt="Cover Artikel" class="article-cover">
 
       <div class="article-content">
-        <p>Di tengah pesatnya pembangunan, pemuda Jawa Barat mulai mengambil peran penting dalam menjaga kelestarian lingkungan. Inisiatif rakai dan penghijauan kini bukan sekadar slogan, namun sudah mulai bergerak dari akar rumput.</p>
-        
-        <p>fwbfjbwfwg (ini adalah contoh dari konten yang ada di database). Kami menyadari bahwa tindakan kecil jika dilakukan secara kolektif akan membuahkan hasil yang luar biasa. Pemuda-pemuda ini bergerak dengan penuh inisiatif dan kemandirian.</p>
-
-        <blockquote>"Masa depan lingkungan kita ada di tangan pemuda. Jika bukan kita yang merawatnya hari ini, lalu siapa lagi yang akan mewarisinya esok hari?"</blockquote>
-
-        <p>Berbagai program kerja telah dicanangkan untuk mendukung agenda ini. Dari mulai penanaman ribuan pohon di area kritis hingga lokakarya pengelolaan sampah plastik menjadi barang bernilai guna. Semua itu didasari oleh satu visi: Jabar Berdampak.</p>
+        {!! $artikel->konten !!}
         
         <br><br>
-        <a href="artikel.html" class="btn btn-outline-green">&larr; Kembali ke Daftar Artikel</a>
+        <a href="{{ url('/berita-artikel') }}" class="btn btn-outline-green">&larr; Kembali ke Daftar Artikel</a>
       </div>
     </article>
   </main>
@@ -178,9 +172,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>

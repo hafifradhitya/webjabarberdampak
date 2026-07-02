@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jabar Berdampak - Organisasi Lingkungan & Kepemudaan</title>
   <meta name="description" content="Website resmi Jabar Berdampak, organisasi pemuda yang berfokus pada penghijauan, ekonomi kreatif, dan pengembangan kepemimpinan." />
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     /* Specific styles for index.html */
     .features {
@@ -274,9 +274,9 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html" class="active">Beranda</a></li>
-          <li><a href="program.html">Program & Aktivitas</a></li>
-          <li><a href="artikel.html">Artikel</a></li>
+          <li><a href="{{ url('/') }}" class="active">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
         </ul>
       </nav>
     </div>
@@ -288,7 +288,7 @@
       <h1>Melestarikan Alam, Membangun Pemimpin Masa Depan</h1>
       <p>Memberdayakan pemuda untuk menjaga masa depan bumi kita melalui tindakan berkelanjutan, pendidikan kepemimpinan, dan kesadaran lingkungan.</p>
       <div class="hero-buttons">
-        <a href="program.html" class="btn btn-gold">Lihat Program Kami</a>
+        <a href="{{ url('/program-kegiatan') }}" class="btn btn-gold">Lihat Program Kami</a>
         <a href="#about" class="btn btn-outline">Pelajari Lebih Lanjut</a>
       </div>
     </div>
@@ -486,9 +486,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>
@@ -513,6 +513,6 @@
       </div>
     </div>
   </footer>
-  <script type="module" src="./main.js"></script>
+  
 </body>
 </html>

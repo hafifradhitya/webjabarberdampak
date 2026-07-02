@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Kegiatan - Jabar Berdampak</title>
-  <link rel="stylesheet" href="./style.css" />
+  @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     /* CSS Khusus Detail */
     .detail-hero {
@@ -89,40 +89,39 @@
           <span></span>
         </button>
         <ul class="nav-links">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="program.html" class="active">Program & Aktivitas</a></li>
-          <li><a href="artikel.html">Artikel</a></li>
+          <li><a href="{{ url('/') }}">Beranda</a></li>
+          <li><a href="{{ url('/program-kegiatan') }}" class="active">Program & Aktivitas</a></li>
+          <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Hero Image (Thumbnail) -->
-  <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200" alt="Kegiatan" class="detail-hero">
+  <img src="{{ $kegiatan->thumbnail ? asset('storage/' . $kegiatan->thumbnail) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200' }}" alt="{{ $kegiatan->nama_kegiatan }}" class="detail-hero">
 
   <!-- Main Content -->
   <main class="container">
     <div class="detail-container">
-      <span class="badge-status badge-ongoing">ONGOING</span>
-      <h1 class="detail-title">Pelatihan Agentic AI untuk Pemuda Jabar</h1>
+      <span class="badge-status badge-completed">{{ strtoupper($kegiatan->status ?? 'AKTIVITAS') }}</span>
+      <h1 class="detail-title">{{ $kegiatan->nama_kegiatan }}</h1>
       
       <div class="meta-grid">
         <div class="meta-item">
           <h4>Tanggal Pelaksanaan</h4>
-          <p>01 Juli 2026</p>
+          <p>{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</p>
         </div>
         <div class="meta-item">
           <h4>Lokasi</h4>
-          <p>UCIC (Universitas Catur Insan Cendekia)</p>
+          <p>{{ $kegiatan->lokasi ?? '-' }}</p>
         </div>
       </div>
 
       <div class="detail-content">
-        <p>Kegiatan ini diselenggarakan untuk memberikan wawasan dan keterampilan praktis mengenai pemanfaatan Artificial Intelligence (AI) yang bersifat agentic kepada para pemuda di Jawa Barat.</p>
-        <p>Melalui workshop interaktif, peserta diajarkan bagaimana cara menggunakan AI untuk memecahkan permasalahan lingkungan dan menginisiasi program kerja yang lebih efisien dan terukur secara data.</p>
+        {!! nl2br(e($kegiatan->deskripsi)) !!}
         
         <br><br>
-        <a href="program.html" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
+        <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
       </div>
     </div>
   </main>
@@ -138,9 +137,9 @@
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="program.html">Program</a></li>
-            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="{{ url('/') }}">Beranda</a></li>
+            <li><a href="{{ url('/program-kegiatan') }}">Program</a></li>
+            <li><a href="{{ url('/berita-artikel') }}">Artikel</a></li>
             <li><a href="#">Kontak Kami</a></li>
           </ul>
         </div>
