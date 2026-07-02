@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProkerController extends Controller
 {
@@ -19,9 +20,16 @@ class ProkerController extends Controller
         $request->validate([
             'nama_proker' => 'required',
             'tanggal_mulai' => 'required|date',
+            'gambar' => 'required|image',
         ]);
 
-        Proker::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('proker_images', 'public');
+        }
+
+        Proker::create($data);
         
         toast()->success('Program Kerja berhasil disimpan');
         return redirect()->route('proker.index');
@@ -35,7 +43,16 @@ class ProkerController extends Controller
         ]);
 
         $proker = Proker::findOrFail($id);
-        $proker->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            if ($proker->gambar) {
+                Storage::disk('public')->delete($proker->gambar);
+            }
+            $data['gambar'] = $request->file('gambar')->store('proker_images', 'public');
+        }
+
+        $proker->update($data);
 
         toast()->success('Program Kerja berhasil diperbarui');
         return redirect()->route('proker.index');
@@ -43,7 +60,11 @@ class ProkerController extends Controller
 
     public function destroy($id)
     {
-        Proker::destroy($id);
+        $proker = Proker::findOrFail($id);
+        if ($proker->gambar) {
+            Storage::disk('public')->delete($proker->gambar);
+        }
+        $proker->delete();
         toast()->success('Program Kerja berhasil dihapus');
         return redirect()->route('proker.index');
     }

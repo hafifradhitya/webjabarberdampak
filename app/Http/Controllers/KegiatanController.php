@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KegiatanController extends Controller
 {
@@ -19,10 +20,17 @@ class KegiatanController extends Controller
         $request->validate([
             'nama_kegiatan' => 'required',
             'tanggal_kegiatan' => 'required|date',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Kegiatan::create($request->all());
-        
+        $data = $request->all();
+
+        if ($request->hasFile('thumbnail')) {
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        Kegiatan::create($data);
+
         toast()->success('Kegiatan berhasil disimpan');
         return redirect()->route('kegiatan.index');
     }
@@ -32,10 +40,20 @@ class KegiatanController extends Controller
         $request->validate([
             'nama_kegiatan' => 'required',
             'tanggal_kegiatan' => 'required|date',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($id);
-        $kegiatan->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('thumbnail')) {
+            if ($kegiatan->thumbnail) {
+                Storage::disk('public')->delete($kegiatan->thumbnail);
+            }
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        $kegiatan->update($data);
 
         toast()->success('Kegiatan berhasil diperbarui');
         return redirect()->route('kegiatan.index');
@@ -43,7 +61,11 @@ class KegiatanController extends Controller
 
     public function destroy($id)
     {
-        Kegiatan::destroy($id);
+        $kegiatan = Kegiatan::findOrFail($id);
+        if ($kegiatan->thumbnail) {
+            Storage::disk('public')->delete($kegiatan->thumbnail);
+        }
+        $kegiatan->delete();
         toast()->success('Kegiatan berhasil dihapus');
         return redirect()->route('kegiatan.index');
     }

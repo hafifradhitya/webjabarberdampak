@@ -22,6 +22,7 @@
                         <th>Penanggung Jawab</th>
                         <th>Progress</th>
                         <th>Status</th>
+                        <th>Gambar</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -52,6 +53,15 @@
                             </span>
                         </td>
                         <td>
+                            @if($proker->gambar)
+                                <a href="{{ asset('storage/' . $proker->gambar) }}" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="fas fa-image"></i>
+                                </a>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
                             <div class="d-flex flex-wrap align-items-center" style="gap: 0.5rem;">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEditProker{{ $proker->id }}">
                                     <i class="fas fa-edit"></i>
@@ -75,7 +85,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('proker.update', $proker->id) }}" method="POST">
+                                <form action="{{ route('proker.update', $proker->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
@@ -129,6 +139,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label>Gambar</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="gambar_edit_{{ $proker->id }}" name="gambar" accept="image/*">
+                                                <label class="custom-file-label" for="gambar_edit_{{ $proker->id }}">Pilih file gambar</label>
+                                            </div>
+                                            @if($proker->gambar)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/' . $proker->gambar) }}" alt="Gambar Proker" class="img-thumbnail" style="max-height: 100px;">
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -158,7 +180,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('proker.store') }}" method="POST">
+            <form action="{{ route('proker.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -211,6 +233,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="gambar">Gambar <span class="text-danger">*</span></label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="gambar" name="gambar" accept="image/*" required>
+                            <label class="custom-file-label" for="gambar">Pilih file gambar</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -222,5 +251,16 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+    });
+</script>
+@endpush
 
 @endsection

@@ -17,6 +17,7 @@ class Proker extends Model
         'deskripsi',
         'anggaran',
         'status',
+        'gambar',
     ];
 
     protected function casts(): array

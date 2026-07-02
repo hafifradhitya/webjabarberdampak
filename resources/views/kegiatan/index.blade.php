@@ -17,6 +17,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>No</th>
+                        <th>Thumbnail</th>
                         <th>Nama Kegiatan</th>
                         <th>Tanggal</th>
                         <th>Lokasi</th>
@@ -28,6 +29,13 @@
                     @foreach($kegiatans as $index => $kegiatan)
                     <tr>
                         <td>{{ $index + 1 }}</td>
+                        <td>
+                            @if($kegiatan->thumbnail)
+                                <img src="{{ asset('storage/' . $kegiatan->thumbnail) }}" alt="Thumbnail" width="50" height="50" class="img-thumbnail" style="object-fit: cover;">
+                            @else
+                                <span class="text-muted">Tidak ada</span>
+                            @endif
+                        </td>
                         <td>{{ $kegiatan->nama_kegiatan }}</td>
                         <td>{{ $kegiatan->tanggal_kegiatan->format('d/m/Y') }}</td>
                         <td>{{ $kegiatan->lokasi ?? '-' }}</td>
@@ -60,7 +68,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('kegiatan.update', $kegiatan->id) }}" method="POST">
+                                <form action="{{ route('kegiatan.update', $kegiatan->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
@@ -81,6 +89,16 @@
                                                     <input type="text" class="form-control" name="lokasi" value="{{ $kegiatan->lokasi }}">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thumbnail</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="thumbnail" accept="image/*" id="customFileEdit{{ $kegiatan->id }}">
+                                                <label class="custom-file-label" for="customFileEdit{{ $kegiatan->id }}">Pilih file gambar</label>
+                                            </div>
+                                            @if($kegiatan->thumbnail)
+                                                <small class="text-muted d-block mt-1">Biarkan kosong jika tidak ingin mengubah thumbnail.</small>
+                                            @endif
                                         </div>
                                         <div class="form-group">
                                             <label>Deskripsi</label>
@@ -123,7 +141,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('kegiatan.store') }}" method="POST">
+            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -142,6 +160,13 @@
                                 <label for="lokasi">Lokasi</label>
                                 <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi kegiatan">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thumbnail">Thumbnail <span class="text-danger">*</span></label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail" accept="image/*" required>
+                            <label class="custom-file-label" for="thumbnail">Pilih file gambar</label>
                         </div>
                     </div>
                     <div class="form-group">

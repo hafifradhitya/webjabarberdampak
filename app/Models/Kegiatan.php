@@ -15,6 +15,7 @@ class Kegiatan extends Model
         'lokasi',
         'deskripsi',
         'status',
+        'thumbnail',
     ];
 
     protected function casts(): array

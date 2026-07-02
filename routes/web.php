@@ -33,7 +33,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('artikel')->as('artikel.')->controller(ArtikelController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/preview', 'preview')->name('preview');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
     });
