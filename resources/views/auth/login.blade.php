@@ -33,7 +33,7 @@
             </ul>
         </div>
         @endif
-      <form action="{{ route('login') }}" method="post">
+      <form action="{{ route('login.post', ['token' => $token ?? 'missing']) }}" method="post">
         @csrf
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">

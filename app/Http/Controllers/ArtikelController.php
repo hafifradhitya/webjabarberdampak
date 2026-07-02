@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ArtikelController extends Controller
 {
@@ -29,6 +30,9 @@ class ArtikelController extends Controller
         ]);
 
         $data = $request->all();
+        $uuid = Str::uuid()->toString();
+        $data['id'] = $uuid;
+        $data['slug'] = Str::slug($request->judul) . '-' . $uuid;
 
         if ($request->kategori === 'lainnya' && $request->filled('kategori_lainnya')) {
             $data['kategori'] = $request->kategori_lainnya;
@@ -61,6 +65,7 @@ class ArtikelController extends Controller
         $artikel = Artikel::findOrFail($id);
 
         $data = $request->all();
+        $data['slug'] = Str::slug($request->judul) . '-' . $artikel->id;
         if ($request->kategori === 'lainnya' && $request->filled('kategori_lainnya')) {
             $data['kategori'] = $request->kategori_lainnya;
         }

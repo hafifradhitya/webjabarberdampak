@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProkerController extends Controller
 {
@@ -24,6 +25,9 @@ class ProkerController extends Controller
         ]);
 
         $data = $request->all();
+        $uuid = Str::uuid()->toString();
+        $data['id'] = $uuid;
+        $data['slug'] = Str::slug($request->nama_proker) . '-' . $uuid;
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('proker_images', 'public');
@@ -44,6 +48,7 @@ class ProkerController extends Controller
 
         $proker = Proker::findOrFail($id);
         $data = $request->all();
+        $data['slug'] = Str::slug($request->nama_proker) . '-' . $proker->id;
 
         if ($request->hasFile('gambar')) {
             if ($proker->gambar) {

@@ -169,7 +169,7 @@
           <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
           <h3 class="program-title">{{ $proker->nama_proker }}</h3>
           <p class="program-desc">{{ $proker->deskripsi }}</p>
-          <a href="{{ url('/detail-proker', $proker->id) }}" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
+          <a href="{{ url('/detail-proker', $proker->slug) }}" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
         </div>
       </div>
       @empty
@@ -189,7 +189,7 @@
       
       <div class="activity-grid">
         @forelse($kegiatans as $index => $kegiatan)
-        <a href="{{ url('/detail-kegiatan', $kegiatan->id) }}" class="activity-item" style="display: {{ $index < 3 ? 'block' : 'none' }};">
+        <a href="{{ url('/detail-kegiatan', $kegiatan->slug) }}" class="activity-item" style="display: {{ $index < 3 ? 'block' : 'none' }};">
           <div class="activity-card">
             <img src="{{ $kegiatan->thumbnail ? asset('storage/' . $kegiatan->thumbnail) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600' }}" alt="{{ $kegiatan->nama_kegiatan }}">
             <div class="activity-overlay">

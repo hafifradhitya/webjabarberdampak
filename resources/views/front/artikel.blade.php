@@ -220,7 +220,7 @@
           </div>
           <h2 class="featured-title">{{ $featuredArtikel->judul }}</h2>
           <p style="color: var(--text-muted); margin-bottom: 20px;">{{ Str::limit(strip_tags($featuredArtikel->konten), 150) }}</p>
-          <a href="{{ url('/detail-artikel', $featuredArtikel->id) }}" class="btn btn-primary">Baca Selengkapnya</a>
+          <a href="{{ url('/detail-artikel', $featuredArtikel->slug) }}" class="btn btn-primary">Baca Selengkapnya</a>
         </div>
       </article>
       @endif
@@ -236,7 +236,7 @@
             </div>
             <h3 class="card-title">{{ $artikel->judul }}</h3>
             <p class="card-excerpt">{{ Str::limit(strip_tags($artikel->konten), 100) }}</p>
-            <a href="{{ url('/detail-artikel', $artikel->id) }}" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
+            <a href="{{ url('/detail-artikel', $artikel->slug) }}" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
           </div>
         </article>
         @empty

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
 {
@@ -24,6 +25,9 @@ class KegiatanController extends Controller
         ]);
 
         $data = $request->all();
+        $uuid = Str::uuid()->toString();
+        $data['id'] = $uuid;
+        $data['slug'] = Str::slug($request->nama_kegiatan) . '-' . $uuid;
 
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
@@ -45,6 +49,7 @@ class KegiatanController extends Controller
 
         $kegiatan = Kegiatan::findOrFail($id);
         $data = $request->all();
+        $data['slug'] = Str::slug($request->nama_kegiatan) . '-' . $kegiatan->id;
 
         if ($request->hasFile('thumbnail')) {
             if ($kegiatan->thumbnail) {

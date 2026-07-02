@@ -13,17 +13,38 @@ Route::get('/', function () {
     return view('front.index');  
 });
 
-Route::get('/login', function () {  
-    return view('auth.login');  
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
+Route::get('/dashboard/portal-admin-jabarberdampak', function () {  
+    // Generate a random 40-character token (looks encrypted)
+    $token = Str::random(40);
+    // Store in session
+    session(['secure_login_token' => $token]);
+    // Redirect to the randomized URL
+    return redirect('/auth-guard/' . $token);
 })->name('login')->middleware('guest');
 
-Route::post('/login', [LoginController::class, 'handleLogin'])->middleware('guest');
+Route::get('/auth-guard/{token}', function ($token) {
+    // If the token doesn't match the one in session, block access
+    if (session('secure_login_token') !== $token) {
+        abort(404);
+    }
+    return view('auth.login', ['token' => $token]);  
+})->name('login.view')->middleware('guest');
+
+Route::post('/auth-guard/{token}', function (Request $request, $token) {
+    if (session('secure_login_token') !== $token) {
+        abort(404);
+    }
+    return app(LoginController::class)->handleLogin($request);
+})->name('login.post')->middleware('guest');
 
 Route::get('/program-kegiatan', [FrontController::class, 'program']);
 Route::get('/berita-artikel', [FrontController::class, 'artikel']);
-Route::get('/detail-proker/{id}', [FrontController::class, 'detailProker']);
-Route::get('/detail-artikel/{id}', [FrontController::class, 'detailArtikel']);
-Route::get('/detail-kegiatan/{id}', [FrontController::class, 'detailKegiatan']);
+Route::get('/detail-proker/{slug}', [FrontController::class, 'detailProker']);
+Route::get('/detail-artikel/{slug}', [FrontController::class, 'detailArtikel']);
+Route::get('/detail-kegiatan/{slug}', [FrontController::class, 'detailKegiatan']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

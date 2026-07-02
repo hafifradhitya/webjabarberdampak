@@ -17,15 +17,15 @@ class FrontController extends Controller
         return view('front.program', compact('prokers', 'kegiatans'));
     }
 
-    public function detailProker($id)
+    public function detailProker($slug)
     {
-        $proker = Proker::findOrFail($id);
+        $proker = Proker::where('slug', $slug)->firstOrFail();
         return view('front.detail-proker', compact('proker'));
     }
 
-    public function detailKegiatan($id)
+    public function detailKegiatan($slug)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
+        $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
         return view('front.detail-kegiatan', compact('kegiatan'));
     }
 
@@ -37,9 +37,9 @@ class FrontController extends Controller
         return view('front.artikel', compact('artikels', 'kategoris'));
     }
 
-    public function detailArtikel($id)
+    public function detailArtikel($slug)
     {
-        $artikel = Artikel::findOrFail($id);
+        $artikel = Artikel::where('slug', $slug)->firstOrFail();
         return view('front.detail-artikel', compact('artikel'));
     }
 }
