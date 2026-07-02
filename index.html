@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jabar Berdampak - Organisasi Lingkungan & Kepemudaan</title>
+  <meta name="description" content="Website resmi Jabar Berdampak, organisasi pemuda yang berfokus pada penghijauan, ekonomi kreatif, dan pengembangan kepemimpinan." />
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    /* Specific styles for index.html */
+    .features {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--bg-white);
+    }
+    
+    .vision-mission {
+      background-color: var(--bg-light);
+      padding: var(--spacing-xl) 0;
+    }
+    
+    .vm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+    }
+    
+    .vm-card {
+      background: var(--bg-white);
+      padding: var(--spacing-lg);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: relative;
+    }
+    
+    .vm-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .vm-icon {
+      width: 48px;
+      height: 48px;
+      background-color: rgba(56, 176, 0, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-green);
+    }
+
+    .org-structure {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--bg-white);
+      overflow-x: auto; /* Enable scrolling for wide trees */
+    }
+    .org-wrapper {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .carousel-container {
+      width: 100%;
+      overflow: hidden;
+      padding: var(--spacing-md) 0;
+      border-radius: 20px;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 100%;
+    }
+    .carousel-card {
+      background: var(--bg-white);
+      padding: var(--spacing-xl);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      text-align: center;
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .carousel-card:hover {
+      border-color: var(--primary-gold);
+      transform: translateY(-5px);
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 4px solid var(--bg-light);
+    }
+    .profile-name {
+      font-weight: 700;
+      color: var(--primary-green);
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+    .profile-role {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .profile-divisi {
+      margin-top: 10px;
+      background: rgba(56, 176, 0, 0.1);
+      color: var(--primary-green);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .btn-detail {
+      margin-top: 20px;
+      padding: 10px 24px;
+      background-color: var(--primary-green);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-detail:hover {
+      background-color: #2b8a00;
+      transform: scale(1.05);
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--primary-gold);
+      color: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .carousel-btn:hover {
+      background: #d4af37;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .prev-btn { left: -24px; }
+    .next-btn { right: -24px; }
+    @media (max-width: 650px) {
+      .prev-btn { left: 10px; }
+      .next-btn { right: 10px; }
+    }
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: var(--bg-white);
+      width: 90%;
+      max-width: 400px;
+      border-radius: 20px;
+      padding: var(--spacing-xl);
+      position: relative;
+      transform: translateY(-20px);
+      transition: transform 0.3s;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .modal-close:hover {
+      color: #ff4d4d;
+    }
+    .modal-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 4px solid var(--primary-gold);
+    }
+    .modal-name {
+      font-size: 1.5rem;
+      color: var(--primary-green);
+      margin-bottom: 5px;
+    }
+    .modal-role {
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .modal-divisi {
+      display: inline-block;
+      margin-top: 10px;
+      background: rgba(56, 176, 0, 0.1);
+      color: var(--primary-green);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .modal-desc {
+      text-align: left;
+      background: var(--bg-light);
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .modal-desc h4 {
+      margin-bottom: 8px;
+      color: var(--primary-green);
+      font-size: 1rem;
+    }
+    .modal-desc p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    
+    @media (max-width: 768px) {
+      .vm-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="sticky-header">
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">Jabar Berdampak</div>
+        <button class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Beranda</a></li>
+          <li><a href="program.html">Program & Aktivitas</a></li>
+          <li><a href="artikel.html">Artikel</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Melestarikan Alam, Membangun Pemimpin Masa Depan</h1>
+      <p>Memberdayakan pemuda untuk menjaga masa depan bumi kita melalui tindakan berkelanjutan, pendidikan kepemimpinan, dan kesadaran lingkungan.</p>
+      <div class="hero-buttons">
+        <a href="program.html" class="btn btn-gold">Lihat Program Kami</a>
+        <a href="#about" class="btn btn-outline">Pelajari Lebih Lanjut</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission -->
+  <section id="about" class="vision-mission">
+    <div class="container">
+      <h2 class="section-title">Visi & Misi</h2>
+      <p class="section-subtitle">Tujuan dan komitmen kami untuk membawa dampak positif bagi lingkungan dan masyarakat.</p>
+      
+      <div class="vm-grid">
+        <div class="vm-card">
+          <h3>
+            <div class="vm-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+            </div>
+            Visi Kami
+          </h3>
+          <p>Menjadi wadah pembentukan generasi muda yang peduli lingkungan, berjiwa pemimpin, berwawasan luas, serta mampu berperan aktif dalam menegakkan nilai-nilai keberlanjutan dan kelestarian alam di Jawa Barat dan sekitarnya.</p>
+        </div>
+        
+        <div class="vm-card">
+          <h3>
+            <div class="vm-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            Misi Kami
+          </h3>
+          <ul>
+            <li>• Mendidik generasi muda menjadi pemimpin yang bertanggung jawab terhadap lingkungan.</li>
+            <li>• Membangun ekonomi kreatif berbasis daur ulang dan inovasi hijau.</li>
+            <li>• Mendorong aksi nyata melalui program penghijauan dan restorasi alam.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Organization Structure -->
+  <section class="org-structure">
+    <div class="container">
+      <h2 class="section-title">Struktur Organisasi</h2>
+      <p class="section-subtitle">Para individu di balik Jabar Berdampak yang berkomitmen untuk mewujudkan visi dan misi kami.</p>
+      
+      <!-- Carousel Slider -->
+      <div class="org-wrapper">
+        <button class="carousel-btn prev-btn" id="orgPrevBtn">&lt;</button>
+        <div class="carousel-container">
+          <div class="carousel-track" id="orgCarousel">
+            <!-- BPH -->
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150" alt="Griyandi" class="profile-img">
+              <div class="profile-name">Griyandi</div>
+              <div class="profile-role">Ketua</div>
+              <div class="profile-divisi">BPH</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" alt="Muhammad Farhan Fauzi" class="profile-img">
+              <div class="profile-name">Muhammad Farhan Fauzi</div>
+              <div class="profile-role">Wakil Ketua</div>
+              <div class="profile-divisi">BPH</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150" alt="Gita Nurazizah" class="profile-img">
+              <div class="profile-name">Gita Nurazizah</div>
+              <div class="profile-role">Sekretaris 1</div>
+              <div class="profile-divisi">BPH</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Nabila Syafia Tanjung" class="profile-img">
+              <div class="profile-name">Nabila Syafia Tanjung</div>
+              <div class="profile-role">Sekretaris 2</div>
+              <div class="profile-divisi">BPH</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Edgina Anastasia" class="profile-img">
+              <div class="profile-name">Edgina Anastasia</div>
+              <div class="profile-role">Bendahara</div>
+              <div class="profile-divisi">BPH</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            
+            <!-- Divisi Humas -->
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="Ai Risa Yuliandini" class="profile-img">
+              <div class="profile-name">Ai Risa Yuliandini</div>
+              <div class="profile-role">Koordinator</div>
+              <div class="profile-divisi">Divisi Humas</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150" alt="Jelita Maria H. S." class="profile-img">
+              <div class="profile-name">Jelita Maria H. S.</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Humas</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150" alt="Kartikasari" class="profile-img">
+              <div class="profile-name">Kartikasari</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Humas</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            
+            <!-- Divisi PDD -->
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" alt="M. Fateeh" class="profile-img">
+              <div class="profile-name">M. Fateeh</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi PDD</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=150" alt="Heln Syakina Azzahra" class="profile-img">
+              <div class="profile-name">Heln Syakina Azzahra</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi PDD</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            
+            <!-- Divisi Acara -->
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&q=80&w=150" alt="Nadia Sapitri" class="profile-img">
+              <div class="profile-name">Nadia Sapitri</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" alt="Wan Mochammad H." class="profile-img">
+              <div class="profile-name">Wan Mochammad H.</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150" alt="Zaskia Zen" class="profile-img">
+              <div class="profile-name">Zaskia Zen</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Zahwa Mutiara Tarisa" class="profile-img">
+              <div class="profile-name">Zahwa Mutiara Tarisa</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150" alt="Ri'ayah Hilmiyaty 'A." class="profile-img">
+              <div class="profile-name">Ri'ayah Hilmiyaty 'A.</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn next-btn" id="orgNextBtn">&gt;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Detail Profil -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+      <div class="modal-body">
+        <img src="" alt="" id="modalImg" class="modal-img">
+        <h3 id="modalName" class="modal-name">Nama</h3>
+        <p id="modalRole" class="modal-role">Jabatan</p>
+        <p id="modalDivisi" class="modal-divisi">Divisi</p>
+        <div class="modal-desc">
+          <h4>Tentang</h4>
+          <p>Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan pemuda di Jawa Barat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">Jabar Berdampak</div>
+          <p>Membangun masa depan yang berkelanjutan, satu komunitas pada satu waktu. Bergabunglah dalam perjalanan kami menuju bumi yang lebih hijau.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Tautan Cepat</h4>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="program.html">Program</a></li>
+            <li><a href="artikel.html">Artikel</a></li>
+            <li><a href="#">Kontak Kami</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Media Sosial</h4>
+          <ul class="social-icons">
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg> Twitter (X)</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg> LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Lokasi</h4>
+          <p>Jawa Barat, Indonesia</p>
+          <p>Email: jawabaratberdampak@gmail.com</p>
+          <p>Telepon: 085719305028</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="currentYear">2024</span> Jabar Berdampak. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
