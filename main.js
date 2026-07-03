@@ -31,26 +31,47 @@ document.addEventListener('DOMContentLoaded', () => {
       let index = 0;
       let intervalId;
       
+      const getItemsToShow = () => {
+        if (window.innerWidth >= 1024) return 5;
+        if (window.innerWidth >= 768) return 3;
+        return 1;
+      };
+
       const updateCarousel = () => {
-        // Since each card is flex: 0 0 100%, we translate by index * 100%
-        track.style.transform = `translateX(-${index * 100}%)`;
+        const itemsToShow = getItemsToShow();
+        const maxIndex = Math.max(0, cards.length - itemsToShow);
+        
+        if (index > maxIndex) index = maxIndex;
+        if (index < 0) index = maxIndex;
+        
+        // Translate by index * (100% / itemsToShow)
+        // Wait, flex is calc(100% / 5), so each card is 20%. Moving index by 1 means moving by 20%.
+        // But since the track width is 100% of the container, moving by 20% means 20% of the container.
+        // Actually, if track is 100% wide, then track.style.transform = `translateX(-${index * (100 / itemsToShow)}%)`;
+        track.style.transform = `translateX(-${index * (100 / itemsToShow)}%)`;
       };
       
       const nextSlide = () => {
+        const itemsToShow = getItemsToShow();
         index++;
-        if (index >= cards.length) {
+        if (index > cards.length - itemsToShow) {
           index = 0;
         }
         updateCarousel();
       };
       
       const prevSlide = () => {
+        const itemsToShow = getItemsToShow();
         index--;
         if (index < 0) {
-          index = cards.length - 1;
+          index = Math.max(0, cards.length - itemsToShow);
         }
         updateCarousel();
       };
+
+      window.addEventListener('resize', () => {
+        updateCarousel();
+      });
       
       const startAutoSlide = () => {
         intervalId = setInterval(nextSlide, 5000);
