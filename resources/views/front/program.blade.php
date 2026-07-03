@@ -77,6 +77,121 @@
       overflow: hidden;
     }
 
+    .program-detail-btn {
+      padding: 6px 16px;
+      font-size: 0.9rem;
+    }
+
+    .proker-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(5, 20, 12, 0.68);
+    }
+
+    .proker-modal.active {
+      display: flex;
+    }
+
+    .proker-modal-panel {
+      width: min(920px, 100%);
+      max-height: min(86vh, 820px);
+      background: var(--bg-white);
+      border-radius: 8px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .proker-modal-media {
+      background: var(--primary-green);
+      width: 100%;
+      max-height: 420px;
+      overflow: hidden;
+    }
+
+    .proker-modal-media img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: contain;
+      display: block;
+      background: var(--primary-green);
+    }
+
+    .proker-modal-body {
+      padding: 34px;
+      overflow-y: auto;
+    }
+
+    .proker-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(14, 59, 33, 0.9);
+      color: var(--text-light);
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      z-index: 2;
+    }
+
+    .proker-modal-close:hover {
+      background: var(--secondary-green);
+    }
+
+    .proker-modal-title {
+      color: var(--primary-green);
+      font-size: 2rem;
+      line-height: 1.18;
+      margin: 12px 0 22px;
+    }
+
+    .proker-modal-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 18px 0 24px;
+      border-top: 1px solid #e8eee8;
+      border-bottom: 1px solid #e8eee8;
+      margin-bottom: 24px;
+    }
+
+    .proker-meta-item span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .proker-meta-item strong {
+      color: var(--text-dark);
+      font-size: 0.98rem;
+    }
+
+    .proker-modal-desc {
+      color: var(--text-dark);
+      font-size: 1.02rem;
+      line-height: 1.82;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
     /* Completed Activities Section */
     .completed-activities {
       background-color: var(--bg-light);
@@ -129,6 +244,30 @@
       font-size: 0.85rem;
       opacity: 0.8;
     }
+
+    @media (max-width: 820px) {
+      .proker-modal {
+        padding: 16px;
+      }
+      .proker-modal-panel {
+        max-height: 90vh;
+      }
+      .proker-modal-media {
+        max-height: 260px;
+      }
+      .proker-modal-media img {
+        max-height: 260px;
+      }
+      .proker-modal-body {
+        padding: 24px;
+      }
+      .proker-modal-title {
+        font-size: 1.55rem;
+      }
+      .proker-modal-meta {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -163,13 +302,53 @@
     <div class="program-grid">
       
       @forelse($prokers as $proker)
+      @php
+        $prokerImage = $proker->gambar ? asset('storage/' . $proker->gambar) : 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=900';
+        $prokerModalId = 'prokerModal' . $proker->id;
+      @endphp
       <div class="program-card">
-        <img src="{{ $proker->gambar ? asset('storage/' . $proker->gambar) : 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600' }}" alt="{{ $proker->nama_proker }}" class="program-img">
+        <img src="{{ $prokerImage }}" alt="{{ $proker->nama_proker }}" class="program-img">
         <div class="program-content">
           <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
           <h3 class="program-title">{{ $proker->nama_proker }}</h3>
           <p class="program-desc">{{ $proker->deskripsi }}</p>
-          <a href="{{ url('/detail-proker', $proker->slug) }}" class="btn btn-outline-green" style="padding: 6px 16px; font-size: 0.9rem;">Detail Program</a>
+          <button type="button" class="btn btn-outline-green program-detail-btn" data-proker-open="{{ $prokerModalId }}">Detail Program</button>
+        </div>
+      </div>
+
+      <div class="proker-modal" id="{{ $prokerModalId }}" role="dialog" aria-modal="true" aria-labelledby="{{ $prokerModalId }}Title">
+        <div class="proker-modal-panel">
+          <button type="button" class="proker-modal-close" data-proker-close aria-label="Tutup detail program">&times;</button>
+          <div class="proker-modal-media">
+            <img src="{{ $prokerImage }}" alt="{{ $proker->nama_proker }}">
+          </div>
+          <div class="proker-modal-body">
+            <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
+            <h2 class="proker-modal-title" id="{{ $prokerModalId }}Title">{{ $proker->nama_proker }}</h2>
+
+            <div class="proker-modal-meta">
+              <div class="proker-meta-item">
+                <span>Tanggal Pelaksanaan</span>
+                <strong>{{ $proker->tanggal_mulai ? $proker->tanggal_mulai->format('d M Y') : '-' }} - {{ $proker->tanggal_selesai ? $proker->tanggal_selesai->format('d M Y') : '-' }}</strong>
+              </div>
+              <div class="proker-meta-item">
+                <span>Penanggung Jawab</span>
+                <strong>{{ $proker->penanggung_jawab ?? '-' }}</strong>
+              </div>
+              <div class="proker-meta-item">
+                <span>Anggaran</span>
+                <strong>Rp {{ number_format($proker->anggaran ?? 0, 0, ',', '.') }}</strong>
+              </div>
+              <div class="proker-meta-item">
+                <span>Status</span>
+                <strong>{{ ucfirst($proker->status ?? 'program') }}</strong>
+              </div>
+            </div>
+
+            <div class="proker-modal-desc">
+              {!! nl2br(e($proker->deskripsi ?: 'Deskripsi program belum tersedia.')) !!}
+            </div>
+          </div>
         </div>
       </div>
       @empty
@@ -189,9 +368,14 @@
       
       <div class="activity-grid">
         @forelse($kegiatans as $index => $kegiatan)
+        @php
+          $activityThumbnail = $kegiatan->documentations->first()
+            ? asset('storage/' . $kegiatan->documentations->first()->image_path)
+            : ($kegiatan->banner ? asset('storage/' . $kegiatan->banner) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600');
+        @endphp
         <a href="{{ url('/detail-kegiatan', $kegiatan->slug) }}" class="activity-item" style="display: {{ $index < 3 ? 'block' : 'none' }};">
           <div class="activity-card">
-            <img src="{{ $kegiatan->thumbnail ? asset('storage/' . $kegiatan->thumbnail) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600' }}" alt="{{ $kegiatan->nama_kegiatan }}">
+            <img src="{{ $activityThumbnail }}" alt="{{ $kegiatan->nama_kegiatan }}">
             <div class="activity-overlay">
               <h3 class="activity-title">{{ $kegiatan->nama_kegiatan }}</h3>
               <span class="activity-date">{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</span>
@@ -261,6 +445,45 @@
         });
         document.getElementById('loadMoreBtn').style.display = 'none';
     }
+
+    const prokerModals = document.querySelectorAll('.proker-modal');
+
+    function closeProkerModals() {
+      prokerModals.forEach(modal => modal.classList.remove('active'));
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-proker-open]').forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = document.getElementById(button.dataset.prokerOpen);
+        if (!modal) {
+          return;
+        }
+
+        closeProkerModals();
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+        modal.querySelector('[data-proker-close]')?.focus();
+      });
+    });
+
+    document.querySelectorAll('[data-proker-close]').forEach(button => {
+      button.addEventListener('click', closeProkerModals);
+    });
+
+    prokerModals.forEach(modal => {
+      modal.addEventListener('click', event => {
+        if (event.target === modal) {
+          closeProkerModals();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeProkerModals();
+      }
+    });
   </script>
 </body>
 </html>

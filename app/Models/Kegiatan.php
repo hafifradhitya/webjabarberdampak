@@ -17,7 +17,7 @@ class Kegiatan extends Model
         'lokasi',
         'deskripsi',
         'status',
-        'thumbnail',
+        'banner',
     ];
 
     protected function casts(): array
@@ -29,6 +29,6 @@ class Kegiatan extends Model
 
     public function documentations()
     {
-        return $this->hasMany(KegiatanDocumentation::class);
+        return $this->hasMany(KegiatanDocumentation::class)->orderBy('sort_order')->orderBy('created_at');
     }
 }

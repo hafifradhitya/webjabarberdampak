@@ -12,6 +12,227 @@
       padding: var(--spacing-xl) 0;
       background-color: var(--bg-white);
     }
+
+    .about-organization {
+      padding: 88px 0;
+      background: linear-gradient(180deg, var(--primary-green) 0%, var(--primary-green) 46%, #f5faf5 46%, #f5faf5 100%);
+      overflow: hidden;
+    }
+
+    .info-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-gold);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .info-eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--primary-gold);
+      box-shadow: 0 0 0 4px rgba(250, 208, 44, 0.2);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-copy h2 {
+      color: var(--text-light);
+      font-size: 3.1rem;
+      line-height: 1.12;
+      margin-bottom: 22px;
+    }
+
+    .about-highlight {
+      color: var(--primary-gold);
+    }
+
+    .about-copy p {
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      max-width: 680px;
+      margin-bottom: 18px;
+    }
+
+    .about-visual {
+      position: relative;
+      padding-bottom: 74px;
+    }
+
+    .about-photo {
+      position: relative;
+      min-height: 370px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 370px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 59, 33, 0.08), rgba(14, 59, 33, 0.46));
+    }
+
+    .about-stat-panel {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--bg-white);
+      border: 1px solid rgba(14, 59, 33, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(14, 59, 33, 0.18);
+      overflow: hidden;
+    }
+
+    .about-stat {
+      padding: 22px 20px;
+      border-right: 1px solid rgba(14, 59, 33, 0.1);
+    }
+
+    .about-stat:last-child {
+      border-right: 0;
+    }
+
+    .about-stat strong {
+      display: block;
+      color: var(--primary-green);
+      font-size: 2.15rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .about-stat span {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .impact-block {
+      margin-top: 76px;
+    }
+
+    .impact-intro {
+      max-width: 760px;
+      margin-bottom: 32px;
+    }
+
+    .impact-intro .info-eyebrow {
+      color: var(--primary-green);
+    }
+
+    .impact-intro .info-eyebrow::before {
+      background: var(--primary-green);
+      box-shadow: 0 0 0 4px rgba(14, 59, 33, 0.12);
+    }
+
+    .impact-intro h2 {
+      color: var(--primary-green);
+      font-size: 2.65rem;
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
+
+    .impact-intro p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .info-card-grid,
+    .impact-card-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .info-card-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .impact-card-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .info-card,
+    .impact-card {
+      background: var(--bg-white);
+      border: 1px solid rgba(14, 59, 33, 0.11);
+      border-radius: 8px;
+      padding: 28px;
+      min-height: 210px;
+      box-shadow: 0 14px 34px rgba(14, 59, 33, 0.07);
+    }
+
+    .info-icon,
+    .impact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+    }
+
+    .info-icon {
+      background: rgba(14, 59, 33, 0.09);
+      color: var(--primary-green);
+    }
+
+    .impact-icon {
+      background: rgba(250, 208, 44, 0.16);
+      color: var(--primary-gold);
+    }
+
+    .impact-card {
+      background: linear-gradient(180deg, var(--secondary-green), var(--primary-green));
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--text-light);
+    }
+
+    .impact-card h3 {
+      color: var(--text-light);
+    }
+
+    .impact-card p {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .info-card h3,
+    .info-card h3 {
+      color: #253225;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+
+    .info-card p {
+      color: #626a62;
+      line-height: 1.7;
+      margin: 0;
+    }
     
     .vision-mission {
       background-color: var(--bg-light);
@@ -253,8 +474,56 @@
       color: var(--text-muted);
       line-height: 1.5;
     }
+
+    @media (max-width: 1024px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .about-copy h2 {
+        font-size: 2.6rem;
+      }
+      .impact-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
     
     @media (max-width: 768px) {
+      .about-organization {
+        padding: 56px 0;
+      }
+      .about-grid,
+      .info-card-grid,
+      .impact-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-copy h2,
+      .impact-intro h2 {
+        font-size: 2rem;
+      }
+      .about-visual {
+        padding-bottom: 0;
+      }
+      .about-photo,
+      .about-photo img {
+        min-height: 280px;
+      }
+      .about-stat-panel {
+        position: static;
+        grid-template-columns: 1fr;
+        margin-top: 14px;
+      }
+      .about-stat {
+        border-right: 0;
+        border-bottom: 1px solid rgba(14, 59, 33, 0.1);
+      }
+      .about-stat:last-child {
+        border-bottom: 0;
+      }
+      .info-card,
+      .impact-card {
+        min-height: auto;
+      }
       .vm-grid {
         grid-template-columns: 1fr;
       }
@@ -294,8 +563,118 @@
     </div>
   </section>
 
+  <!-- About Organization -->
+  <section id="about" class="about-organization">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="info-eyebrow">Tentang Kami</div>
+          <h2>Setiap wilayah punya cerita, kami rajut jadi <span class="about-highlight">gerakan berdampak</span></h2>
+          <p>Jabar Berdampak adalah organisasi kepemudaan dan gerakan relawan yang berfokus pada pengembangan kapasitas pemuda, kepedulian lingkungan, aksi sosial, serta pemberdayaan masyarakat di Jawa Barat.</p>
+          <p>BPH (Badan Pengurus Harian) menjalankan koordinasi harian, memastikan program berjalan terarah, relawan terhubung dengan peran yang sesuai, dan setiap kegiatan tercatat sebagai bagian dari dampak bersama.</p>
+        </div>
+
+        <div class="about-visual">
+          <div class="about-photo">
+            <img src="https://images.unsplash.com/photo-1527525443983-6e60c75fff46?auto=format&fit=crop&q=80&w=900" alt="Relawan muda berdiskusi dan berkolaborasi">
+          </div>
+          <div class="about-stat-panel" aria-label="Ringkasan Jabar Berdampak">
+            <div class="about-stat">
+              <strong>27</strong>
+              <span>Kabupaten dan kota cakupan jaringan relawan</span>
+            </div>
+            <div class="about-stat">
+              <strong>1</strong>
+              <span>Basis data terpadu untuk pendataan anggota dan kegiatan</span>
+            </div>
+            <div class="about-stat">
+              <strong>4</strong>
+              <span>Bidang dampak utama yang dijalankan bersama</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-block">
+        <div class="impact-intro">
+          <div class="info-eyebrow">Kenapa Pendataan</div>
+          <h2>Data yang rapi, dampak yang nyata</h2>
+          <p>Pendataan bukan sekadar administrasi. Ini fondasi agar program, bantuan, pelatihan, dan dokumentasi kegiatan bisa tersusun jelas, dapat dievaluasi, serta sampai kepada orang dan wilayah yang tepat.</p>
+        </div>
+
+        <div class="info-card-grid">
+          <article class="info-card">
+            <div class="info-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path><rect x="3" y="3" width="18" height="18" rx="5"></rect></svg>
+            </div>
+            <h3>Identitas yang jelas</h3>
+            <p>Setiap anggota dan relawan terverifikasi sejak awal, sehingga koordinasi program lebih akuntabel dan bebas data ganda.</p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M16 8c-2 0-5 1-6 4-1 2 0 4 2 4 3 0 5-4 4-8Z"></path></svg>
+            </div>
+            <h3>Sebaran yang merata</h3>
+            <p>Data wilayah membantu pengurus menyalurkan program ke titik yang paling membutuhkan di tingkat kabupaten dan kota.</p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"></path><path d="M9 19v-8"></path><path d="M14 19v-5"></path><path d="M19 19V9"></path><path d="M3 19h18"></path></svg>
+            </div>
+            <h3>Laporan yang terbuka</h3>
+            <p>Setiap kegiatan terdokumentasi rapi agar kontribusi dapat dipertanggungjawabkan kepada publik dan sesama relawan.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="impact-block">
+        <div class="impact-intro">
+          <div class="info-eyebrow">Bidang Dampak</div>
+          <h2>Empat motif gerakan relawan</h2>
+          <p>Program Jabar Berdampak bergerak dalam empat bidang utama, menyesuaikan kapasitas relawan dan kebutuhan masyarakat di lapangan.</p>
+        </div>
+
+        <div class="impact-card-grid">
+          <article class="impact-card">
+            <div class="impact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-9 16-9 0 9-4 16-9 16Z"></path><path d="M9 15c2-4 5-7 11-11"></path></svg>
+            </div>
+            <h3>Lingkungan</h3>
+            <p>Penghijauan, pengelolaan sampah, konservasi, dan pelatihan praktik ramah lingkungan.</p>
+          </article>
+
+          <article class="impact-card">
+            <div class="impact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 10-10-5-10 5 10 5 10-5Z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>
+            </div>
+            <h3>Pendidikan</h3>
+            <p>Pendampingan belajar, literasi, pelatihan kepemimpinan, dan pengembangan keterampilan pemuda.</p>
+          </article>
+
+          <article class="impact-card">
+            <div class="impact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"></path></svg>
+            </div>
+            <h3>Sosial & Kemanusiaan</h3>
+            <p>Bantuan warga, aksi tanggap kebutuhan sosial, dan pendampingan komunitas rentan.</p>
+          </article>
+
+          <article class="impact-card">
+            <div class="impact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 9 11l4 4 7-7"></path><path d="M14 8h6v6"></path></svg>
+            </div>
+            <h3>Ekonomi Kerakyatan</h3>
+            <p>Pendampingan UMKM, pelatihan wirausaha, ekonomi kreatif, dan penguatan peluang usaha lokal.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Vision & Mission -->
-  <section id="about" class="vision-mission">
+  <section id="vision" class="vision-mission">
     <div class="container">
       <h2 class="section-title">Visi & Misi</h2>
       <p class="section-subtitle">Tujuan dan komitmen kami untuk membawa dampak positif bagi lingkungan dan masyarakat.</p>

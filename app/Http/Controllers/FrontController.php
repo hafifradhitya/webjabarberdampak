@@ -12,7 +12,7 @@ class FrontController extends Controller
     public function program()
     {
         $prokers = Proker::latest()->get();
-        $kegiatans = Kegiatan::latest()->get();
+        $kegiatans = Kegiatan::with('documentations')->latest()->get();
         
         return view('front.program', compact('prokers', 'kegiatans'));
     }

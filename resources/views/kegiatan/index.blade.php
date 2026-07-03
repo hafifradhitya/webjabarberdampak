@@ -17,7 +17,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>No</th>
-                        <th>Thumbnail</th>
+                        <th>Banner</th>
                         <th>Dokumentasi</th>
                         <th>Nama Kegiatan</th>
                         <th>Tanggal</th>
@@ -31,8 +31,8 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            @if($kegiatan->thumbnail)
-                                <img src="{{ asset('storage/' . $kegiatan->thumbnail) }}" alt="Thumbnail" width="50" height="50" class="img-thumbnail" style="object-fit: cover;">
+                            @if($kegiatan->banner)
+                                <img src="{{ asset('storage/' . $kegiatan->banner) }}" alt="Banner" width="96" height="40" class="img-thumbnail" style="object-fit: cover;">
                             @else
                                 <span class="text-muted">Tidak ada</span>
                             @endif
@@ -95,14 +95,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Thumbnail</label>
+                                            <label>Banner Kegiatan</label>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="thumbnail" accept="image/*" id="customFileEdit{{ $kegiatan->id }}">
-                                                <label class="custom-file-label" for="customFileEdit{{ $kegiatan->id }}">Pilih file gambar</label>
+                                                <input type="file" class="custom-file-input" name="banner" accept="image/*" id="customFileEdit{{ $kegiatan->id }}">
+                                                <label class="custom-file-label" for="customFileEdit{{ $kegiatan->id }}">Pilih file banner</label>
                                             </div>
-                                            @if($kegiatan->thumbnail)
-                                                <small class="text-muted d-block mt-1">Biarkan kosong jika tidak ingin mengubah thumbnail.</small>
+                                            @if($kegiatan->banner)
+                                                <small class="text-muted d-block mt-1">Biarkan kosong jika tidak ingin mengubah banner.</small>
                                             @endif
+                                            <small class="text-muted d-block">Ukuran Canva: Banner (Landscape) 1000 x 500 mm, rasio 2:1. Export PNG/JPG, maksimal 15 MB.</small>
                                         </div>
                                         <div class="form-group">
                                             <label>Deskripsi</label>
@@ -116,6 +117,7 @@
                                                         <div class="col-6 col-md-4 mb-3">
                                                             <div class="border rounded p-2 h-100">
                                                                 <img src="{{ asset('storage/' . $documentation->image_path) }}" alt="Dokumentasi {{ $loop->iteration }}" class="img-fluid rounded mb-2" style="height: 90px; width: 100%; object-fit: cover;">
+                                                                <input type="text" class="form-control form-control-sm mb-2" name="caption_dokumentasi[{{ $documentation->id }}]" value="{{ $documentation->caption }}" maxlength="160" placeholder="Keterangan gambar">
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" id="hapusDokumentasi{{ $documentation->id }}" name="hapus_dokumentasi[]" value="{{ $documentation->id }}" data-delete-doc>
                                                                     <label class="custom-control-label small" for="hapusDokumentasi{{ $documentation->id }}">Hapus gambar ini</label>
@@ -131,6 +133,7 @@
                                                 <input type="file" class="custom-file-input" id="dokumentasiEdit{{ $kegiatan->id }}" name="dokumentasi[]" accept="image/*" multiple data-doc-input data-existing="{{ $kegiatan->documentations->count() }}">
                                                 <label class="custom-file-label" for="dokumentasiEdit{{ $kegiatan->id }}">Tambah dokumentasi</label>
                                             </div>
+                                            <div class="mt-2" data-doc-caption-list></div>
                                             <small class="text-muted">Total dokumentasi maksimal 5 gambar. Bisa pilih beberapa file sekaligus.</small>
                                         </div>
                                         <div class="form-group">
@@ -193,11 +196,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="thumbnail">Thumbnail <span class="text-danger">*</span></label>
+                        <label for="banner">Banner Kegiatan <span class="text-danger">*</span></label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail" accept="image/*" required>
-                            <label class="custom-file-label" for="thumbnail">Pilih file gambar</label>
+                            <input type="file" class="custom-file-input" id="banner" name="banner" accept="image/*" required>
+                            <label class="custom-file-label" for="banner">Pilih file banner</label>
                         </div>
+                        <small class="text-muted d-block mt-1">Ukuran Canva: Banner (Landscape) 1000 x 500 mm, rasio 2:1. Export PNG/JPG, maksimal 15 MB.</small>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi_kegiatan">Deskripsi</label>
@@ -209,6 +213,7 @@
                             <input type="file" class="custom-file-input" id="dokumentasi_kegiatan" name="dokumentasi[]" accept="image/*" multiple data-doc-input data-existing="0">
                             <label class="custom-file-label" for="dokumentasi_kegiatan">Pilih maksimal 5 gambar</label>
                         </div>
+                        <div class="mt-2" data-doc-caption-list></div>
                         <small class="text-muted">Opsional. Maksimal 5 gambar, ukuran setiap gambar maksimal 5 MB.</small>
                     </div>
                     <div class="form-group">
@@ -235,6 +240,52 @@
 
 @push('script')
 <script>
+    function renderDocumentationCaptions(input) {
+        const form = input.closest('form');
+        const captionList = form.querySelector('[data-doc-caption-list]');
+
+        if (!captionList) {
+            return;
+        }
+
+        captionList.innerHTML = '';
+
+        Array.from(input.files).forEach(function(file, index) {
+            const group = document.createElement('div');
+            group.className = 'input-group input-group-sm mb-2';
+
+            const prepend = document.createElement('div');
+            prepend.className = 'input-group-prepend';
+
+            const label = document.createElement('span');
+            label.className = 'input-group-text';
+            label.textContent = 'Gambar ' + (index + 1);
+
+            const caption = document.createElement('input');
+            caption.type = 'text';
+            caption.className = 'form-control';
+            caption.name = 'dokumentasi_caption[]';
+            caption.maxLength = 160;
+            caption.placeholder = 'Keterangan singkat untuk ' + file.name;
+
+            prepend.appendChild(label);
+            group.appendChild(prepend);
+            group.appendChild(caption);
+            captionList.appendChild(group);
+        });
+    }
+
+    document.querySelectorAll('input[type="file"][name="banner"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            const form = input.closest('form');
+            const label = form.querySelector('label[for="' + input.id + '"]');
+
+            if (label) {
+                label.textContent = input.files.length ? input.files[0].name : 'Pilih file banner';
+            }
+        });
+    });
+
     document.querySelectorAll('[data-doc-input]').forEach(function(input) {
         input.addEventListener('change', function() {
             const form = input.closest('form');
@@ -242,10 +293,14 @@
             const existing = Number(input.dataset.existing || 0);
             const deleted = form.querySelectorAll('[data-delete-doc]:checked').length;
             const nextTotal = existing - deleted + input.files.length;
+            const captionList = form.querySelector('[data-doc-caption-list]');
 
             if (nextTotal > 5) {
                 alert('Total dokumentasi kegiatan maksimal 5 gambar.');
                 input.value = '';
+                if (captionList) {
+                    captionList.innerHTML = '';
+                }
                 if (label) {
                     label.textContent = 'Pilih maksimal 5 gambar';
                 }
@@ -257,6 +312,8 @@
                     ? input.files.length + ' gambar dipilih'
                     : 'Pilih maksimal 5 gambar';
             }
+
+            renderDocumentationCaptions(input);
         });
     });
 </script>

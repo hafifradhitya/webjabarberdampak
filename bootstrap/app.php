@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (PostTooLargeException $exception) {
             return response(
-                'Ukuran upload terlalu besar. Maksimal total upload adalah 64 MB, dan setiap gambar maksimal 5 MB.',
+                'Ukuran upload terlalu besar. Maksimal total upload adalah 64 MB, banner maksimal 15 MB, dan dokumentasi maksimal 5 MB per gambar.',
                 413
             );
         });

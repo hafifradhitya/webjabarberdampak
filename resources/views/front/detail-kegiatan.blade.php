@@ -3,25 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detail Kegiatan - Jabar Berdampak</title>
+  <title>{{ $kegiatan->nama_kegiatan }} - Jabar Berdampak</title>
   @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
-    /* CSS Khusus Detail */
+    body {
+      background: #f4f7f4;
+    }
+    .detail-hero-wrap {
+      width: 100%;
+      height: clamp(300px, 50vw, 640px);
+      margin-top: -15px;
+      position: relative;
+      overflow: hidden;
+      background: var(--primary-green);
+    }
+    .detail-hero-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 59, 33, 0.06), rgba(14, 59, 33, 0.34));
+      pointer-events: none;
+    }
     .detail-hero {
       width: 100%;
-      height: 400px;
+      height: 100%;
       object-fit: cover;
-      margin-top: -15px;
+      display: block;
     }
     .detail-container {
-      max-width: 900px;
-      margin: -60px auto 60px;
-      background: var(--bg-white);
-      border-radius: 20px;
-      padding: var(--spacing-xl);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      max-width: 1100px;
+      margin: -72px auto 72px;
       position: relative;
       z-index: 10;
+    }
+    .summary-panel {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 18px 52px rgba(14, 59, 33, 0.1);
+    }
+    .summary-header {
+      max-width: 780px;
     }
     .badge-status {
       display: inline-block;
@@ -46,9 +68,9 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
-      margin-bottom: 40px;
-      padding-bottom: 30px;
-      border-bottom: 1px solid var(--bg-light);
+      margin-bottom: 34px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid #e8eee8;
     }
     .meta-item h4 {
       font-size: 0.9rem;
@@ -65,29 +87,80 @@
       line-height: 1.8;
       color: var(--text-dark);
     }
-    .content-section {
-      margin-bottom: 36px;
+    .detail-content p {
+      margin-bottom: 0;
     }
-    .content-section h2 {
+    .description-section {
+      margin-top: 38px;
+      padding-top: 38px;
+      border-top: 1px solid #e8eee8;
+    }
+    .detail-section-title {
       color: var(--primary-green);
       font-size: 1.45rem;
       margin-bottom: 12px;
     }
+    .detail-actions {
+      margin-top: 34px;
+    }
+    .documentation-section {
+      margin-top: 38px;
+      padding-top: 38px;
+      border-top: 1px solid #e8eee8;
+    }
+    .section-kicker {
+      color: #9a7b00;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .documentation-heading {
+      max-width: 720px;
+      margin-bottom: 22px;
+    }
+    .documentation-heading h2 {
+      font-size: 1.7rem;
+      margin-bottom: 8px;
+    }
+    .documentation-heading p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin: 0;
+    }
+    .documentation-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.75fr);
+      gap: 24px;
+      align-items: stretch;
+    }
     .documentation-gallery {
-      margin: 12px 0 36px;
+      min-width: 0;
     }
     .documentation-frame {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      background: var(--bg-light);
-      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      background: #e8efe8;
+      aspect-ratio: 16 / 10;
     }
     .documentation-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+    .documentation-counter {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      padding: 6px 12px;
+      border-radius: 50px;
+      background: rgba(14, 59, 33, 0.86);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
     .gallery-nav {
       position: absolute;
@@ -112,6 +185,25 @@
     }
     .gallery-nav.next {
       right: 14px;
+    }
+    .documentation-info {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      border-left: 4px solid var(--primary-gold);
+      padding-left: 22px;
+    }
+    .documentation-info h3 {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .documentation-info p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
     }
     .gallery-thumbs {
       display: flex;
@@ -140,13 +232,35 @@
     .gallery-thumb.active {
       border-color: var(--primary-green);
     }
+    .empty-documentation {
+      border: 1px dashed #c7d6ca;
+      border-radius: 14px;
+      padding: 16px;
+      color: var(--text-muted);
+      background: #fbfdfb;
+    }
     @media (max-width: 768px) {
+      .detail-hero-wrap {
+        height: clamp(260px, 58vw, 360px);
+      }
       .detail-container {
-        padding: var(--spacing-lg);
-        margin-top: -30px;
+        margin: -42px auto 54px;
+      }
+      .summary-panel {
+        padding: 26px 20px;
+        border-radius: 18px;
       }
       .detail-title {
         font-size: 2rem;
+      }
+      .documentation-layout {
+        grid-template-columns: 1fr;
+      }
+      .documentation-info {
+        border-left: 0;
+        border-top: 4px solid var(--primary-gold);
+        padding-left: 0;
+        padding-top: 18px;
       }
       .gallery-nav {
         width: 36px;
@@ -180,65 +294,123 @@
     </div>
   </header>
 
-  <!-- Hero Image (Thumbnail) -->
-  <img src="{{ $kegiatan->thumbnail ? asset('storage/' . $kegiatan->thumbnail) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200' }}" alt="{{ $kegiatan->nama_kegiatan }}" class="detail-hero">
+  @php
+    $heroImage = $kegiatan->banner
+      ? asset('storage/' . $kegiatan->banner)
+      : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200';
+    $documentations = $kegiatan->documentations;
+    $hasDocumentations = $documentations->isNotEmpty();
+    $galleryCount = $hasDocumentations ? $documentations->count() : 1;
+    $firstDocumentation = $documentations->first();
+    $mainDocumentationImage = $hasDocumentations ? asset('storage/' . $firstDocumentation->image_path) : $heroImage;
+    $mainDocumentationCaption = $hasDocumentations
+      ? ($firstDocumentation->caption ?: 'Dokumentasi visual dari kegiatan ' . $kegiatan->nama_kegiatan . '.')
+      : 'Gambar utama kegiatan sebagai gambaran awal dokumentasi.';
+    $statusClass = [
+      'upcoming' => 'badge-upcoming',
+      'ongoing' => 'badge-ongoing',
+      'completed' => 'badge-completed',
+    ][$kegiatan->status] ?? 'badge-upcoming';
+    $statusLabel = [
+      'upcoming' => 'Akan Datang',
+      'ongoing' => 'Sedang Berlangsung',
+      'completed' => 'Selesai',
+    ][$kegiatan->status] ?? 'Aktivitas';
+  @endphp
+
+  <!-- Hero Image (Banner) -->
+  <div class="detail-hero-wrap">
+    <img src="{{ $heroImage }}" alt="{{ $kegiatan->nama_kegiatan }}" class="detail-hero">
+  </div>
 
   <!-- Main Content -->
   <main class="container">
     <div class="detail-container">
-      @php
-        $statusClass = [
-          'upcoming' => 'badge-upcoming',
-          'ongoing' => 'badge-ongoing',
-          'completed' => 'badge-completed',
-        ][$kegiatan->status] ?? 'badge-upcoming';
-      @endphp
-      <span class="badge-status {{ $statusClass }}">{{ strtoupper($kegiatan->status ?? 'AKTIVITAS') }}</span>
-      <h1 class="detail-title">{{ $kegiatan->nama_kegiatan }}</h1>
-      
-      <div class="meta-grid">
-        <div class="meta-item">
-          <h4>Tanggal Pelaksanaan</h4>
-          <p>{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</p>
+      <article class="summary-panel">
+        <div class="summary-header">
+          <span class="badge-status {{ $statusClass }}">{{ $statusLabel }}</span>
+          <h1 class="detail-title">{{ $kegiatan->nama_kegiatan }}</h1>
         </div>
-        <div class="meta-item">
-          <h4>Lokasi</h4>
-          <p>{{ $kegiatan->lokasi ?? '-' }}</p>
-        </div>
-      </div>
 
-      @if($kegiatan->documentations->isNotEmpty())
-      <section class="content-section documentation-gallery" data-activity-gallery>
-        <h2>Dokumentasi Kegiatan</h2>
-        <div class="documentation-frame">
-          <img src="{{ asset('storage/' . $kegiatan->documentations->first()->image_path) }}" alt="Dokumentasi {{ $kegiatan->nama_kegiatan }}" data-gallery-main>
-          @if($kegiatan->documentations->count() > 1)
-            <button type="button" class="gallery-nav prev" data-gallery-prev aria-label="Dokumentasi sebelumnya">&lsaquo;</button>
-            <button type="button" class="gallery-nav next" data-gallery-next aria-label="Dokumentasi berikutnya">&rsaquo;</button>
-          @endif
+        <div class="meta-grid">
+          <div class="meta-item">
+            <h4>Tanggal Pelaksanaan</h4>
+            <p>{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</p>
+          </div>
+          <div class="meta-item">
+            <h4>Lokasi</h4>
+            <p>{{ $kegiatan->lokasi ?? '-' }}</p>
+          </div>
+          <div class="meta-item">
+            <h4>Dokumentasi</h4>
+            <p>{{ $hasDocumentations ? $documentations->count() . ' gambar' : 'Belum ditambahkan' }}</p>
+          </div>
         </div>
-        @if($kegiatan->documentations->count() > 1)
-        <div class="gallery-thumbs">
-          @foreach($kegiatan->documentations as $documentation)
-            <button type="button" class="gallery-thumb {{ $loop->first ? 'active' : '' }}" data-gallery-thumb data-src="{{ asset('storage/' . $documentation->image_path) }}" aria-label="Lihat dokumentasi {{ $loop->iteration }}">
-              <img src="{{ asset('storage/' . $documentation->image_path) }}" alt="Thumbnail dokumentasi {{ $loop->iteration }}">
-            </button>
-          @endforeach
-        </div>
-        @endif
-      </section>
-      @endif
 
-      <div class="detail-content">
-        @if($kegiatan->deskripsi)
-          <section class="content-section">
-            <h2>Deskripsi</h2>
-            {!! nl2br(e($kegiatan->deskripsi)) !!}
-          </section>
-        @endif
-        
-        <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
-      </div>
+        <section class="documentation-section" data-activity-gallery>
+          <div class="documentation-heading">
+            <div class="section-kicker">Dokumentasi</div>
+            <h2>Gambaran Kegiatan</h2>
+            <p>Rangkuman visual dari suasana, proses, dan momen penting kegiatan.</p>
+          </div>
+
+          <div class="documentation-layout">
+            <div class="documentation-gallery">
+              <div class="documentation-frame">
+                <img src="{{ $mainDocumentationImage }}" alt="Dokumentasi {{ $kegiatan->nama_kegiatan }}" data-gallery-main>
+                <div class="documentation-counter">
+                  <span data-gallery-current>1</span>/<span>{{ $galleryCount }}</span>
+                </div>
+                @if($documentations->count() > 1)
+                  <button type="button" class="gallery-nav prev" data-gallery-prev aria-label="Dokumentasi sebelumnya">&lsaquo;</button>
+                  <button type="button" class="gallery-nav next" data-gallery-next aria-label="Dokumentasi berikutnya">&rsaquo;</button>
+                @endif
+              </div>
+            </div>
+
+            <div class="documentation-info">
+              <div>
+                <div class="section-kicker">Overview Gambar</div>
+                <h3 data-gallery-title>{{ $hasDocumentations ? 'Dokumentasi 1' : 'Dokumentasi Utama' }}</h3>
+                <p data-gallery-caption>{{ $mainDocumentationCaption }}</p>
+              </div>
+
+              @if($hasDocumentations)
+                <div class="gallery-thumbs" aria-label="Daftar dokumentasi kegiatan">
+                  @foreach($documentations as $documentation)
+                    @php
+                      $documentationImage = asset('storage/' . $documentation->image_path);
+                      $documentationCaption = $documentation->caption ?: 'Dokumentasi visual dari kegiatan ' . $kegiatan->nama_kegiatan . '.';
+                    @endphp
+                    <button
+                      type="button"
+                      class="gallery-thumb {{ $loop->first ? 'active' : '' }}"
+                      data-gallery-thumb
+                      data-src="{{ $documentationImage }}"
+                      data-title="Dokumentasi {{ $loop->iteration }}"
+                      data-caption="{{ $documentationCaption }}"
+                      aria-label="Lihat dokumentasi {{ $loop->iteration }}"
+                    >
+                      <img src="{{ $documentationImage }}" alt="Thumbnail dokumentasi {{ $loop->iteration }}">
+                    </button>
+                  @endforeach
+                </div>
+              @else
+                <div class="empty-documentation">Dokumentasi tambahan belum tersedia.</div>
+              @endif
+            </div>
+          </div>
+        </section>
+
+        <section class="detail-content description-section">
+          <h2 class="detail-section-title">Deskripsi</h2>
+          <p>{!! nl2br(e($kegiatan->deskripsi ?: 'Deskripsi kegiatan belum tersedia.')) !!}</p>
+        </section>
+
+        <div class="detail-actions">
+          <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
+        </div>
+      </article>
     </div>
   </main>
 
@@ -284,6 +456,9 @@
   <script>
     document.querySelectorAll('[data-activity-gallery]').forEach(function(gallery) {
       const mainImage = gallery.querySelector('[data-gallery-main]');
+      const title = gallery.querySelector('[data-gallery-title]');
+      const caption = gallery.querySelector('[data-gallery-caption]');
+      const current = gallery.querySelector('[data-gallery-current]');
       const thumbs = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
       const prev = gallery.querySelector('[data-gallery-prev]');
       const next = gallery.querySelector('[data-gallery-next]');
@@ -297,6 +472,16 @@
         activeIndex = (index + thumbs.length) % thumbs.length;
         const activeThumb = thumbs[activeIndex];
         mainImage.src = activeThumb.dataset.src;
+        mainImage.alt = activeThumb.getAttribute('aria-label') || mainImage.alt;
+        if (title) {
+          title.textContent = activeThumb.dataset.title || 'Dokumentasi';
+        }
+        if (caption) {
+          caption.textContent = activeThumb.dataset.caption || '';
+        }
+        if (current) {
+          current.textContent = activeIndex + 1;
+        }
         thumbs.forEach(function(thumb, thumbIndex) {
           thumb.classList.toggle('active', thumbIndex === activeIndex);
         });
