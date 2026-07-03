@@ -26,7 +26,7 @@ class ArtikelController extends Controller
         $request->validate([
             'judul' => 'required',
             'konten' => 'required',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         $data = $request->all();
@@ -59,7 +59,7 @@ class ArtikelController extends Controller
         $request->validate([
             'judul' => 'required',
             'konten' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         $artikel = Artikel::findOrFail($id);

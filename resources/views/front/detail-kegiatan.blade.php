@@ -65,6 +65,81 @@
       line-height: 1.8;
       color: var(--text-dark);
     }
+    .content-section {
+      margin-bottom: 36px;
+    }
+    .content-section h2 {
+      color: var(--primary-green);
+      font-size: 1.45rem;
+      margin-bottom: 12px;
+    }
+    .documentation-gallery {
+      margin: 12px 0 36px;
+    }
+    .documentation-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--bg-light);
+      aspect-ratio: 16 / 9;
+    }
+    .documentation-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(14, 59, 33, 0.86);
+      color: white;
+      cursor: pointer;
+      font-size: 1.35rem;
+      display: grid;
+      place-items: center;
+    }
+    .gallery-nav:hover {
+      background: var(--primary-green);
+    }
+    .gallery-nav.prev {
+      left: 14px;
+    }
+    .gallery-nav.next {
+      right: 14px;
+    }
+    .gallery-thumbs {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 14px 2px 4px;
+      scroll-snap-type: x mandatory;
+    }
+    .gallery-thumb {
+      flex: 0 0 92px;
+      height: 68px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      cursor: pointer;
+      scroll-snap-align: start;
+    }
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-thumb.active {
+      border-color: var(--primary-green);
+    }
     @media (max-width: 768px) {
       .detail-container {
         padding: var(--spacing-lg);
@@ -72,6 +147,14 @@
       }
       .detail-title {
         font-size: 2rem;
+      }
+      .gallery-nav {
+        width: 36px;
+        height: 36px;
+      }
+      .gallery-thumb {
+        flex-basis: 78px;
+        height: 58px;
       }
     }
   </style>
@@ -103,7 +186,14 @@
   <!-- Main Content -->
   <main class="container">
     <div class="detail-container">
-      <span class="badge-status badge-completed">{{ strtoupper($kegiatan->status ?? 'AKTIVITAS') }}</span>
+      @php
+        $statusClass = [
+          'upcoming' => 'badge-upcoming',
+          'ongoing' => 'badge-ongoing',
+          'completed' => 'badge-completed',
+        ][$kegiatan->status] ?? 'badge-upcoming';
+      @endphp
+      <span class="badge-status {{ $statusClass }}">{{ strtoupper($kegiatan->status ?? 'AKTIVITAS') }}</span>
       <h1 class="detail-title">{{ $kegiatan->nama_kegiatan }}</h1>
       
       <div class="meta-grid">
@@ -117,10 +207,36 @@
         </div>
       </div>
 
+      @if($kegiatan->documentations->isNotEmpty())
+      <section class="content-section documentation-gallery" data-activity-gallery>
+        <h2>Dokumentasi Kegiatan</h2>
+        <div class="documentation-frame">
+          <img src="{{ asset('storage/' . $kegiatan->documentations->first()->image_path) }}" alt="Dokumentasi {{ $kegiatan->nama_kegiatan }}" data-gallery-main>
+          @if($kegiatan->documentations->count() > 1)
+            <button type="button" class="gallery-nav prev" data-gallery-prev aria-label="Dokumentasi sebelumnya">&lsaquo;</button>
+            <button type="button" class="gallery-nav next" data-gallery-next aria-label="Dokumentasi berikutnya">&rsaquo;</button>
+          @endif
+        </div>
+        @if($kegiatan->documentations->count() > 1)
+        <div class="gallery-thumbs">
+          @foreach($kegiatan->documentations as $documentation)
+            <button type="button" class="gallery-thumb {{ $loop->first ? 'active' : '' }}" data-gallery-thumb data-src="{{ asset('storage/' . $documentation->image_path) }}" aria-label="Lihat dokumentasi {{ $loop->iteration }}">
+              <img src="{{ asset('storage/' . $documentation->image_path) }}" alt="Thumbnail dokumentasi {{ $loop->iteration }}">
+            </button>
+          @endforeach
+        </div>
+        @endif
+      </section>
+      @endif
+
       <div class="detail-content">
-        {!! nl2br(e($kegiatan->deskripsi)) !!}
+        @if($kegiatan->deskripsi)
+          <section class="content-section">
+            <h2>Deskripsi</h2>
+            {!! nl2br(e($kegiatan->deskripsi)) !!}
+          </section>
+        @endif
         
-        <br><br>
         <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
       </div>
     </div>
@@ -165,5 +281,46 @@
     </div>
   </footer>
   <script type="module" src="./main.js"></script>
+  <script>
+    document.querySelectorAll('[data-activity-gallery]').forEach(function(gallery) {
+      const mainImage = gallery.querySelector('[data-gallery-main]');
+      const thumbs = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
+      const prev = gallery.querySelector('[data-gallery-prev]');
+      const next = gallery.querySelector('[data-gallery-next]');
+      let activeIndex = 0;
+
+      function setActive(index) {
+        if (!thumbs.length) {
+          return;
+        }
+
+        activeIndex = (index + thumbs.length) % thumbs.length;
+        const activeThumb = thumbs[activeIndex];
+        mainImage.src = activeThumb.dataset.src;
+        thumbs.forEach(function(thumb, thumbIndex) {
+          thumb.classList.toggle('active', thumbIndex === activeIndex);
+        });
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
+      thumbs.forEach(function(thumb, index) {
+        thumb.addEventListener('click', function() {
+          setActive(index);
+        });
+      });
+
+      if (prev) {
+        prev.addEventListener('click', function() {
+          setActive(activeIndex - 1);
+        });
+      }
+
+      if (next) {
+        next.addEventListener('click', function() {
+          setActive(activeIndex + 1);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -25,7 +25,7 @@ class FrontController extends Controller
 
     public function detailKegiatan($slug)
     {
-        $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
+        $kegiatan = Kegiatan::with('documentations')->where('slug', $slug)->firstOrFail();
         return view('front.detail-kegiatan', compact('kegiatan'));
     }
 

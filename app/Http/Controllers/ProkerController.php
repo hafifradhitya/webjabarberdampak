@@ -21,10 +21,13 @@ class ProkerController extends Controller
         $request->validate([
             'nama_proker' => 'required',
             'tanggal_mulai' => 'required|date',
-            'gambar' => 'required|image',
+            'tanggal_selesai' => 'nullable|date',
+            'anggaran' => 'nullable|numeric|min:0',
+            'status' => 'nullable|in:planning,ongoing,completed,cancelled',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
-        $data = $request->all();
+        $data = $this->prokerData($request);
         $uuid = Str::uuid()->toString();
         $data['id'] = $uuid;
         $data['slug'] = Str::slug($request->nama_proker) . '-' . $uuid;
@@ -44,10 +47,14 @@ class ProkerController extends Controller
         $request->validate([
             'nama_proker' => 'required',
             'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'nullable|date',
+            'anggaran' => 'nullable|numeric|min:0',
+            'status' => 'nullable|in:planning,ongoing,completed,cancelled',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         $proker = Proker::findOrFail($id);
-        $data = $request->all();
+        $data = $this->prokerData($request);
         $data['slug'] = Str::slug($request->nama_proker) . '-' . $proker->id;
 
         if ($request->hasFile('gambar')) {
@@ -72,5 +79,23 @@ class ProkerController extends Controller
         $proker->delete();
         toast()->success('Program Kerja berhasil dihapus');
         return redirect()->route('proker.index');
+    }
+
+    private function prokerData(Request $request): array
+    {
+        $data = $request->only([
+            'nama_proker',
+            'tanggal_mulai',
+            'tanggal_selesai',
+            'penanggung_jawab',
+            'deskripsi',
+            'anggaran',
+            'status',
+        ]);
+
+        $data['anggaran'] = $request->filled('anggaran') ? $request->input('anggaran') : 0;
+        $data['status'] = $request->input('status') ?: 'planning';
+
+        return $data;
     }
 }

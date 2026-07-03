@@ -18,6 +18,7 @@
                     <tr>
                         <th>No</th>
                         <th>Thumbnail</th>
+                        <th>Dokumentasi</th>
                         <th>Nama Kegiatan</th>
                         <th>Tanggal</th>
                         <th>Lokasi</th>
@@ -35,6 +36,9 @@
                             @else
                                 <span class="text-muted">Tidak ada</span>
                             @endif
+                        </td>
+                        <td>
+                            <span class="badge badge-light">{{ $kegiatan->documentations->count() }}/5 gambar</span>
                         </td>
                         <td>{{ $kegiatan->nama_kegiatan }}</td>
                         <td>{{ $kegiatan->tanggal_kegiatan->format('d/m/Y') }}</td>
@@ -105,6 +109,31 @@
                                             <textarea class="form-control" name="deskripsi" rows="4">{{ $kegiatan->deskripsi }}</textarea>
                                         </div>
                                         <div class="form-group">
+                                            <label>Dokumentasi Kegiatan</label>
+                                            @if($kegiatan->documentations->isNotEmpty())
+                                                <div class="row mb-2">
+                                                    @foreach($kegiatan->documentations as $documentation)
+                                                        <div class="col-6 col-md-4 mb-3">
+                                                            <div class="border rounded p-2 h-100">
+                                                                <img src="{{ asset('storage/' . $documentation->image_path) }}" alt="Dokumentasi {{ $loop->iteration }}" class="img-fluid rounded mb-2" style="height: 90px; width: 100%; object-fit: cover;">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="hapusDokumentasi{{ $documentation->id }}" name="hapus_dokumentasi[]" value="{{ $documentation->id }}" data-delete-doc>
+                                                                    <label class="custom-control-label small" for="hapusDokumentasi{{ $documentation->id }}">Hapus gambar ini</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <p class="text-muted small mb-2">Belum ada dokumentasi.</p>
+                                            @endif
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="dokumentasiEdit{{ $kegiatan->id }}" name="dokumentasi[]" accept="image/*" multiple data-doc-input data-existing="{{ $kegiatan->documentations->count() }}">
+                                                <label class="custom-file-label" for="dokumentasiEdit{{ $kegiatan->id }}">Tambah dokumentasi</label>
+                                            </div>
+                                            <small class="text-muted">Total dokumentasi maksimal 5 gambar. Bisa pilih beberapa file sekaligus.</small>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status">
                                                 <option value="upcoming" {{ $kegiatan->status == 'upcoming' ? 'selected' : '' }}>Akan Datang</option>
@@ -124,6 +153,7 @@
                         </div>
                     </div>
                     @endforeach
+                </tbody>
             </table>
         </div>
     </div>
@@ -174,6 +204,14 @@
                         <textarea class="form-control" id="deskripsi_kegiatan" name="deskripsi" rows="4" placeholder="Masukkan deskripsi kegiatan"></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="dokumentasi_kegiatan">Dokumentasi Kegiatan</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="dokumentasi_kegiatan" name="dokumentasi[]" accept="image/*" multiple data-doc-input data-existing="0">
+                            <label class="custom-file-label" for="dokumentasi_kegiatan">Pilih maksimal 5 gambar</label>
+                        </div>
+                        <small class="text-muted">Opsional. Maksimal 5 gambar, ukuran setiap gambar maksimal 5 MB.</small>
+                    </div>
+                    <div class="form-group">
                         <label for="status_kegiatan">Status</label>
                         <select class="form-control" id="status_kegiatan" name="status">
                             <option value="upcoming">Akan Datang</option>
@@ -194,3 +232,32 @@
 </div>
 
 @endsection
+
+@push('script')
+<script>
+    document.querySelectorAll('[data-doc-input]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            const form = input.closest('form');
+            const label = form.querySelector('label[for="' + input.id + '"]');
+            const existing = Number(input.dataset.existing || 0);
+            const deleted = form.querySelectorAll('[data-delete-doc]:checked').length;
+            const nextTotal = existing - deleted + input.files.length;
+
+            if (nextTotal > 5) {
+                alert('Total dokumentasi kegiatan maksimal 5 gambar.');
+                input.value = '';
+                if (label) {
+                    label.textContent = 'Pilih maksimal 5 gambar';
+                }
+                return;
+            }
+
+            if (label) {
+                label.textContent = input.files.length
+                    ? input.files.length + ' gambar dipilih'
+                    : 'Pilih maksimal 5 gambar';
+            }
+        });
+    });
+</script>
+@endpush

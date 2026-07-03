@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "serve:large": "bash scripts/serve-large-upload.sh",
     "build": "vite build",
     "preview": "vite preview"
   },

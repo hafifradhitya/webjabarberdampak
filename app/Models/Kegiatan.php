@@ -26,4 +26,9 @@ class Kegiatan extends Model
             'tanggal_kegiatan' => 'date',
         ];
     }
+
+    public function documentations()
+    {
+        return $this->hasMany(KegiatanDocumentation::class);
+    }
 }
