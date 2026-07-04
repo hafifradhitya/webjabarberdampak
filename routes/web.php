@@ -13,6 +13,11 @@ Route::get('/', function () {
     return view('front.index');  
 });
 
+// Easter Egg Route
+Route::get('/kodein', function () {
+    return view('front.kodein');
+});
+
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 

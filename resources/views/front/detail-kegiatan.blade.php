@@ -581,5 +581,39 @@
       }
     });
   </script>
+
+  <!-- Kodein Easter Egg Trigger -->
+  <script>
+    (function() {
+      let secretCode = ["k", "o", "d", "e", "i", "n"];
+      let inputPos = 0;
+      document.addEventListener("keydown", function(e) {
+        if (e.target.tagName.toLowerCase() === "input" || e.target.tagName.toLowerCase() === "textarea") return;
+        if (e.key.toLowerCase() === secretCode[inputPos]) {
+          inputPos++;
+          if (inputPos === secretCode.length) {
+            window.location.href = "{{ url("/kodein") }}";
+            inputPos = 0;
+          }
+        } else {
+          inputPos = 0;
+        }
+      });
+      const logo = document.querySelector(".logo");
+      if (logo) {
+        let clickCount = 0;
+        let clickTimer;
+        logo.addEventListener("click", function(e) {
+          clickCount++;
+          clearTimeout(clickTimer);
+          if (clickCount >= 5) {
+            e.preventDefault();
+            window.location.href = "{{ url("/kodein") }}";
+          }
+          clickTimer = setTimeout(() => { clickCount = 0; }, 500);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
