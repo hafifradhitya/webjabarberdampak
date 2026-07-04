@@ -10,23 +10,34 @@ document.addEventListener('DOMContentLoaded', () => {
       let index = 0;
       let intervalId;
       
+      const getVisibleCards = () => {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 768) return 2;
+        return 1;
+      };
+
       const updateCarousel = () => {
-        // Since each card is flex: 0 0 100%, we translate by index * 100%
-        track.style.transform = `translateX(-${index * 100}%)`;
+        // Calculate the width of one card including the gap
+        const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+        const cardWidth = cards[0].offsetWidth;
+        const moveAmount = index * (cardWidth + gap);
+        track.style.transform = `translateX(-${moveAmount}px)`;
       };
       
       const nextSlide = () => {
+        const maxIndex = Math.max(0, cards.length - getVisibleCards());
         index++;
-        if (index >= cards.length) {
+        if (index > maxIndex) {
           index = 0;
         }
         updateCarousel();
       };
       
       const prevSlide = () => {
+        const maxIndex = Math.max(0, cards.length - getVisibleCards());
         index--;
         if (index < 0) {
-          index = cards.length - 1;
+          index = maxIndex;
         }
         updateCarousel();
       };
@@ -48,6 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
       prevBtn.addEventListener('click', () => {
         prevSlide();
         resetAutoSlide();
+      });
+
+      window.addEventListener('resize', () => {
+        const maxIndex = Math.max(0, cards.length - getVisibleCards());
+        if (index > maxIndex) index = maxIndex;
+        updateCarousel();
       });
 
       // Start the auto slide

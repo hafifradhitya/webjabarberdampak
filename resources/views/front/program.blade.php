@@ -23,7 +23,7 @@
 
     .program-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: var(--spacing-lg);
       margin-bottom: var(--spacing-xl);
     }
@@ -201,7 +201,7 @@
 
     .activity-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: var(--spacing-lg);
     }
 
@@ -268,6 +268,81 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Program Controls: Filter & Search */
+    .program-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .program-search {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .program-search input {
+      width: 100%;
+      padding: 12px 20px 12px 42px;
+      border: 1px solid rgba(14, 59, 33, 0.2);
+      border-radius: 50px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .program-search input:focus {
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 3px rgba(14, 59, 33, 0.1);
+    }
+
+    .program-search svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .program-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .program-tab {
+      padding: 8px 20px;
+      background: var(--bg-white);
+      border: 1px solid rgba(14, 59, 33, 0.2);
+      border-radius: 50px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .program-tab:hover {
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+    }
+
+    .program-tab.active {
+      background: var(--primary-green);
+      color: var(--bg-white);
+      border-color: var(--primary-green);
+    }
+
+    @media (min-width: 768px) {
+      .program-controls {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -299,17 +374,38 @@
   </div>
 
   <section class="container">
-    <div class="program-grid">
+    <div class="program-controls">
+      <div class="program-tabs">
+        <button class="program-tab active" data-filter="all">Semua</button>
+        <button class="program-tab" data-filter="planning">Perencanaan</button>
+        <button class="program-tab" data-filter="ongoing">Sedang Berjalan</button>
+        <button class="program-tab" data-filter="completed">Selesai</button>
+        <button class="program-tab" data-filter="cancelled">Dibatalkan</button>
+      </div>
+      <div class="program-search">
+        <input type="text" id="searchProgram" placeholder="Cari program kerja...">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </div>
+    </div>
+
+    <div class="program-grid" id="programGrid">
       
       @forelse($prokers as $proker)
       @php
         $prokerImage = $proker->gambar ? asset('storage/' . $proker->gambar) : 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=900';
         $prokerModalId = 'prokerModal' . $proker->id;
+        $prokerStatusLabel = match(strtolower($proker->status ?? '')) {
+            'planning' => 'Perencanaan',
+            'ongoing' => 'Sedang Berjalan',
+            'completed' => 'Selesai',
+            'cancelled' => 'Dibatalkan',
+            default => 'Program'
+        };
       @endphp
       <div class="program-card">
         <img src="{{ $prokerImage }}" alt="{{ $proker->nama_proker }}" class="program-img">
         <div class="program-content">
-          <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
+          <span class="program-category" data-status="{{ strtolower($proker->status ?? '') }}">{{ strtoupper($prokerStatusLabel) }}</span>
           <h3 class="program-title">{{ $proker->nama_proker }}</h3>
           <p class="program-desc">{{ $proker->deskripsi }}</p>
           <button type="button" class="btn btn-outline-green program-detail-btn" data-proker-open="{{ $prokerModalId }}">Detail Program</button>
@@ -323,7 +419,7 @@
             <img src="{{ $prokerImage }}" alt="{{ $proker->nama_proker }}">
           </div>
           <div class="proker-modal-body">
-            <span class="program-category">{{ strtoupper($proker->status ?? 'PROGRAM') }}</span>
+            <span class="program-category">{{ strtoupper($prokerStatusLabel) }}</span>
             <h2 class="proker-modal-title" id="{{ $prokerModalId }}Title">{{ $proker->nama_proker }}</h2>
 
             <div class="proker-modal-meta">
@@ -356,6 +452,12 @@
         <p>Belum ada program kerja yang ditambahkan.</p>
       </div>
       @endforelse
+      
+      <div id="programEmptyState" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 16px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <h3 style="color: var(--primary-green); margin-bottom: 8px;">Tidak Ada Program Ditemukan</h3>
+        <p style="color: var(--text-muted);">Coba ubah filter kategori atau kata kunci pencarian Anda.</p>
+      </div>
 
     </div>
   </section>
@@ -366,17 +468,31 @@
       <h2 class="section-title">Aktivitas yang Telah Terlaksana</h2>
       <p class="section-subtitle">Dokumentasi dari berbagai kegiatan dan program kerja yang sukses kami selenggarakan.</p>
       
-      <div class="activity-grid">
+      <div class="program-controls" style="margin-bottom: 24px; justify-content: space-between;">
+        <div class="program-tabs">
+          <button class="activity-tab program-tab active" data-filter="all">Semua</button>
+          <button class="activity-tab program-tab" data-filter="upcoming">Akan Datang</button>
+          <button class="activity-tab program-tab" data-filter="ongoing">Sedang Berlangsung</button>
+          <button class="activity-tab program-tab" data-filter="completed">Selesai</button>
+        </div>
+        <div class="program-search">
+          <input type="text" id="searchActivity" placeholder="Cari aktivitas...">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+      </div>
+
+      <div class="activity-grid" id="activityGrid">
         @forelse($kegiatans as $index => $kegiatan)
         @php
           $activityThumbnail = $kegiatan->documentations->first()
             ? asset('storage/' . $kegiatan->documentations->first()->image_path)
             : ($kegiatan->banner ? asset('storage/' . $kegiatan->banner) : 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=600');
         @endphp
-        <a href="{{ url('/detail-kegiatan', $kegiatan->slug) }}" class="activity-item" style="display: {{ $index < 3 ? 'block' : 'none' }};">
+        <a href="{{ url('/detail-kegiatan', $kegiatan->slug) }}" class="activity-item" style="display: none;">
           <div class="activity-card">
             <img src="{{ $activityThumbnail }}" alt="{{ $kegiatan->nama_kegiatan }}">
             <div class="activity-overlay">
+              <span class="activity-category" data-status="{{ strtolower($kegiatan->status ?? '') }}" style="display: none;"></span>
               <h3 class="activity-title">{{ $kegiatan->nama_kegiatan }}</h3>
               <span class="activity-date">{{ $kegiatan->tanggal_kegiatan ? $kegiatan->tanggal_kegiatan->format('d M Y') : '-' }}</span>
             </div>
@@ -387,14 +503,13 @@
           <p>Belum ada aktivitas yang ditambahkan.</p>
         </div>
         @endforelse
+        
+        <div id="activityEmptyState" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 16px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <h3 style="color: var(--primary-green); margin-bottom: 8px;">Tidak Ada Aktivitas Ditemukan</h3>
+          <p style="color: var(--text-muted);">Coba ubah filter kategori atau kata kunci pencarian Anda.</p>
+        </div>
       </div>
-      
-      @if(count($kegiatans) > 3)
-      <div style="text-align: center; margin-top: 40px; padding-bottom: 60px;">
-        <button id="loadMoreBtn" class="btn btn-primary" onclick="loadMoreActivities()">Muat Lebih Banyak Aktivitas</button>
-      </div>
-      @endif
-
     </div>
   </section>
 
@@ -438,14 +553,7 @@
   </footer>
   <script type="module" src="./main.js"></script>
   <script>
-    function loadMoreActivities() {
-        const hiddenItems = document.querySelectorAll('.activity-item[style*="display: none"]');
-        hiddenItems.forEach(item => {
-            item.style.display = 'block';
-        });
-        document.getElementById('loadMoreBtn').style.display = 'none';
-    }
-
+    // --- MODAL LOGIC ---
     const prokerModals = document.querySelectorAll('.proker-modal');
 
     function closeProkerModals() {
@@ -483,6 +591,206 @@
       if (event.key === 'Escape') {
         closeProkerModals();
       }
+    });
+
+    // --- FILTER, SEARCH & LOAD MORE FOR PROGRAMS (TOP SECTION) ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchProgram');
+        const filterTabs = document.querySelector('.program-controls').querySelectorAll('.program-tab');
+        const programCards = document.querySelectorAll('.program-card');
+        const programGrid = document.getElementById('programGrid');
+        
+        let currentFilter = 'all';
+        let searchQuery = '';
+        const itemsPerPage = 3;
+        let visibleCount = itemsPerPage;
+
+        // Create Load More Button dynamically
+        const loadMoreProgramBtn = document.createElement('button');
+        loadMoreProgramBtn.className = 'btn btn-primary';
+        loadMoreProgramBtn.textContent = 'Muat Lebih Banyak Program';
+        loadMoreProgramBtn.style.margin = '30px auto';
+        loadMoreProgramBtn.style.display = 'none';
+        
+        const loadMoreContainer = document.createElement('div');
+        loadMoreContainer.style.textAlign = 'center';
+        loadMoreContainer.style.width = '100%';
+        loadMoreContainer.style.gridColumn = '1 / -1'; // span full width if in grid
+        loadMoreContainer.appendChild(loadMoreProgramBtn);
+        
+        if (programGrid) {
+            programGrid.parentNode.insertBefore(loadMoreContainer, programGrid.nextSibling);
+        }
+
+        function updateDisplay() {
+            let matchCount = 0;
+            
+            programCards.forEach(card => {
+                // Ignore empty states if they have this class
+                if (!card.classList.contains('program-card')) return;
+                
+                const titleEl = card.querySelector('.program-title');
+                const catEl = card.querySelector('.program-category');
+                
+                if (titleEl && catEl) {
+                    const title = titleEl.textContent.toLowerCase();
+                    const category = catEl.getAttribute('data-status') || '';
+                    
+                    const matchesSearch = title.includes(searchQuery);
+                    const matchesFilter = currentFilter === 'all' || category.includes(currentFilter);
+                    
+                    if (matchesSearch && matchesFilter) {
+                        if (matchCount < visibleCount) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                        matchCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+
+            if (matchCount > visibleCount) {
+                loadMoreProgramBtn.style.display = 'inline-block';
+            } else {
+                loadMoreProgramBtn.style.display = 'none';
+            }
+            
+            const emptyState = document.getElementById('programEmptyState');
+            if (emptyState) {
+                emptyState.style.display = matchCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                visibleCount = itemsPerPage; // reset load more
+                updateDisplay();
+            });
+        }
+
+        if (filterTabs.length > 0) {
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentFilter = tab.getAttribute('data-filter').toLowerCase();
+                    visibleCount = itemsPerPage; // reset load more
+                    updateDisplay();
+                });
+            });
+        }
+
+        loadMoreProgramBtn.addEventListener('click', () => {
+            visibleCount += itemsPerPage;
+            updateDisplay();
+        });
+
+        // Initialize display
+        if (programCards.length > 0) {
+            updateDisplay();
+        }
+
+        // --- FILTER, SEARCH & LOAD MORE FOR ACTIVITIES (BOTTOM SECTION) ---
+        const searchActivity = document.getElementById('searchActivity');
+        const activityItems = document.querySelectorAll('.activity-item');
+        const activityGrid = document.getElementById('activityGrid');
+        const activityFilterTabs = document.querySelectorAll('.activity-tab');
+        
+        let activityCurrentFilter = 'all';
+        let activitySearchQuery = '';
+        const activityItemsPerPage = 3;
+        let activityVisibleCount = activityItemsPerPage;
+
+        // Create Load More Button for Activities
+        const loadMoreActivityBtn = document.createElement('button');
+        loadMoreActivityBtn.className = 'btn btn-primary';
+        loadMoreActivityBtn.textContent = 'Muat Lebih Banyak Aktivitas';
+        loadMoreActivityBtn.style.margin = '40px auto';
+        loadMoreActivityBtn.style.display = 'none';
+        
+        const loadMoreActivityContainer = document.createElement('div');
+        loadMoreActivityContainer.style.textAlign = 'center';
+        loadMoreActivityContainer.style.width = '100%';
+        loadMoreActivityContainer.style.gridColumn = '1 / -1';
+        loadMoreActivityContainer.style.paddingBottom = '40px';
+        loadMoreActivityContainer.appendChild(loadMoreActivityBtn);
+        
+        if (activityGrid) {
+            activityGrid.parentNode.insertBefore(loadMoreActivityContainer, activityGrid.nextSibling);
+        }
+
+        function updateActivityDisplay() {
+            let matchCount = 0;
+            
+            activityItems.forEach(item => {
+                const titleEl = item.querySelector('.activity-title');
+                const catEl = item.querySelector('.activity-category');
+                
+                if (titleEl && catEl) {
+                    const title = titleEl.textContent.toLowerCase();
+                    const category = catEl.getAttribute('data-status') || '';
+                    
+                    const matchesSearch = title.includes(activitySearchQuery);
+                    const matchesFilter = activityCurrentFilter === 'all' || category.includes(activityCurrentFilter);
+                    
+                    if (matchesSearch && matchesFilter) {
+                        if (matchCount < activityVisibleCount) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                        matchCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+
+            if (matchCount > activityVisibleCount) {
+                loadMoreActivityBtn.style.display = 'inline-block';
+            } else {
+                loadMoreActivityBtn.style.display = 'none';
+            }
+            
+            const activityEmptyState = document.getElementById('activityEmptyState');
+            if (activityEmptyState) {
+                activityEmptyState.style.display = matchCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        if (searchActivity) {
+            searchActivity.addEventListener('input', (e) => {
+                activitySearchQuery = e.target.value.toLowerCase();
+                activityVisibleCount = activityItemsPerPage; // reset load more
+                updateActivityDisplay();
+            });
+        }
+        
+        if (activityFilterTabs.length > 0) {
+            activityFilterTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    activityFilterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    activityCurrentFilter = tab.getAttribute('data-filter').toLowerCase();
+                    activityVisibleCount = activityItemsPerPage; // reset load more
+                    updateActivityDisplay();
+                });
+            });
+        }
+
+        loadMoreActivityBtn.addEventListener('click', () => {
+            activityVisibleCount += activityItemsPerPage;
+            updateActivityDisplay();
+        });
+
+        // Initialize Activity display
+        if (activityItems.length > 0) {
+            updateActivityDisplay();
+        }
     });
   </script>
 </body>

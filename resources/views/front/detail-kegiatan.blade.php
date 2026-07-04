@@ -407,7 +407,72 @@
           <p>{!! nl2br(e($kegiatan->deskripsi ?: 'Deskripsi kegiatan belum tersedia.')) !!}</p>
         </section>
 
-        <div class="detail-actions">
+        <!-- Share Widget -->
+        <div class="share-widget" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--bg-light); display: flex; flex-wrap: wrap; align-items: center; gap: 16px;">
+          <strong style="color: var(--text-dark);">Bagikan:</strong>
+          <button onclick="window.copyLinkToClipboard(window.location.href)" class="share-btn copy-link" style="background: var(--bg-light); color: var(--text-dark); padding: 8px 16px; border: 1px solid #ddd; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> Salin Tautan</button>
+          <a href="https://api.whatsapp.com/send?text={{ urlencode($kegiatan->nama_kegiatan . ' - ' . url()->current()) }}" target="_blank" class="share-btn whatsapp" style="background: #25D366; color: white; padding: 8px 16px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> WhatsApp</a>
+          <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($kegiatan->nama_kegiatan) }}" target="_blank" class="share-btn twitter" style="background: #000000; color: white; padding: 8px 16px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg> X (Twitter)</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="share-btn facebook" style="background: #1877F2; color: white; padding: 8px 16px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook</a>
+          <a href="https://www.instagram.com/" target="_blank" class="share-btn instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 8px 16px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram</a>
+        </div>
+
+      @php
+        $relatedKegiatans = \App\Models\Kegiatan::with('documentations')->where('id', '!=', $kegiatan->id)
+                              ->latest()
+                              ->take(3)
+                              ->get();
+      @endphp
+      
+      @if($relatedKegiatans->count() > 0)
+      <div class="related-articles" style="margin-top: 50px; padding-top: 40px; border-top: 2px solid var(--bg-light);">
+        <h3 style="color: var(--primary-green); margin-bottom: 20px; font-size: 1.5rem;">Aktivitas Lainnya</h3>
+        
+        <div style="position: relative; margin: 0 -10px; padding: 0 10px;">
+            <button class="carousel-btn prev-btn related-prev" aria-label="Previous" style="position: absolute; left: -20px; top: 50%; transform: translateY(-50%); z-index: 10; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-green); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            
+            <div class="related-track" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 20px;">
+              <style>.related-track::-webkit-scrollbar { display: none; }</style>
+              @foreach($relatedKegiatans as $related)
+              <a href="{{ url('/detail-kegiatan', $related->slug) }}" style="flex: 0 0 clamp(260px, 45%, 320px); scroll-snap-align: start; display: block; background: var(--bg-white); border: 1px solid #e8eee8; border-radius: 12px; overflow: hidden; transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <img src="{{ $related->banner ? asset('storage/' . $related->banner) : 'https://images.unsplash.com/photo-1618477461853-cf6ed80fbfc9?auto=format&fit=crop&q=80&w=400' }}" alt="{{ $related->nama_kegiatan }}" style="width: 100%; height: 160px; object-fit: cover;">
+                <div style="padding: 20px;">
+                  <span style="color: var(--accent-green); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">{{ match(strtolower($related->status)) { 'upcoming' => 'Akan Datang', 'ongoing' => 'Sedang Berjalan', 'completed' => 'Selesai', default => 'Aktivitas' } }}</span>
+                  <h4 style="margin: 8px 0 0; font-size: 1.1rem; color: var(--text-dark); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $related->nama_kegiatan }}</h4>
+                </div>
+              </a>
+              @endforeach
+            </div>
+            
+            <button class="carousel-btn next-btn related-next" aria-label="Next" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); z-index: 10; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-green); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const track = document.querySelector('.related-track');
+                const btnPrev = document.querySelector('.related-prev');
+                const btnNext = document.querySelector('.related-next');
+                
+                if(track && btnPrev && btnNext) {
+                    btnNext.addEventListener('click', () => {
+                        const cardWidth = track.querySelector('a').offsetWidth + 20;
+                        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    });
+                    btnPrev.addEventListener('click', () => {
+                        const cardWidth = track.querySelector('a').offsetWidth + 20;
+                        track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    });
+                }
+            });
+        </script>
+      </div>
+      @endif
+
+        <div class="detail-actions" style="text-align: center;">
           <a href="{{ url('/program-kegiatan') }}" class="btn btn-outline-green">&larr; Kembali ke Aktivitas</a>
         </div>
       </article>

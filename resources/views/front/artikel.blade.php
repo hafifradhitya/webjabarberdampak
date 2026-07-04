@@ -66,23 +66,30 @@
       line-height: 1.3;
     }
 
+    .featured-article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
     /* Article Grid */
     .article-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
     }
 
     .article-card {
       background: var(--bg-white);
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .article-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     }
 
     .card-img {
@@ -164,6 +171,102 @@
       font-size: 0.8rem;
       color: var(--text-muted);
     }
+
+    /* Program Controls: Filter & Search */
+    .program-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .program-search {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .program-search input {
+      width: 100%;
+      padding: 12px 20px 12px 42px;
+      border: 1px solid rgba(14, 59, 33, 0.2);
+      border-radius: 50px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .program-search input:focus {
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 3px rgba(14, 59, 33, 0.1);
+    }
+
+    .program-search svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .program-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .program-tab {
+      padding: 8px 20px;
+      background: var(--bg-white);
+      border: 1px solid rgba(14, 59, 33, 0.2);
+      border-radius: 50px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .program-tab:hover {
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+    }
+
+    .program-tab.active {
+      background: var(--primary-green);
+      color: var(--bg-white);
+      border-color: var(--primary-green);
+    }
+
+    /* Category Limitation Logic */
+    .article-tab:nth-child(n+3) {
+        display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .program-controls {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .article-tab:nth-child(n+3) {
+          display: inline-block;
+      }
+      .article-tab:nth-child(n+6) {
+          display: none;
+      }
+    }
+    
+    .see-all-btn {
+        display: inline-block !important;
+        background-color: var(--bg-light);
+    }
+    .see-all-btn.active {
+        background-color: var(--primary-gold);
+        color: var(--text-dark);
+        border-color: var(--primary-gold);
+    }
   </style>
 </head>
 <body>
@@ -197,11 +300,18 @@
   <section class="container article-layout">
     <div class="main-content">
       
-      <div class="filter-bar">
-        <div class="selected-categories" id="selectedCategoriesContainer"></div>
-        <button id="btnOpenCategory" class="btn btn-outline" style="display: flex; gap: 8px; align-items: center; border-color: var(--primary-green); color: var(--primary-green);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Pilih Kategori
-        </button>
+      <div class="program-controls" style="margin-bottom: 30px; justify-content: space-between; gap: 16px;">
+        <div class="program-tabs" id="articleCategoryTabs" style="overflow-x: auto; white-space: nowrap; padding-bottom: 5px;">
+          <button class="article-tab program-tab active" data-filter="all">Semua</button>
+          @foreach($kategoris as $kategori)
+          <button class="article-tab program-tab" data-filter="{{ strtolower($kategori) }}">{{ $kategori }}</button>
+          @endforeach
+          <button class="program-tab see-all-btn" id="btnOpenCategoryModal">+ Lainnya</button>
+        </div>
+        <div class="program-search" style="min-width: 250px;">
+          <input type="text" id="searchArticle" placeholder="Cari artikel...">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
       </div>
 
       @php
@@ -211,16 +321,17 @@
 
       <!-- Featured Article -->
       @if($featuredArtikel)
-      <article class="featured-article">
-        <img src="{{ $featuredArtikel->gambar ? asset('storage/' . $featuredArtikel->gambar) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800' }}" alt="{{ $featuredArtikel->judul }}" class="featured-img">
-        <div class="featured-content">
+      <article class="featured-article" data-category="{{ strtolower($featuredArtikel->kategori) }}" data-title="{{ strtolower($featuredArtikel->judul) }}">
+        <img src="{{ $featuredArtikel->gambar ? asset('storage/' . $featuredArtikel->gambar) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800' }}" alt="{{ $featuredArtikel->judul }}" class="featured-img" style="border-radius: 16px 16px 0 0;">
+        <div class="featured-content" style="padding: 30px;">
           <div class="article-meta">
-            <span class="category" style="color: var(--accent-green); font-weight: 600;">{{ $featuredArtikel->kategori }}</span>
-            <span class="date">{{ $featuredArtikel->tanggal_publish ? $featuredArtikel->tanggal_publish->format('d M Y') : '-' }}</span>
+            <span class="category" style="color: var(--accent-green); font-weight: 600; padding: 4px 12px; background: rgba(30,123,73,0.1); border-radius: 20px;">{{ $featuredArtikel->kategori }}</span>
+            <span class="date" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> {{ $featuredArtikel->tanggal_publish ? $featuredArtikel->tanggal_publish->format('d M Y') : '-' }}</span>
+            <span class="read-time" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Baca {{ max(1, ceil(str_word_count(strip_tags($featuredArtikel->konten)) / 200)) }} menit</span>
           </div>
-          <h2 class="featured-title">{{ $featuredArtikel->judul }}</h2>
-          <p style="color: var(--text-muted); margin-bottom: 20px;">{{ Str::limit(strip_tags($featuredArtikel->konten), 150) }}</p>
-          <a href="{{ url('/detail-artikel', $featuredArtikel->slug) }}" class="btn btn-primary">Baca Selengkapnya</a>
+          <h2 class="featured-title" style="font-size: 2.2rem; font-weight: 800; transition: color 0.3s;">{{ $featuredArtikel->judul }}</h2>
+          <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.1rem; line-height: 1.6;">{{ Str::limit(strip_tags($featuredArtikel->konten), 200) }}</p>
+          <a href="{{ url('/detail-artikel', $featuredArtikel->slug) }}" class="btn btn-primary" style="padding: 12px 24px;">Baca Selengkapnya <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px; display: inline-block; vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
       </article>
       @endif
@@ -228,15 +339,19 @@
       <!-- Article Grid -->
       <div class="article-grid">
         @forelse($gridArtikels as $artikel)
-        <article class="article-card">
+        <article class="article-card" data-category="{{ strtolower($artikel->kategori) }}" data-title="{{ strtolower($artikel->judul) }}" style="display: flex; flex-direction: column;">
           <img src="{{ $artikel->gambar ? asset('storage/' . $artikel->gambar) : 'https://images.unsplash.com/photo-1618477461853-cf6ed80fbfc9?auto=format&fit=crop&q=80&w=400' }}" alt="{{ $artikel->judul }}" class="card-img">
-          <div class="card-content">
-            <div class="article-meta">
-              <span style="color: var(--accent-green); font-weight: 600;">{{ $artikel->kategori }}</span>
+          <div class="card-content" style="flex: 1; display: flex; flex-direction: column;">
+            <div class="article-meta" style="margin-bottom: 12px; font-size: 0.8rem;">
+              <span style="color: var(--accent-green); font-weight: 600; padding: 2px 8px; background: rgba(30,123,73,0.1); border-radius: 12px;">{{ $artikel->kategori }}</span>
+              <span style="display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{ max(1, ceil(str_word_count(strip_tags($artikel->konten)) / 200)) }} mnt</span>
             </div>
-            <h3 class="card-title">{{ $artikel->judul }}</h3>
-            <p class="card-excerpt">{{ Str::limit(strip_tags($artikel->konten), 100) }}</p>
-            <a href="{{ url('/detail-artikel', $artikel->slug) }}" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem;">Baca »</a>
+            <h3 class="card-title" style="flex: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 3.0em;">{{ $artikel->judul }}</h3>
+            <p class="card-excerpt" style="flex: 1;">{{ Str::limit(strip_tags($artikel->konten), 90) }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">{{ $artikel->tanggal_publish ? $artikel->tanggal_publish->format('d M Y') : '-' }}</span>
+              <a href="{{ url('/detail-artikel', $artikel->slug) }}" style="color: var(--primary-green); font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 4px;">Baca <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+            </div>
           </div>
         </article>
         @empty
@@ -246,6 +361,16 @@
           </div>
           @endif
         @endforelse
+      </div>
+
+      <div id="articleEmptyState" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 16px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <h3 style="color: var(--primary-green); margin-bottom: 8px;">Tidak Ada Artikel Ditemukan</h3>
+        <p style="color: var(--text-muted);">Coba ubah kategori atau kata kunci pencarian Anda.</p>
+      </div>
+
+      <div id="loadMoreContainer" style="text-align: center; margin-top: 40px; display: none;">
+        <button id="loadMoreBtn" class="btn btn-primary" style="padding: 12px 30px; font-weight: 600;">Muat Lebih Banyak Artikel</button>
       </div>
 
     </div>
@@ -293,24 +418,188 @@
   </footer>
 
   <!-- Category Filter Modal -->
-  <div class="modal-overlay" id="categoryModal">
-    <div class="modal-content" style="max-width: 400px; width: 90%; background: var(--bg-white); padding: 30px; border-radius: 20px; position: relative; text-align: center;">
+  <div class="modal-overlay" id="categoryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="max-width: 400px; width: 90%; background: var(--bg-white); padding: 30px; border-radius: 20px; position: relative; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
       <button class="modal-close" id="closeCategoryBtn" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 2rem; cursor: pointer; color: var(--text-muted);">&times;</button>
-      <h3 style="color: var(--primary-green); margin-bottom: 24px;">Pilih Kategori</h3>
+      <h3 style="color: var(--primary-green); margin-bottom: 24px;">Semua Kategori</h3>
       
       <div class="category-checkboxes" style="display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
-        @forelse($kategoris as $kategori)
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="checkbox" class="cat-filter" value="{{ $kategori }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> {{ $kategori }}
+          <input type="radio" name="modalCategory" class="modal-cat-radio" value="all" style="width: 18px; height: 18px; accent-color: var(--primary-green);" checked> Semua Kategori
         </label>
-        @empty
-        <p style="color: var(--text-muted);">Belum ada kategori.</p>
-        @endforelse
+        @foreach($kategoris as $kategori)
+        <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
+          <input type="radio" name="modalCategory" class="modal-cat-radio" value="{{ strtolower($kategori) }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> {{ $kategori }}
+        </label>
+        @endforeach
       </div>
-      
-      <button class="btn btn-primary" id="applyCategoryBtn" style="width: 100%;">Terapkan Filter</button>
     </div>
   </div>
+
+  <!-- Inline JS for Article Interactivity -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchArticle');
+      const filterTabs = document.querySelectorAll('.article-tab');
+      const articleGrid = document.querySelector('.article-grid');
+      const articleCards = document.querySelectorAll('.article-card');
+      const featuredArticle = document.querySelector('.featured-article');
+      const emptyState = document.getElementById('articleEmptyState');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const loadMoreContainer = document.getElementById('loadMoreContainer');
+      const btnOpenCategoryModal = document.getElementById('btnOpenCategoryModal');
+      const categoryModal = document.getElementById('categoryModal');
+      const closeCategoryBtn = document.getElementById('closeCategoryBtn');
+      const modalRadios = document.querySelectorAll('.modal-cat-radio');
+      
+      let currentFilter = 'all';
+      let searchQuery = '';
+      const itemsPerPage = 6;
+      let visibleCount = itemsPerPage;
+
+      function updateDisplay() {
+        let matchCount = 0;
+        
+        // Handle featured article
+        if (featuredArticle) {
+          const title = featuredArticle.getAttribute('data-title') || '';
+          const category = featuredArticle.getAttribute('data-category') || '';
+          const matchesSearch = title.includes(searchQuery);
+          const matchesFilter = currentFilter === 'all' || category === currentFilter;
+          
+          if (matchesSearch && matchesFilter) {
+            featuredArticle.style.display = 'block';
+          } else {
+            featuredArticle.style.display = 'none';
+          }
+        }
+
+        // Handle grid articles
+        articleCards.forEach(card => {
+          const title = card.getAttribute('data-title') || '';
+          const category = card.getAttribute('data-category') || '';
+          
+          const matchesSearch = title.includes(searchQuery);
+          const matchesFilter = currentFilter === 'all' || category === currentFilter;
+          
+          if (matchesSearch && matchesFilter) {
+            if (matchCount < visibleCount) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+            matchCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Load More button logic
+        if (matchCount > visibleCount) {
+          if (loadMoreContainer) loadMoreContainer.style.display = 'block';
+        } else {
+          if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+        }
+
+        // Empty state logic
+        const featuredIsVisible = featuredArticle && featuredArticle.style.display !== 'none';
+        if (matchCount === 0 && !featuredIsVisible) {
+          if (emptyState) emptyState.style.display = 'block';
+          if (articleGrid) articleGrid.style.display = 'none';
+        } else {
+          if (emptyState) emptyState.style.display = 'none';
+          if (articleGrid) articleGrid.style.display = 'grid';
+        }
+      }
+
+      function applyFilter(filterValue) {
+        currentFilter = filterValue;
+        visibleCount = itemsPerPage;
+        
+        // Sync tabs
+        let tabFound = false;
+        filterTabs.forEach(t => {
+          t.classList.remove('active');
+          if (t.getAttribute('data-filter') === filterValue) {
+             t.classList.add('active');
+             tabFound = true;
+          }
+        });
+        
+        // If the selected category is not in the visible tabs, highlight the "+ Lainnya" button
+        if(btnOpenCategoryModal) {
+            if(!tabFound && filterValue !== 'all') {
+                btnOpenCategoryModal.classList.add('active');
+            } else {
+                btnOpenCategoryModal.classList.remove('active');
+            }
+        }
+
+        // Sync modal radios
+        modalRadios.forEach(radio => {
+          radio.checked = (radio.value === filterValue);
+        });
+
+        updateDisplay();
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value.toLowerCase();
+          visibleCount = itemsPerPage;
+          updateDisplay();
+        });
+      }
+
+      if (filterTabs) {
+        filterTabs.forEach(tab => {
+          if(tab.id !== 'btnOpenCategoryModal') {
+            tab.addEventListener('click', () => {
+                applyFilter(tab.getAttribute('data-filter').toLowerCase());
+            });
+          }
+        });
+      }
+
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+          visibleCount += itemsPerPage;
+          updateDisplay();
+        });
+      }
+      
+      // Modal Logic
+      if(btnOpenCategoryModal && categoryModal) {
+          btnOpenCategoryModal.addEventListener('click', () => {
+              categoryModal.style.display = 'flex';
+          });
+      }
+      if(closeCategoryBtn && categoryModal) {
+          closeCategoryBtn.addEventListener('click', () => {
+              categoryModal.style.display = 'none';
+          });
+      }
+      if(categoryModal) {
+          categoryModal.addEventListener('click', (e) => {
+              if (e.target === categoryModal) categoryModal.style.display = 'none';
+          });
+      }
+      
+      if(modalRadios) {
+          modalRadios.forEach(radio => {
+              radio.addEventListener('change', (e) => {
+                  applyFilter(e.target.value);
+                  setTimeout(() => {
+                      if(categoryModal) categoryModal.style.display = 'none';
+                  }, 150);
+              });
+          });
+      }
+
+      // Initialize
+      updateDisplay();
+    });
+  </script>
 
   
 </body>

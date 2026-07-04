@@ -283,7 +283,7 @@
 
     .org-wrapper {
       position: relative;
-      max-width: 600px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -298,115 +298,160 @@
       display: flex;
       transition: transform 0.5s ease-in-out;
       width: 100%;
+      gap: 20px;
     }
 
     .carousel-card {
       background: var(--bg-white);
-      padding: var(--spacing-xl);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: 0 14px 34px rgba(14, 59, 33, 0.07);
       text-align: center;
       flex: 0 0 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       box-sizing: border-box;
-      border: 2px solid transparent;
-      transition: all 0.3s;
+      border: 1px solid rgba(14, 59, 33, 0.11);
+      border-top: 4px solid var(--primary-gold);
+      transition: all 0.3s ease;
+      position: relative;
     }
 
     .carousel-card:hover {
-      border-color: var(--primary-gold);
       transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(14, 59, 33, 0.12);
+    }
+
+    @media (min-width: 768px) {
+      .carousel-card {
+        flex: 0 0 calc(50% - 10px);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .carousel-card {
+        flex: 0 0 calc(33.333% - 13.33px);
+      }
     }
 
     .profile-img {
-      width: 150px;
-      height: 150px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 20px;
-      border: 4px solid var(--bg-light);
+      margin-bottom: 12px;
+      border: 4px solid var(--bg-white);
+      box-shadow: 0 8px 24px rgba(14, 59, 33, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-card:hover .profile-img {
+      transform: scale(1.05);
     }
 
     .profile-name {
       font-weight: 700;
       color: var(--primary-green);
-      font-size: 1.3rem;
-      margin-bottom: 5px;
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .profile-role {
       color: var(--text-muted);
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .profile-divisi {
-      margin-top: 10px;
+      margin-top: 8px;
       background: rgba(56, 176, 0, 0.1);
       color: var(--primary-green);
-      padding: 6px 16px;
+      padding: 4px 12px;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
     }
 
     .btn-detail {
-      margin-top: 20px;
+      margin-top: 16px;
       padding: 10px 24px;
-      background-color: var(--primary-green);
-      color: white;
+      font-size: 0.95rem;
+      background-color: var(--primary-gold);
+      color: var(--primary-green);
       border-radius: 50px;
       text-decoration: none;
-      font-weight: 600;
-      transition: background-color 0.3s, transform 0.2s;
+      font-weight: 700;
+      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-detail::after {
+      content: "→";
+      transition: transform 0.3s ease;
     }
 
     .btn-detail:hover {
-      background-color: #2b8a00;
-      transform: scale(1.05);
+      background-color: #d4af37;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(250, 208, 44, 0.3);
+    }
+
+    .btn-detail:hover::after {
+      transform: translateX(4px);
     }
 
     .carousel-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: var(--primary-gold);
-      color: white;
-      border: none;
+      background: var(--bg-white);
+      color: var(--primary-green);
+      border: 1px solid rgba(14, 59, 33, 0.1);
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      font-size: 1.5rem;
       cursor: pointer;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s, transform 0.3s;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 16px rgba(14, 59, 33, 0.1);
     }
 
     .carousel-btn:hover {
-      background: #d4af37;
+      background: var(--primary-green);
+      color: var(--bg-white);
       transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 20px rgba(14, 59, 33, 0.2);
     }
 
     .prev-btn {
-      left: -24px;
+      left: -70px;
     }
 
     .next-btn {
-      right: -24px;
+      right: -70px;
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 1200px) {
+      .prev-btn {
+        left: -20px;
+      }
+      .next-btn {
+        right: -20px;
+      }
+    }
+
+    @media (max-width: 768px) {
       .prev-btn {
         left: 10px;
       }
-
       .next-btn {
         right: 10px;
       }
@@ -436,15 +481,14 @@
 
     .modal-content {
       background: var(--bg-white);
-      width: 90%;
-      max-width: 400px;
+      width: 95%;
+      max-width: 800px;
       border-radius: 20px;
-      padding: var(--spacing-xl);
       position: relative;
       transform: translateY(-20px);
       transition: transform 0.3s;
-      text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
     }
 
     .modal-overlay.active .modal-content {
@@ -453,72 +497,190 @@
 
     .modal-close {
       position: absolute;
-      top: 15px;
+      top: 16px;
       right: 20px;
-      background: transparent;
+      background: var(--bg-white);
       border: none;
       font-size: 2rem;
       cursor: pointer;
       color: var(--text-muted);
       line-height: 1;
-      transition: color 0.3s;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .modal-close:hover {
       color: #ff4d4d;
+      background: #fff0f0;
+      transform: scale(1.1);
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-left {
+      padding: 40px 24px;
+      background: #fcfcfc;
+      text-align: center;
+      border-bottom: 1px solid rgba(14, 59, 33, 0.08);
+      position: relative;
+    }
+
+    .modal-left::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--primary-green);
+    }
+
+    .modal-right {
+      padding: 32px 32px;
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+      .modal-body {
+        flex-direction: row;
+      }
+      .modal-left {
+        width: 35%;
+        border-bottom: none;
+        border-right: 1px solid rgba(14, 59, 33, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60px;
+      }
+      .modal-left::after {
+        height: 100px;
+      }
+      .modal-right {
+        width: 65%;
+        padding: 40px 40px;
+      }
     }
 
     .modal-img {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 15px;
-      border: 4px solid var(--primary-gold);
+      margin-bottom: 20px;
+      border: 4px solid var(--bg-white);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
     }
 
     .modal-name {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--primary-green);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      font-weight: 700;
     }
 
     .modal-role {
       font-weight: 700;
       color: var(--text-muted);
+      font-size: 1.05rem;
+      margin: 0 0 10px 0;
     }
 
     .modal-divisi {
       display: inline-block;
-      margin-top: 10px;
-      background: rgba(56, 176, 0, 0.1);
-      color: var(--primary-green);
+      background: rgba(250, 208, 44, 0.15);
+      color: #9c7b05;
       padding: 6px 16px;
       border-radius: 50px;
       font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 20px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+
+    .modal-socials {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .modal-socials a {
+      color: var(--text-muted);
+      background: #fff;
+      border: 1px solid rgba(14, 59, 33, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+
+    .modal-socials a:hover {
+      color: var(--bg-white);
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(14, 59, 33, 0.15);
     }
 
     .modal-desc {
       text-align: left;
-      background: var(--bg-light);
-      padding: 15px;
-      border-radius: 12px;
-      max-height: 250px;
-      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .modal-desc h4 {
-      margin-bottom: 8px;
-      color: var(--primary-green);
-      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-desc-text {
+      overflow-y: auto;
+      max-height: 320px;
+      padding-right: 16px;
+    }
+
+    .modal-desc-text::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal-desc-text::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+      border-radius: 4px;
+    }
+    .modal-desc-text::-webkit-scrollbar-thumb {
+      background: #c1c1c1; 
+      border-radius: 4px;
+    }
+    .modal-desc-text::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8; 
     }
 
     .modal-desc p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+      font-size: 0.95rem;
+      color: #4a5568;
+      line-height: 1.7;
+      margin: 0;
     }
 
     @media (max-width: 1024px) {
@@ -825,7 +987,9 @@
 
       <!-- Carousel Slider -->
       <div class="org-wrapper">
-        <button class="carousel-btn prev-btn" id="orgPrevBtn">&lt;</button>
+        <button class="carousel-btn prev-btn" id="orgPrevBtn" aria-label="Previous">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
         <div class="carousel-container">
           <div class="carousel-track" id="orgCarousel">
             <!-- BPH -->
@@ -1154,7 +1318,9 @@
             </div>
           </div>
         </div>
-        <button class="carousel-btn next-btn" id="orgNextBtn">&gt;</button>
+        <button class="carousel-btn next-btn" id="orgNextBtn" aria-label="Next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -1164,14 +1330,24 @@
     <div class="modal-content">
       <button class="modal-close" id="closeModalBtn">&times;</button>
       <div class="modal-body">
-        <img src="" alt="" id="modalImg" class="modal-img">
-        <h3 id="modalName" class="modal-name">Nama</h3>
-        <p id="modalRole" class="modal-role">Jabatan</p>
-        <p id="modalDivisi" class="modal-divisi">Divisi</p>
-        <div class="modal-desc">
-          <h4>Tentang</h4>
-          <p id="modalDescContent">Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan
-            pemberdayaan pemuda di Jawa Barat.</p>
+        <div class="modal-left">
+          <img src="" alt="" id="modalImg" class="modal-img">
+          <h3 id="modalName" class="modal-name">Nama</h3>
+          <p id="modalRole" class="modal-role">Jabatan</p>
+          <p id="modalDivisi" class="modal-divisi">Divisi</p>
+          <div class="modal-socials" id="modalSocials">
+             <a href="#" id="modalIg" target="_blank" aria-label="Instagram" style="display:none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+             </a>
+          </div>
+        </div>
+        <div class="modal-right">
+          <div class="modal-desc">
+            <h4>Tentang</h4>
+            <div class="modal-desc-text">
+              <p id="modalDescContent">Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan pemuda di Jawa Barat.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
