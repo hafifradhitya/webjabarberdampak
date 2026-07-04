@@ -17,7 +17,7 @@ class Auth
     public function handle(Request $request, Closure $next): Response
     {
         if(FacadesAuth::guest()){
-            return redirect()->to('/');
+            abort(404);
         }
         return $next($request);
     }
