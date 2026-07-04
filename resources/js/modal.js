@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalName = document.getElementById('modalName');
   const modalRole = document.getElementById('modalRole');
   const modalDivisi = document.getElementById('modalDivisi');
+  const modalDesc = document.getElementById('modalDescContent');
 
   if (modal && detailButtons.length > 0) {
     detailButtons.forEach(btn => {
@@ -18,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
           modalName.textContent = card.querySelector('.profile-name').textContent;
           modalRole.textContent = card.querySelector('.profile-role').textContent;
           modalDivisi.textContent = card.querySelector('.profile-divisi').textContent;
+          
+          const descEl = card.querySelector('.profile-desc');
+          if (descEl && modalDesc) {
+            modalDesc.innerHTML = descEl.innerHTML;
+          } else if (modalDesc) {
+            modalDesc.innerHTML = 'Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan pemuda di Jawa Barat.';
+          }
           
           modal.classList.add('active');
         }

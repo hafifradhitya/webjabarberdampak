@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jabar Berdampak - Organisasi Lingkungan & Kepemudaan</title>
-  <meta name="description" content="Website resmi Jabar Berdampak, organisasi pemuda yang berfokus pada penghijauan, ekonomi kreatif, dan pengembangan kepemimpinan." />
+  <meta name="description"
+    content="Website resmi Jabar Berdampak, organisasi pemuda yang berfokus pada penghijauan, ekonomi kreatif, dan pengembangan kepemimpinan." />
   @vite(['resources/css/base.css', 'resources/css/navbar.css', 'resources/css/hero.css', 'resources/css/footer.css', 'resources/css/modal.css', 'resources/css/filter.css', 'resources/js/navbar.js', 'resources/js/carousel.js', 'resources/js/modal.js', 'resources/js/filter.js'])
   <style>
     /* Specific styles for index.html */
@@ -233,34 +235,34 @@
       line-height: 1.7;
       margin: 0;
     }
-    
+
     .vision-mission {
       background-color: var(--bg-light);
       padding: var(--spacing-xl) 0;
     }
-    
+
     .vm-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--spacing-lg);
       margin-top: var(--spacing-lg);
     }
-    
+
     .vm-card {
       background: var(--bg-white);
       padding: var(--spacing-lg);
       border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       position: relative;
     }
-    
+
     .vm-card h3 {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: var(--spacing-md);
     }
-    
+
     .vm-icon {
       width: 48px;
       height: 48px;
@@ -275,29 +277,34 @@
     .org-structure {
       padding: var(--spacing-xl) 0;
       background-color: var(--bg-white);
-      overflow-x: auto; /* Enable scrolling for wide trees */
+      overflow-x: auto;
+      /* Enable scrolling for wide trees */
     }
+
     .org-wrapper {
       position: relative;
       max-width: 600px;
       margin: 0 auto;
     }
+
     .carousel-container {
       width: 100%;
       overflow: hidden;
       padding: var(--spacing-md) 0;
       border-radius: 20px;
     }
+
     .carousel-track {
       display: flex;
       transition: transform 0.5s ease-in-out;
       width: 100%;
     }
+
     .carousel-card {
       background: var(--bg-white);
       padding: var(--spacing-xl);
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       text-align: center;
       flex: 0 0 100%;
       display: flex;
@@ -307,10 +314,12 @@
       border: 2px solid transparent;
       transition: all 0.3s;
     }
+
     .carousel-card:hover {
       border-color: var(--primary-gold);
       transform: translateY(-5px);
     }
+
     .profile-img {
       width: 150px;
       height: 150px;
@@ -319,16 +328,19 @@
       margin-bottom: 20px;
       border: 4px solid var(--bg-light);
     }
+
     .profile-name {
       font-weight: 700;
       color: var(--primary-green);
       font-size: 1.3rem;
       margin-bottom: 5px;
     }
+
     .profile-role {
       color: var(--text-muted);
       font-size: 1rem;
     }
+
     .profile-divisi {
       margin-top: 10px;
       background: rgba(56, 176, 0, 0.1);
@@ -338,6 +350,7 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
+
     .btn-detail {
       margin-top: 20px;
       padding: 10px 24px;
@@ -350,10 +363,12 @@
       border: none;
       cursor: pointer;
     }
+
     .btn-detail:hover {
       background-color: #2b8a00;
       transform: scale(1.05);
     }
+
     .carousel-btn {
       position: absolute;
       top: 50%;
@@ -371,23 +386,40 @@
       align-items: center;
       justify-content: center;
       transition: background 0.3s, transform 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
     .carousel-btn:hover {
       background: #d4af37;
       transform: translateY(-50%) scale(1.1);
     }
-    .prev-btn { left: -24px; }
-    .next-btn { right: -24px; }
-    @media (max-width: 650px) {
-      .prev-btn { left: 10px; }
-      .next-btn { right: 10px; }
+
+    .prev-btn {
+      left: -24px;
     }
+
+    .next-btn {
+      right: -24px;
+    }
+
+    @media (max-width: 650px) {
+      .prev-btn {
+        left: 10px;
+      }
+
+      .next-btn {
+        right: 10px;
+      }
+    }
+
     /* Modal Styles */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -396,10 +428,12 @@
       pointer-events: none;
       transition: opacity 0.3s;
     }
+
     .modal-overlay.active {
       opacity: 1;
       pointer-events: auto;
     }
+
     .modal-content {
       background: var(--bg-white);
       width: 90%;
@@ -410,11 +444,13 @@
       transform: translateY(-20px);
       transition: transform 0.3s;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     }
+
     .modal-overlay.active .modal-content {
       transform: translateY(0);
     }
+
     .modal-close {
       position: absolute;
       top: 15px;
@@ -427,9 +463,11 @@
       line-height: 1;
       transition: color 0.3s;
     }
+
     .modal-close:hover {
       color: #ff4d4d;
     }
+
     .modal-img {
       width: 120px;
       height: 120px;
@@ -438,15 +476,18 @@
       margin-bottom: 15px;
       border: 4px solid var(--primary-gold);
     }
+
     .modal-name {
       font-size: 1.5rem;
       color: var(--primary-green);
       margin-bottom: 5px;
     }
+
     .modal-role {
       font-weight: 700;
       color: var(--text-muted);
     }
+
     .modal-divisi {
       display: inline-block;
       margin-top: 10px;
@@ -458,17 +499,22 @@
       font-weight: 600;
       margin-bottom: 20px;
     }
+
     .modal-desc {
       text-align: left;
       background: var(--bg-light);
       padding: 15px;
       border-radius: 12px;
+      max-height: 250px;
+      overflow-y: auto;
     }
+
     .modal-desc h4 {
       margin-bottom: 8px;
       color: var(--primary-green);
       font-size: 1rem;
     }
+
     .modal-desc p {
       font-size: 0.9rem;
       color: var(--text-muted);
@@ -480,56 +526,68 @@
         grid-template-columns: 1fr;
         gap: 36px;
       }
+
       .about-copy h2 {
         font-size: 2.6rem;
       }
+
       .impact-card-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    
+
     @media (max-width: 768px) {
       .about-organization {
         padding: 56px 0;
       }
+
       .about-grid,
       .info-card-grid,
       .impact-card-grid {
         grid-template-columns: 1fr;
       }
+
       .about-copy h2,
       .impact-intro h2 {
         font-size: 2rem;
       }
+
       .about-visual {
         padding-bottom: 0;
       }
+
       .about-photo,
       .about-photo img {
         min-height: 280px;
       }
+
       .about-stat-panel {
         position: static;
         grid-template-columns: 1fr;
         margin-top: 14px;
       }
+
       .about-stat {
         border-right: 0;
         border-bottom: 1px solid rgba(14, 59, 33, 0.1);
       }
+
       .about-stat:last-child {
         border-bottom: 0;
       }
+
       .info-card,
       .impact-card {
         min-height: auto;
       }
+
       .vm-grid {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -555,7 +613,8 @@
   <section class="hero">
     <div class="container hero-content">
       <h1>Melestarikan Alam, Membangun Pemimpin Masa Depan</h1>
-      <p>Memberdayakan pemuda untuk menjaga masa depan bumi kita melalui tindakan berkelanjutan, pendidikan kepemimpinan, dan kesadaran lingkungan.</p>
+      <p>Memberdayakan pemuda untuk menjaga masa depan bumi kita melalui tindakan berkelanjutan, pendidikan
+        kepemimpinan, dan kesadaran lingkungan.</p>
       <div class="hero-buttons">
         <a href="{{ url('/program-kegiatan') }}" class="btn btn-gold">Lihat Program Kami</a>
         <a href="#about" class="btn btn-outline">Pelajari Lebih Lanjut</a>
@@ -570,13 +629,16 @@
         <div class="about-copy">
           <div class="info-eyebrow">Tentang Kami</div>
           <h2>Setiap wilayah punya cerita, kami rajut jadi <span class="about-highlight">gerakan berdampak</span></h2>
-          <p>Jabar Berdampak adalah organisasi kepemudaan dan gerakan relawan yang berfokus pada pengembangan kapasitas pemuda, kepedulian lingkungan, aksi sosial, serta pemberdayaan masyarakat di Jawa Barat.</p>
-          <p>BPH (Badan Pengurus Harian) menjalankan koordinasi harian, memastikan program berjalan terarah, relawan terhubung dengan peran yang sesuai, dan setiap kegiatan tercatat sebagai bagian dari dampak bersama.</p>
+          <p>Jabar Berdampak adalah organisasi kepemudaan dan gerakan relawan yang berfokus pada pengembangan kapasitas
+            pemuda, kepedulian lingkungan, aksi sosial, serta pemberdayaan masyarakat di Jawa Barat.</p>
+          <p>BPH (Badan Pengurus Harian) menjalankan koordinasi harian, memastikan program berjalan terarah, relawan
+            terhubung dengan peran yang sesuai, dan setiap kegiatan tercatat sebagai bagian dari dampak bersama.</p>
         </div>
 
         <div class="about-visual">
           <div class="about-photo">
-            <img src="https://images.unsplash.com/photo-1527525443983-6e60c75fff46?auto=format&fit=crop&q=80&w=900" alt="Relawan muda berdiskusi dan berkolaborasi">
+            <img src="https://images.unsplash.com/photo-1527525443983-6e60c75fff46?auto=format&fit=crop&q=80&w=900"
+              alt="Relawan muda berdiskusi dan berkolaborasi">
           </div>
           <div class="about-stat-panel" aria-label="Ringkasan Jabar Berdampak">
             <div class="about-stat">
@@ -599,32 +661,51 @@
         <div class="impact-intro">
           <div class="info-eyebrow">Kenapa Pendataan</div>
           <h2>Data yang rapi, dampak yang nyata</h2>
-          <p>Pendataan bukan sekadar administrasi. Ini fondasi agar program, bantuan, pelatihan, dan dokumentasi kegiatan bisa tersusun jelas, dapat dievaluasi, serta sampai kepada orang dan wilayah yang tepat.</p>
+          <p>Pendataan bukan sekadar administrasi. Ini fondasi agar program, bantuan, pelatihan, dan dokumentasi
+            kegiatan bisa tersusun jelas, dapat dievaluasi, serta sampai kepada orang dan wilayah yang tepat.</p>
         </div>
 
         <div class="info-card-grid">
           <article class="info-card">
             <div class="info-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path><rect x="3" y="3" width="18" height="18" rx="5"></rect></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5"></path>
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              </svg>
             </div>
             <h3>Identitas yang jelas</h3>
-            <p>Setiap anggota dan relawan terverifikasi sejak awal, sehingga koordinasi program lebih akuntabel dan bebas data ganda.</p>
+            <p>Setiap anggota dan relawan terverifikasi sejak awal, sehingga koordinasi program lebih akuntabel dan
+              bebas data ganda.</p>
           </article>
 
           <article class="info-card">
             <div class="info-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M16 8c-2 0-5 1-6 4-1 2 0 4 2 4 3 0 5-4 4-8Z"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8c-2 0-5 1-6 4-1 2 0 4 2 4 3 0 5-4 4-8Z"></path>
+              </svg>
             </div>
             <h3>Sebaran yang merata</h3>
-            <p>Data wilayah membantu pengurus menyalurkan program ke titik yang paling membutuhkan di tingkat kabupaten dan kota.</p>
+            <p>Data wilayah membantu pengurus menyalurkan program ke titik yang paling membutuhkan di tingkat kabupaten
+              dan kota.</p>
           </article>
 
           <article class="info-card">
             <div class="info-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"></path><path d="M9 19v-8"></path><path d="M14 19v-5"></path><path d="M19 19V9"></path><path d="M3 19h18"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19V5"></path>
+                <path d="M9 19v-8"></path>
+                <path d="M14 19v-5"></path>
+                <path d="M19 19V9"></path>
+                <path d="M3 19h18"></path>
+              </svg>
             </div>
             <h3>Laporan yang terbuka</h3>
-            <p>Setiap kegiatan terdokumentasi rapi agar kontribusi dapat dipertanggungjawabkan kepada publik dan sesama relawan.</p>
+            <p>Setiap kegiatan terdokumentasi rapi agar kontribusi dapat dipertanggungjawabkan kepada publik dan sesama
+              relawan.</p>
           </article>
         </div>
       </div>
@@ -633,13 +714,18 @@
         <div class="impact-intro">
           <div class="info-eyebrow">Bidang Dampak</div>
           <h2>Empat motif gerakan relawan</h2>
-          <p>Program Jabar Berdampak bergerak dalam empat bidang utama, menyesuaikan kapasitas relawan dan kebutuhan masyarakat di lapangan.</p>
+          <p>Program Jabar Berdampak bergerak dalam empat bidang utama, menyesuaikan kapasitas relawan dan kebutuhan
+            masyarakat di lapangan.</p>
         </div>
 
         <div class="impact-card-grid">
           <article class="impact-card">
             <div class="impact-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-9 16-9 0 9-4 16-9 16Z"></path><path d="M9 15c2-4 5-7 11-11"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 20A7 7 0 0 1 4 13c0-5 7-9 16-9 0 9-4 16-9 16Z"></path>
+                <path d="M9 15c2-4 5-7 11-11"></path>
+              </svg>
             </div>
             <h3>Lingkungan</h3>
             <p>Penghijauan, pengelolaan sampah, konservasi, dan pelatihan praktik ramah lingkungan.</p>
@@ -647,7 +733,11 @@
 
           <article class="impact-card">
             <div class="impact-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 10-10-5-10 5 10 5 10-5Z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m22 10-10-5-10 5 10 5 10-5Z"></path>
+                <path d="M6 12v5c3 2 9 2 12 0v-5"></path>
+              </svg>
             </div>
             <h3>Pendidikan</h3>
             <p>Pendampingan belajar, literasi, pelatihan kepemimpinan, dan pengembangan keterampilan pemuda.</p>
@@ -655,7 +745,12 @@
 
           <article class="impact-card">
             <div class="impact-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z">
+                </path>
+              </svg>
             </div>
             <h3>Sosial & Kemanusiaan</h3>
             <p>Bantuan warga, aksi tanggap kebutuhan sosial, dan pendampingan komunitas rentan.</p>
@@ -663,7 +758,11 @@
 
           <article class="impact-card">
             <div class="impact-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 9 11l4 4 7-7"></path><path d="M14 8h6v6"></path></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 17 9 11l4 4 7-7"></path>
+                <path d="M14 8h6v6"></path>
+              </svg>
             </div>
             <h3>Ekonomi Kerakyatan</h3>
             <p>Pendampingan UMKM, pelatihan wirausaha, ekonomi kreatif, dan penguatan peluang usaha lokal.</p>
@@ -677,23 +776,33 @@
   <section id="vision" class="vision-mission">
     <div class="container">
       <h2 class="section-title">Visi & Misi</h2>
-      <p class="section-subtitle">Tujuan dan komitmen kami untuk membawa dampak positif bagi lingkungan dan masyarakat.</p>
-      
+      <p class="section-subtitle">Tujuan dan komitmen kami untuk membawa dampak positif bagi lingkungan dan masyarakat.
+      </p>
+
       <div class="vm-grid">
         <div class="vm-card">
           <h3>
             <div class="vm-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12h4l3-9 5 18 3-9h5" />
+              </svg>
             </div>
             Visi Kami
           </h3>
-          <p>Menjadi wadah pembentukan generasi muda yang peduli lingkungan, berjiwa pemimpin, berwawasan luas, serta mampu berperan aktif dalam menegakkan nilai-nilai keberlanjutan dan kelestarian alam di Jawa Barat dan sekitarnya.</p>
+          <p>Menjadi wadah pembentukan generasi muda yang peduli lingkungan, berjiwa pemimpin, berwawasan luas, serta
+            mampu berperan aktif dalam menegakkan nilai-nilai keberlanjutan dan kelestarian alam di Jawa Barat dan
+            sekitarnya.</p>
         </div>
-        
+
         <div class="vm-card">
           <h3>
             <div class="vm-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
             </div>
             Misi Kami
           </h3>
@@ -711,8 +820,9 @@
   <section class="org-structure">
     <div class="container">
       <h2 class="section-title">Struktur Organisasi</h2>
-      <p class="section-subtitle">Para individu di balik Jabar Berdampak yang berkomitmen untuk mewujudkan visi dan misi kami.</p>
-      
+      <p class="section-subtitle">Para individu di balik Jabar Berdampak yang berkomitmen untuk mewujudkan visi dan misi
+        kami.</p>
+
       <!-- Carousel Slider -->
       <div class="org-wrapper">
         <button class="carousel-btn prev-btn" id="orgPrevBtn">&lt;</button>
@@ -720,114 +830,326 @@
           <div class="carousel-track" id="orgCarousel">
             <!-- BPH -->
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150" alt="Griyandi" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/8.jpeg') }}" alt="Griyandi"
+                class="profile-img">
               <div class="profile-name">Griyandi</div>
               <div class="profile-role">Ketua</div>
               <div class="profile-divisi">BPH</div>
+              <div class="profile-desc" style="display: none;">
+                GRIYANDI<br>
+                INSTAGRAM: ya_ndhi<br><br>
+                MAHASISWA SEKOLAH TINGGI ILMU DAKWAH MOHAMMAD NATSIR BEKASI<br><br>
+                KETUA LEADERSHIP TRAINING CENTER STID MOHAMMAD NATSIR BEKASI<br><br>
+                FOUNDER JAWA BARAT BERDAMPAK
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" alt="Muhammad Farhan Fauzi" class="profile-img">
-              <div class="profile-name">Muhammad Farhan Fauzi</div>
+              <img src="{{ asset('assets/gambarorganisasi/2.jpeg') }}"
+                alt="Muhamad Farhan Fauzi" class="profile-img">
+              <div class="profile-name">Muhamad Farhan Fauzi</div>
               <div class="profile-role">Wakil Ketua</div>
               <div class="profile-divisi">BPH</div>
+              <div class="profile-desc" style="display: none;">
+                <strong>Biodata Singkat</strong><br><br>
+                Nama: Muhamad Farhan Fauzi<br>
+                Ig : fhnfauzii<br>
+                Minat: Kepemimpinan, Public Speaking, Pengembangan Soft Skill, dan Pengembangan Komunitas<br>
+                Motto: "Terus belajar, bertumbuh, dan memberikan dampak positif bagi sekitar."<br><br>
+                <strong>Perkenalan singkat</strong><br>
+                Halo semuanya, perkenalkan nama saya Muhamad Farhan Fauzi. Saat ini saya dipercaya sebagai Wakil Ketua
+                Komunitas Jabar Berdampak. Saya memiliki ketertarikan pada bidang kepemimpinan, public speaking, dan
+                pengembangan soft skill. Melalui peran ini, saya berkomitmen untuk berkontribusi dalam membangun
+                komunitas yang aktif, kolaboratif, dan memberikan manfaat bagi masyarakat. Senang bisa bertemu dan
+                belajar bersama teman-teman semua.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150" alt="Gita Nurazizah" class="profile-img">
+              <img src="https://ui-avatars.com/api/?name=Gita+Nurazizah&background=random&color=fff"
+                alt="Gita Nurazizah" class="profile-img">
               <div class="profile-name">Gita Nurazizah</div>
               <div class="profile-role">Sekretaris 1</div>
               <div class="profile-divisi">BPH</div>
+              <div class="profile-desc" style="display: none;">
+                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
+                pemuda di Jawa Barat.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Nabila Syafia Tanjung" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/7.jpeg') }}"
+                alt="Nabila Syafia Tanjung" class="profile-img">
               <div class="profile-name">Nabila Syafia Tanjung</div>
               <div class="profile-role">Sekretaris 2</div>
               <div class="profile-divisi">BPH</div>
+              <div class="profile-desc" style="display: none;">
+                <strong>Biografi:</strong><br>
+                Nabila Syafia Tanjung merupakan siswi kelas XI jurusan Akuntansi di SMKS Sandikta. Saat ini dipercaya
+                sebagai Sekretaris 2 Komunitas Jabar Berdampak. Memiliki ketertarikan pada bidang administrasi,
+                akuntansi, komunikasi, dan pengembangan diri. Senang mempelajari hal-hal baru serta terus berusaha
+                mengembangkan kemampuan melalui berbagai pengalaman dan kesempatan belajar.<br><br>
+                <strong>Perkenalan Singkat:</strong><br>
+                Halo, saya Nabila Syafia Tanjung. Senang dapat menjadi bagian dari Komunitas Jabar Berdampak sebagai
+                Sekretaris 2. Semoga melalui komunitas ini saya dapat terus belajar, berkolaborasi, dan memberikan
+                kontribusi positif bagi komunitas maupun masyarakat.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Edgina Anastasia" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/14.jpeg') }}"
+                alt="Edgina Anastasia" class="profile-img">
               <div class="profile-name">Edgina Anastasia</div>
               <div class="profile-role">Bendahara</div>
               <div class="profile-divisi">BPH</div>
+              <div class="profile-desc" style="display: none;">
+                Nama: Edgina Anastasia<br>
+                Instagram: xorain_cutee<br>
+                divisi: Bendahara<br><br>
+                seorang pelajar yang aktif dalam bidang akademik, organisasi, dan kepemudaan. Saya merupakan peraih
+                Medali Emas Olimpiade Bahasa Indonesia Tingkat Nasional dan Medali Perak Lomba Bahasa Indonesia Tingkat
+                Nasional. Saya juga pernah menjabat sebagai Bendahara MPK, Ketua Ekstrakurikuler Informatika Club, serta
+                Duta Inisiatif Indonesia. Saya memiliki minat dalam kepemimpinan, pengembangan diri, dan pemberdayaan
+                generasi muda, serta berkomitmen untuk terus berkarya dan memberikan dampak positif bagi masyarakat.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
-            
+
             <!-- Divisi Humas -->
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="Ai Risa Yuliandini" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/11.jpeg') }}"
+                alt="Ai Risa Yuliandini" class="profile-img">
               <div class="profile-name">Ai Risa Yuliandini</div>
               <div class="profile-role">Koordinator</div>
               <div class="profile-divisi">Divisi Humas</div>
+              <div class="profile-desc" style="display: none;">
+                Nama Lengkap: Ai Risa Yuliandini<br>
+                Domisili: Desa Bojong, Kec. Rongga, Kab.Bandung barat, Provinsi Jawa barat<br>
+                Jenis Kelamin: Perempuan<br>
+                Status Keaktifan: Aktif<br>
+                Divisi yang Dipilih: HUMAS/Public Relation<br>
+                Username Instagram: @airisaofficial<br>
+                Username Youtube: Ai Risa Official<br>
+                Username TikTok: @airisaofficial<br>
+                Foto Diri: -<br><br>
+                Deskripsi Singkat Tentang Diri: Mahasiswa aktif, adaptif, kontributif, komunikatif, tanggung jawab,
+                pengalaman sebagai Brand Ambassador open your mind indonesia, Brand Ambassador Prodi Hubungan Masyarakat
+                dan Komunikasi digital, Narasumber podcast aksi menginspirasi, Narasumber Program Diksi, Host
+                VoxDigi/Mc/Moderator, pemateri sosialisasi sekolah²- lintas kecamatan. Pengalaman organisasi (Forum
+                Mahasiswa Rongga, Himpunan mahasiswa, PMII, FOSISI KBB, Komunitas seniman Rongga, dll) Hobi badminton,
+                alasan memilih divisi humas karena Divisi Humas selaras dengan program studi saya, sehingga saya ingin
+                mengimplementasikan ilmu yang dipelajari sekaligus mengembangkan kemampuan komunikasi dalam praktik
+                organisasi.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150" alt="Jelita Maria H. S." class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/10.jpeg') }}"
+                alt="Jelita Maria Hasianna Siagian" class="profile-img">
               <div class="profile-name">Jelita Maria H. S.</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Humas</div>
+              <div class="profile-desc" style="display: none;">
+                Jelita Maria Hasianna Siagian siswi SMKN 06 Kota Bekasi, jurusan Rekayasa Perangkat Lunak. Seorang ENTJ
+                yang selalu berani mencoba hal baru dan menerapkannya secara terstruktur, dari langkah kecil sampai jadi
+                sesuatu yang besar.<br>
+                Peringkat 1 Olimpiade Bahasa Inggris provinsi Jawa Barat.<br>
+                Medali Emas Olimpiade Matematika Nasional Pemuda Pancasila<br>
+                Ketua & Leader Karya Ilmiah Remaja<br>
+                Leader English Club<br>
+                Punya minat luas di musik, public speaking, matematika & sains, bahasa asing, sampai desain.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150" alt="Kartikasari" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/6.jpeg') }}" alt="Kartikasari"
+                class="profile-img">
               <div class="profile-name">Kartikasari</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Humas</div>
+              <div class="profile-desc" style="display: none;">
+                Nama: Kartikasari<br>
+                Asal: Ciamis<br>
+                IG: hii.qtikaa<br>
+                Divisi: Humas<br><br>
+                Halo semua! 👐🏻✨<br>
+                Perkenalkan, nama saya Kartikasari. Saat ini, saya dapet kesempatan keren banget buat bergabung di
+                komunitas Jabar Berdampak sebagai bagian dari Divisi Humas.<br><br>
+                Selain kesibukan saya sehari-hari sebagai mahasiswi Kebidanan yang dituntut harus selalu aktif dan
+                adaptif dalam berbagai hal, saya juga punya ketertarikan besar di dunia public speaking, komunikasi, dan
+                pengen terus mengasah leadership skill saya.<br><br>
+                Lewat komunitas ini, saya pengen berkontribusi nyata supaya bisa memberikan dampak positif dan manfaat
+                langsung bagi masyarakat luas. Senang banget bisa bergabung, kenalan, dan berproses bareng kalian semua
+                di sini.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
-            
+
             <!-- Divisi PDD -->
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" alt="M. Fateeh" class="profile-img">
+              <img src="https://ui-avatars.com/api/?name=M.+Fateeh&background=random&color=fff" alt="M. Fateeh"
+                class="profile-img">
               <div class="profile-name">M. Fateeh</div>
-              <div class="profile-role">Anggota</div>
+              <div class="profile-role">Koordinator</div>
               <div class="profile-divisi">Divisi PDD</div>
+              <div class="profile-desc" style="display: none;">
+                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
+                pemuda di Jawa Barat.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=150" alt="Heln Syakina Azzahra" class="profile-img">
-              <div class="profile-name">Heln Syakina Azzahra</div>
+              <img src="{{ asset('assets/gambarorganisasi/9.jpeg') }}"
+                alt="Safa Azzaira Putri" class="profile-img">
+              <div class="profile-name">Safa Azzaira Putri</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi PDD</div>
+              <div class="profile-desc" style="display: none;">
+                Nama : Safa Azzaira Putri<br>
+                Unsername IG : @sapaavyii_<br>
+                Divisi pilihan : Divisi PDD<br>
+                Saya berasal dari sekolah SMKS Sandikta di Kota Bekasi, mempunyai ketertarikan dalam bidang organisasi,
+                editing, serta pengembangan diri. Saya senang mempelajari hal-hal baru dan aktif mengikuti berbagai
+                kegiatan yang dapat menambahkan pengalaman.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
-            
+
             <!-- Divisi Acara -->
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&q=80&w=150" alt="Nadia Sapitri" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/13.jpeg') }}" alt="Nadia Sapitri" class="profile-img">
               <div class="profile-name">Nadia Sapitri</div>
-              <div class="profile-role">Anggota</div>
+              <div class="profile-role">Koordinator</div>
               <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Hallo kk kk🤩🙌🏻<br>
+                Kenalin yaa, aku Nadia sapitri, boleh panggil aku Nanad. Aku berasal dari Kota Sukabumi, Jawa Barat, dan
+                sekarang masih berstatus sebagai pelajar.<br>
+                Aku orangnya suka belajar hal baru, senang ikut kegiatan, dan pengen terus berkembang. Menurut aku,
+                setiap pengalaman itu pasti ada pelajarannya, makanya aku selalu berusaha buat aktif di organisasi,
+                komunitas, dan kegiatan yang bisa nambah ilmu sekaligus relasi.<br>
+                Senang bisa kenal sama kk kk semua🤩<br>
+                Semoga kita bisa saling support, berkembang bareng, dan bikin banyak hal positif ke depannya yaa🤩🙌🏻
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" alt="Wan Mochammad H." class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/12.jpeg') }}"
+                alt="Wan Mochammad Hanief M." class="profile-img">
               <div class="profile-name">Wan Mochammad H.</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Nama : Wan Mochammad Hanief Maulana As Shiedieqy<br>
+                Daerah : Bandung<br>
+                Instagram : wan_hanief<br>
+                Kampus : Universitas Muhammadiyah Bandung<br>
+                Prestasi :<br>
+                1. Juara 1 Lomba Baca Puisi Umum Tingkat Nasional<br>
+                2. Juara 2 Lomba Baca Puisi Umum Tingkat Nasional<br>
+                3. Juara 3 Lomba Cipta Pantun Umum Tingkat Nasional
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150" alt="Zaskia Zen" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/3.jpeg') }}" alt="Zaskia Zen"
+                class="profile-img">
               <div class="profile-name">Zaskia Zen</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                <strong>Deskripsi Perkenalan Singkat</strong><br><br>
+                Saya Zaskia Zen pdari Divisi Acara. Senang bisa menjadi bagian dari kepanitiaan ini. Saya pribadi yang
+                bertanggung jawab, dan senang bekerja sama dalam tim. Melalui kepanitiaan ini, saya berharap dapat
+                berkontribusi dalam menyukseskan setiap rangkaian acara, sekaligus menambah pengalaman, relasi, dan ilmu
+                baru.<br><br>
+                <strong>Biografi</strong><br><br>
+                Perkenalkan, saya Zaskia Zen, siswi SMK Tanjung Priok 2 yang memiliki ketertarikan pada bidang
+                organisasi, kepemimpinan, serta pengembangan diri. Saya aktif mengikuti berbagai kegiatan kepanitiaan,
+                program duta, dan kompetisi sebagai wadah untuk belajar, mengasah kemampuan, serta memperluas
+                pengalaman. Saya percaya bahwa setiap kesempatan ialah proses untuk terus berkembang, membangun relasi
+                yang baik, dan memberikan manfaat bagi lingkungan sekitar. Dengan semangat belajar dan tanggung jawab,
+                saya berusaha memberikan kontribusi terbaik dalam setiap kegiatan yang saya ikuti.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Zahwa Mutiara Tarisa" class="profile-img">
+              <img src="https://ui-avatars.com/api/?name=Zahwa+Mutiara+Tarisa&background=random&color=fff"
+                alt="Zahwa Mutiara Tarisa" class="profile-img">
               <div class="profile-name">Zahwa Mutiara Tarisa</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
+                pemuda di Jawa Barat.
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150" alt="Ri'ayah Hilmiyaty 'A." class="profile-img">
+              <img src="https://ui-avatars.com/api/?name=Heln+Syakina+Azzahra&background=random&color=fff"
+                alt="Heln Syakina Azzahra" class="profile-img">
+              <div class="profile-name">Heln Syakina Azzahra</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
+                pemuda di Jawa Barat.
+              </div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="{{ asset('assets/gambarorganisasi/1.jpeg') }}" alt="Ri'ayah Hilmiyaty 'Adilah" class="profile-img">
               <div class="profile-name">Ri'ayah Hilmiyaty 'A.</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Nama Lengkap: Ri’ayah Hilmiyaty ‘Adilah<br>
+                Domisili: Purwakarta<br>
+                Jenis Kelamin: Perempuan<br>
+                Instagram/TikTok: @riaaaayyy<br>
+                Divisi: Acara<br>
+                Status Keaktifan: Aktif<br><br>
+                Jelasin kamu gimana orangnya:<br>
+                Aku seorang ESFP yang komunikatif, adaptif, dan penuh energi🤩. Aku senang berinteraksi dengan orang
+                baru dan menghidupkan suasana kelompok.<br>
+                Meskipun pembawaanku santai, seru, dan ekspresif, aku tetap tipe orang yang terstruktur, fokus, dan
+                bertanggung jawab penuh kalau udah diberi amanah untuk mengeksekusi suatu tugas atau project. Let's
+                collaborate and make things happen!
+              </div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="{{ asset('assets/gambarorganisasi/4.jpeg') }}" alt="Sinta Riyanti" class="profile-img">
+              <div class="profile-name">Sinta Riyanti</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Nama : Sinta Riyanti<br>
+                ig : ssnta.girl<br>
+                Instansi : UIN Siber Syekh Nurjati Cirebon<br><br>
+                Halo semuanya, perkenalkan nama saya Sinta Riyantii. Sebagai Divisi Acara Komunitas Jabar Berdampak.
+                Saya memilih bergabung di Divisi Acara karena saya tertarik dengan proses perencanaan dan pelaksanaan
+                sebuah kegiatan. Saya senang bekerja sama dalam tim, belajar hal-hal baru, serta berusaha bertanggung
+                jawab terhadap tugas yang diberikan. Semoga di komunitas ini saya bisa memberikan kontribusi terbaik
+                sekaligus mendapatkan banyak pengalaman baru.
+              </div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="{{ asset('assets/gambarorganisasi/5.jpeg') }}" alt="Adinda Maimanah" class="profile-img">
+              <div class="profile-name">Adinda Maimanah</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi Acara</div>
+              <div class="profile-desc" style="display: none;">
+                Nama : Adinda Maimanah<br>
+                Asal : Cirebon<br>
+                Ig : dnd_mnh<br>
+                Divisi : acara<br><br>
+                Halo semua👐🏻, perkenalkan nama saya adinda Maimanah, sekarang ini sayang sedang mengikuti komunitas
+                Jabar berdampak sebagai divisi acara, saya memiliki ketertarikan dalam publick speaking, melatih skill
+                kepemimpinan dan komunikasi saya, saya berkontribusi dengan komunitas agar dapat memberikan manfaat bagi
+                masyarakat sekitar, senang bisa bergabung dan belajar bersama mohon dukungannya semua😊
+              </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
           </div>
@@ -848,7 +1170,8 @@
         <p id="modalDivisi" class="modal-divisi">Divisi</p>
         <div class="modal-desc">
           <h4>Tentang</h4>
-          <p>Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan pemuda di Jawa Barat.</p>
+          <p id="modalDescContent">Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan
+            pemberdayaan pemuda di Jawa Barat.</p>
         </div>
       </div>
     </div>
@@ -860,7 +1183,8 @@
       <div class="footer-grid">
         <div>
           <div class="footer-logo">Jabar Berdampak</div>
-          <p>Membangun masa depan yang berkelanjutan, satu komunitas pada satu waktu. Bergabunglah dalam perjalanan kami menuju bumi yang lebih hijau.</p>
+          <p>Membangun masa depan yang berkelanjutan, satu komunitas pada satu waktu. Bergabunglah dalam perjalanan kami
+            menuju bumi yang lebih hijau.</p>
         </div>
         <div class="footer-links">
           <h4>Tautan Cepat</h4>
@@ -874,10 +1198,28 @@
         <div class="footer-links">
           <h4>Media Sosial</h4>
           <ul class="social-icons">
-            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram</a></li>
-            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook</a></li>
-            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg> Twitter (X)</a></li>
-            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg> LinkedIn</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg> Instagram</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg> Facebook</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                  </path>
+                </svg> Twitter (X)</a></li>
+            <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg> LinkedIn</a></li>
           </ul>
         </div>
         <div class="footer-links">
@@ -892,6 +1234,7 @@
       </div>
     </div>
   </footer>
-  
+
 </body>
+
 </html>
