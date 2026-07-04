@@ -483,6 +483,9 @@
       background: var(--bg-white);
       width: 95%;
       max-width: 800px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
       border-radius: 20px;
       position: relative;
       transform: translateY(-20px);
@@ -525,6 +528,8 @@
     .modal-body {
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
+      flex: 1;
     }
 
     .modal-left {
@@ -656,8 +661,6 @@
     }
 
     .modal-desc-text {
-      overflow-y: auto;
-      max-height: 320px;
       padding-right: 16px;
     }
 
