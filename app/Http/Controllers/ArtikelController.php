@@ -6,9 +6,12 @@ use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Traits\ProcessesBase64Images;
 
 class ArtikelController extends Controller
 {
+    use ProcessesBase64Images;
+
     public function index()
     {
         $artikels = Artikel::latest()->get();
@@ -40,6 +43,11 @@ class ArtikelController extends Controller
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('artikels', 'public');
+        }
+
+        // Process base64 images in content
+        if (isset($data['konten'])) {
+            $data['konten'] = $this->processBase64Images($data['konten'], 'public', 'artikels_content');
         }
 
         Artikel::create($data);
@@ -75,6 +83,11 @@ class ArtikelController extends Controller
                 Storage::disk('public')->delete($artikel->gambar);
             }
             $data['gambar'] = $request->file('gambar')->store('artikels', 'public');
+        }
+
+        // Process base64 images in content
+        if (isset($data['konten'])) {
+            $data['konten'] = $this->processBase64Images($data['konten'], 'public', 'artikels_content');
         }
 
         $artikel->update($data);

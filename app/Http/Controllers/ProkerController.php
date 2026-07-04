@@ -6,9 +6,12 @@ use App\Models\Proker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Traits\ProcessesBase64Images;
 
 class ProkerController extends Controller
 {
+    use ProcessesBase64Images;
+
     public function index()
     {
         $prokers = Proker::latest()->get();
@@ -95,6 +98,10 @@ class ProkerController extends Controller
 
         $data['anggaran'] = $request->filled('anggaran') ? $request->input('anggaran') : 0;
         $data['status'] = $request->input('status') ?: 'planning';
+
+        if (isset($data['deskripsi'])) {
+            $data['deskripsi'] = $this->processBase64Images($data['deskripsi'], 'public', 'proker_content');
+        }
 
         return $data;
     }

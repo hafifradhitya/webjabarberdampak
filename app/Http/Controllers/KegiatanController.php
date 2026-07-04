@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Traits\ProcessesBase64Images;
 
 class KegiatanController extends Controller
 {
+    use ProcessesBase64Images;
+
     public function index()
     {
         $kegiatans = Kegiatan::with('documentations')->latest()->get();
@@ -43,6 +46,10 @@ class KegiatanController extends Controller
 
         if ($request->hasFile('banner')) {
             $data['banner'] = $request->file('banner')->store('kegiatan_banners', 'public');
+        }
+
+        if (isset($data['deskripsi'])) {
+            $data['deskripsi'] = $this->processBase64Images($data['deskripsi'], 'public', 'kegiatan_content');
         }
 
         $kegiatan = Kegiatan::create($data);
@@ -123,6 +130,10 @@ class KegiatanController extends Controller
                     Storage::disk('public')->delete($documentation->image_path);
                     $documentation->delete();
                 });
+        }
+
+        if (isset($data['deskripsi'])) {
+            $data['deskripsi'] = $this->processBase64Images($data['deskripsi'], 'public', 'kegiatan_content');
         }
 
         $kegiatan->update($data);
