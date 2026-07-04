@@ -80,6 +80,13 @@
       line-height: 1.9;
       color: var(--text-dark);
     }
+    .article-content img, 
+    .article-content video, 
+    .article-content iframe {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 8px;
+    }
     .article-content p {
       margin-bottom: 20px;
     }

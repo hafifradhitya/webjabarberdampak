@@ -66,6 +66,13 @@
       line-height: 1.8;
       color: var(--text-dark);
     }
+    .detail-content img,
+    .detail-content video,
+    .detail-content iframe {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 8px;
+    }
     .detail-content h3 {
       margin-top: 30px;
       margin-bottom: 15px;
