@@ -3,85 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found - Akses Ditolak</title>
+    <title>404 | Not Found | Tidak Ditemukan</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/logo-jaber.png') }}">
     <style>
+        :root {
+            --primary-green: #0e3b21;
+            --primary-gold: #fad02c;
+            --bg-light: #f5faf5;
+            --text-main: #253225;
+            --text-muted: #626a62;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
         body {
-            background-color: #0a0a0a;
-            color: #00ff41;
-            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            background-color: var(--bg-light);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            flex-direction: column;
             text-align: center;
         }
-        .container {
-            border: 1px solid #00ff41;
-            padding: 40px;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        .error-container {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(14, 59, 33, 0.08);
             max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
+            width: 90%;
+            border-top: 6px solid var(--primary-gold);
+            border-bottom: 6px solid var(--primary-green);
         }
-        h1 {
-            font-size: 5rem;
-            margin: 0 0 15px 0;
-            text-shadow: 0 0 10px #00ff41;
-            color: #ff003c;
+        .error-code {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(14, 59, 33, 0.1);
+            padding-bottom: 24px;
         }
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #cccccc;
+        .error-message {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            font-weight: 600;
         }
-        .highlight {
-            color: #00ff41;
+        .error-description {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.7;
+            padding: 0 10px;
         }
-        .blinking-cursor {
-            font-weight: bold;
-            font-size: 1.2rem;
-            animation: 1s blink step-end infinite;
+        .path-highlight {
+            font-weight: 700;
+            color: var(--primary-green);
+            word-break: break-all;
+            background-color: rgba(250, 208, 44, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
-        @keyframes blink {
-            from, to { opacity: 0; }
-            50% { opacity: 1; }
-        }
-        a {
-            color: #0a0a0a;
-            background-color: #00ff41;
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-gold);
+            color: var(--primary-green);
             text-decoration: none;
-            padding: 10px 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            display: inline-block;
-            margin-top: 15px;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(250, 208, 44, 0.3);
+            border: none;
+            cursor: pointer;
         }
-        a:hover {
-            background-color: #ff003c;
-            color: #ffffff;
-            box-shadow: 0 0 15px #ff003c;
-            border-color: #ff003c;
+        .btn-back:hover {
+            background-color: #e5bd20;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(250, 208, 44, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>404</h1>
-        <p>
-            Tersesat? Atau sedang mencoba mencari celah? <br><br>
-            Kamu sedang berada di area <span class="highlight">yang tidak ada</span>. <br>
-            Tidak ada data yang bisa kamu ambil di sini. Sistem telah mencatat anomali akses ini.<br><br>
-            Pergilah sebelum jejak digitalmu terekam lebih jauh.
-        </p>
-        <div style="text-align: left; background: #000; padding: 15px; border-radius: 5px; color:#00ff41; margin-bottom: 20px;">
-            <span style="color:#ff003c;">root@server</span><span style="color:#fff;">:</span><span style="color:#00aaff;">~</span>$ Connection refused.<br>
-            <span style="color:#ff003c;">root@server</span><span style="color:#fff;">:</span><span style="color:#00aaff;">~</span>$ <span class="blinking-cursor">_</span>
+    <div class="error-container">
+        <div class="error-code">
+            404 | NOT FOUND | TIDAK DITEMUKAN
         </div>
-        <a href="{{ url('/') }}">Menyerah & Kembali</a>
+        <p class="error-message">
+            Maaf, halaman <span class="path-highlight">/{{ request()->path() }}</span> tidak dapat kami temukan.
+        </p>
+        <p class="error-description">
+            Sepertinya Anda sedikit keluar jalur. Halaman yang Anda tuju mungkin telah dipindahkan, dihapus, atau tautannya sudah tidak aktif.<br><br>
+            Jangan khawatir, mari kembali ke rute yang benar dan lanjutkan perjalanan Anda dalam memberikan dampak positif bersama <strong>Jabar Berdampak</strong>.
+        </p>
+        <a href="javascript:history.back()" class="btn-back">
+            &larr; Kembali ke Halaman Sebelumnya
+        </a>
     </div>
 </body>
 </html>
