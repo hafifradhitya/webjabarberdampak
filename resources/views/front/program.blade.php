@@ -64,7 +64,15 @@
     .program-title {
       font-size: 1.25rem;
       margin-bottom: 12px;
+    }
+    .program-title a {
       color: var(--primary-green);
+      text-decoration: none;
+      transition: text-decoration 0.2s ease, color 0.2s ease;
+    }
+    .program-title a:hover {
+      text-decoration: underline;
+      color: var(--primary-light);
     }
 
     .program-desc {
@@ -238,6 +246,11 @@
       font-weight: 700;
       margin-bottom: 4px;
       color: var(--text-light);
+      transition: text-decoration 0.2s ease;
+    }
+    
+    .activity-item:hover .activity-title {
+      text-decoration: underline;
     }
 
     .activity-date {
@@ -408,7 +421,7 @@
         <img src="{{ $prokerImage }}" alt="{{ $proker->nama_proker }}" class="program-img">
         <div class="program-content">
           <span class="program-category" data-status="{{ strtolower($proker->status ?? '') }}">{{ strtoupper($prokerStatusLabel) }}</span>
-          <h3 class="program-title">{{ $proker->nama_proker }}</h3>
+          <h3 class="program-title"><a href="javascript:void(0)" data-proker-open="{{ $prokerModalId }}">{{ $proker->nama_proker }}</a></h3>
           <p class="program-desc">{{ $proker->deskripsi }}</p>
           <button type="button" class="btn btn-outline-green program-detail-btn" data-proker-open="{{ $prokerModalId }}">Detail Program</button>
         </div>

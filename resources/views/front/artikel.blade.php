@@ -102,10 +102,28 @@
       padding: var(--spacing-md);
     }
 
+    .featured-title a {
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: text-decoration 0.2s ease, color 0.2s ease;
+    }
+    .featured-title a:hover {
+      text-decoration: underline;
+      color: var(--primary-light);
+    }
+
     .card-title {
       font-size: 1.1rem;
-      color: var(--primary-green);
       margin-bottom: 8px;
+    }
+    .card-title a {
+      color: var(--primary-green);
+      text-decoration: none;
+      transition: text-decoration 0.2s ease, color 0.2s ease;
+    }
+    .card-title a:hover {
+      text-decoration: underline;
+      color: var(--primary-light);
     }
 
     .card-excerpt {
@@ -331,7 +349,7 @@
             <span class="date" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> {{ $featuredArtikel->tanggal_publish ? $featuredArtikel->tanggal_publish->format('d M Y') : '-' }}</span>
             <span class="read-time" style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Baca {{ max(1, ceil(str_word_count(strip_tags($featuredArtikel->konten)) / 200)) }} menit</span>
           </div>
-          <h2 class="featured-title" style="font-size: 2.2rem; font-weight: 800; transition: color 0.3s;">{{ $featuredArtikel->judul }}</h2>
+          <h2 class="featured-title" style="font-size: 2.2rem; font-weight: 800; transition: color 0.3s;"><a href="{{ url('detail-artikel/' . $featuredArtikel->slug) }}">{{ $featuredArtikel->judul }}</a></h2>
           <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.1rem; line-height: 1.6;">{{ Str::limit(strip_tags($featuredArtikel->konten), 200) }}</p>
           <a href="{{ url('/detail-artikel', $featuredArtikel->slug) }}" class="btn btn-primary" style="padding: 12px 24px;">Baca Selengkapnya <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px; display: inline-block; vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
@@ -348,7 +366,7 @@
               <span style="color: var(--accent-green); font-weight: 600; padding: 2px 8px; background: rgba(30,123,73,0.1); border-radius: 12px;">{{ $artikel->kategori }}</span>
               <span style="display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{ max(1, ceil(str_word_count(strip_tags($artikel->konten)) / 200)) }} mnt</span>
             </div>
-            <h3 class="card-title" style="flex: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 3.0em;">{{ $artikel->judul }}</h3>
+            <h3 class="card-title" style="flex: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 3.0em;"><a href="{{ url('detail-artikel/' . $artikel->slug) }}">{{ $artikel->judul }}</a></h3>
             <p class="card-excerpt" style="flex: 1;">{{ Str::limit(strip_tags($artikel->konten), 90) }}</p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.05);">
               <span style="font-size: 0.8rem; color: var(--text-muted);">{{ $artikel->tanggal_publish ? $artikel->tanggal_publish->format('d M Y') : '-' }}</span>

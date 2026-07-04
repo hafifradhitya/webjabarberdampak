@@ -19,6 +19,7 @@ class Artikel extends Model
         'konten',
         'gambar',
         'status',
+        'is_headline',
     ];
 
     protected function casts(): array

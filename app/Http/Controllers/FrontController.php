@@ -45,8 +45,9 @@ class FrontController extends Controller
 
         $query->latest('tanggal_publish');
 
-        // Featured article is the first result of the filtered query
-        $featuredArtikel = $query->first();
+        // Featured article is the first result of the filtered query that has is_headline = true
+        // If no headline exists, fallback to the latest article
+        $featuredArtikel = (clone $query)->where('is_headline', true)->first() ?? $query->first();
 
         // The rest of the grid articles (paginate 9 per page)
         if ($featuredArtikel) {

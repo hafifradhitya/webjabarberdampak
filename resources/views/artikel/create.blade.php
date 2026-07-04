@@ -121,6 +121,14 @@
                     </div>
 
                     <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="isHeadlineSwitch" name="is_headline" {{ old('is_headline') ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="isHeadlineSwitch">Jadikan Headline News</label>
+                        </div>
+                        <small class="text-muted">Artikel akan muncul paling atas dan besar di halaman utama Berita.</small>
+                    </div>
+
+                    <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="status">
                             <option value="draft">Simpan sebagai Draft</option>

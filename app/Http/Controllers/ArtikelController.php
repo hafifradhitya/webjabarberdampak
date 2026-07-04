@@ -49,6 +49,11 @@ class ArtikelController extends Controller
         if (isset($data['konten'])) {
             $data['konten'] = $this->processBase64Images($data['konten'], 'public', 'artikels_content');
         }
+        
+        $data['is_headline'] = $request->has('is_headline');
+        if ($data['is_headline']) {
+            Artikel::where('is_headline', true)->update(['is_headline' => false]);
+        }
 
         Artikel::create($data);
 
@@ -88,6 +93,11 @@ class ArtikelController extends Controller
         // Process base64 images in content
         if (isset($data['konten'])) {
             $data['konten'] = $this->processBase64Images($data['konten'], 'public', 'artikels_content');
+        }
+
+        $data['is_headline'] = $request->has('is_headline');
+        if ($data['is_headline']) {
+            Artikel::where('id', '!=', $id)->where('is_headline', true)->update(['is_headline' => false]);
         }
 
         $artikel->update($data);

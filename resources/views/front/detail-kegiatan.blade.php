@@ -278,6 +278,14 @@
         height: 58px;
       }
     }
+    
+    .related-item h4 {
+      transition: text-decoration 0.2s ease, color 0.2s ease;
+    }
+    .related-item:hover h4 {
+      text-decoration: underline;
+      color: var(--primary-light) !important;
+    }
   </style>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{ asset('assets/logo-jaber.png') }}">
@@ -445,7 +453,7 @@
             <div class="related-track" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 20px;">
               <style>.related-track::-webkit-scrollbar { display: none; }</style>
               @foreach($relatedKegiatans as $related)
-              <a href="{{ url('/detail-kegiatan', $related->slug) }}" style="flex: 0 0 clamp(260px, 45%, 320px); scroll-snap-align: start; display: block; background: var(--bg-white); border: 1px solid #e8eee8; border-radius: 12px; overflow: hidden; transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+              <a href="{{ url('/detail-kegiatan', $related->slug) }}" class="related-item" style="flex: 0 0 clamp(260px, 45%, 320px); scroll-snap-align: start; display: block; background: var(--bg-white); border: 1px solid #e8eee8; border-radius: 12px; overflow: hidden; transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <img src="{{ $related->banner ? asset('storage/' . $related->banner) : 'https://images.unsplash.com/photo-1618477461853-cf6ed80fbfc9?auto=format&fit=crop&q=80&w=400' }}" alt="{{ $related->nama_kegiatan }}" style="width: 100%; height: 160px; object-fit: cover;">
                 <div style="padding: 20px;">
                   <span style="color: var(--accent-green); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">{{ match(strtolower($related->status)) { 'upcoming' => 'Akan Datang', 'ongoing' => 'Sedang Berjalan', 'completed' => 'Selesai', default => 'Aktivitas' } }}</span>
