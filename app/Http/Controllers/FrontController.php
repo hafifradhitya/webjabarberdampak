@@ -29,12 +29,34 @@ class FrontController extends Controller
         return view('front.detail-kegiatan', compact('kegiatan'));
     }
 
-    public function artikel()
+    public function artikel(Request $request)
     {
-        $artikels = Artikel::where('status', 'Published')->latest('tanggal_publish')->get();
         $kategoris = Artikel::where('status', 'Published')->select('kategori')->distinct()->pluck('kategori');
-        
-        return view('front.artikel', compact('artikels', 'kategoris'));
+
+        $query = Artikel::where('status', 'Published');
+
+        if ($request->has('kategori') && $request->kategori != 'all') {
+            $query->where('kategori', strtolower($request->kategori));
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
+        $query->latest('tanggal_publish');
+
+        // Featured article is the first result of the filtered query
+        $featuredArtikel = $query->first();
+
+        // The rest of the grid articles (paginate 9 per page)
+        if ($featuredArtikel) {
+            $gridQuery = clone $query;
+            $gridArtikels = $gridQuery->where('id', '!=', $featuredArtikel->id)->paginate(9)->withQueryString();
+        } else {
+            $gridArtikels = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 9);
+        }
+
+        return view('front.artikel', compact('featuredArtikel', 'gridArtikels', 'kategoris'));
     }
 
     public function detailArtikel($slug)

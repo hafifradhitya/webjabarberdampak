@@ -240,22 +240,21 @@
     }
 
     /* Category Limitation Logic */
-    .article-tab:nth-child(n+3) {
-        display: none;
+    @media (max-width: 767px) {
+      .article-tab:nth-child(n+4) {
+          display: none !important;
+      }
     }
-    
     @media (min-width: 768px) {
+      .article-tab:nth-child(n+6) {
+          display: none !important;
+      }
       .program-controls {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
       }
-      .article-tab:nth-child(n+3) {
-          display: inline-block;
-      }
-      .article-tab:nth-child(n+6) {
-          display: none;
-      }
+    }
     }
     
     .see-all-btn {
@@ -304,22 +303,23 @@
       
       <div class="program-controls" style="margin-bottom: 30px; justify-content: space-between; gap: 16px;">
         <div class="program-tabs" id="articleCategoryTabs" style="overflow-x: auto; white-space: nowrap; padding-bottom: 5px;">
-          <button class="article-tab program-tab active" data-filter="all">Semua</button>
+          @php $currentKategori = request('kategori', 'all'); @endphp
+          <a href="{{ url('berita-artikel') }}" class="article-tab program-tab {{ $currentKategori == 'all' ? 'active' : '' }}" style="text-decoration: none;">Semua</a>
           @foreach($kategoris as $kategori)
-          <button class="article-tab program-tab" data-filter="{{ strtolower($kategori) }}">{{ $kategori }}</button>
+          <a href="{{ url('berita-artikel') }}?kategori={{ urlencode(strtolower($kategori)) }}" class="article-tab program-tab {{ $currentKategori == strtolower($kategori) ? 'active' : '' }}" style="text-decoration: none;">{{ $kategori }}</a>
           @endforeach
           <button class="program-tab see-all-btn" id="btnOpenCategoryModal">+ Lainnya</button>
         </div>
-        <div class="program-search" style="min-width: 250px;">
-          <input type="text" id="searchArticle" placeholder="Cari artikel...">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </div>
+        <form action="{{ url('berita-artikel') }}" method="GET" class="program-search" style="min-width: 250px;">
+          @if(request()->has('kategori') && request('kategori') != 'all')
+              <input type="hidden" name="kategori" value="{{ request('kategori') }}">
+          @endif
+          <input type="text" name="search" id="searchArticle" placeholder="Cari artikel..." value="{{ request('search') }}">
+          <button type="submit" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+        </form>
       </div>
-
-      @php
-          $featuredArtikel = $artikels->first();
-          $gridArtikels = $artikels->slice(1);
-      @endphp
 
       <!-- Featured Article -->
       @if($featuredArtikel)
@@ -365,14 +365,14 @@
         @endforelse
       </div>
 
-      <div id="articleEmptyState" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+      <div id="articleEmptyState" style="display: {{ $gridArtikels->isEmpty() && !$featuredArtikel ? 'block' : 'none' }}; grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 16px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
         <h3 style="color: var(--primary-green); margin-bottom: 8px;">Tidak Ada Artikel Ditemukan</h3>
         <p style="color: var(--text-muted);">Coba ubah kategori atau kata kunci pencarian Anda.</p>
       </div>
 
-      <div id="loadMoreContainer" style="text-align: center; margin-top: 40px; display: none;">
-        <button id="loadMoreBtn" class="btn btn-primary" style="padding: 12px 30px; font-weight: 600;">Muat Lebih Banyak Artikel</button>
+      <div id="loadMoreContainer" style="margin-top: 40px;">
+        {{ $gridArtikels->appends(request()->query())->links('vendor.pagination.custom') }}
       </div>
 
     </div>
@@ -427,11 +427,11 @@
       
       <div class="category-checkboxes" style="display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="radio" name="modalCategory" class="modal-cat-radio" value="all" style="width: 18px; height: 18px; accent-color: var(--primary-green);" checked> Semua Kategori
+          <input type="radio" name="modalCategory" class="modal-cat-radio" value="all" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ $currentKategori == 'all' ? 'checked' : '' }}> Semua Kategori
         </label>
         @foreach($kategoris as $kategori)
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="radio" name="modalCategory" class="modal-cat-radio" value="{{ strtolower($kategori) }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);"> {{ $kategori }}
+          <input type="radio" name="modalCategory" class="modal-cat-radio" value="{{ strtolower($kategori) }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ $currentKategori == strtolower($kategori) ? 'checked' : '' }}> {{ $kategori }}
         </label>
         @endforeach
       </div>
@@ -441,134 +441,11 @@
   <!-- Inline JS for Article Interactivity -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('searchArticle');
       const filterTabs = document.querySelectorAll('.article-tab');
-      const articleGrid = document.querySelector('.article-grid');
-      const articleCards = document.querySelectorAll('.article-card');
-      const featuredArticle = document.querySelector('.featured-article');
-      const emptyState = document.getElementById('articleEmptyState');
-      const loadMoreBtn = document.getElementById('loadMoreBtn');
-      const loadMoreContainer = document.getElementById('loadMoreContainer');
       const btnOpenCategoryModal = document.getElementById('btnOpenCategoryModal');
       const categoryModal = document.getElementById('categoryModal');
       const closeCategoryBtn = document.getElementById('closeCategoryBtn');
       const modalRadios = document.querySelectorAll('.modal-cat-radio');
-      
-      let currentFilter = 'all';
-      let searchQuery = '';
-      const itemsPerPage = 6;
-      let visibleCount = itemsPerPage;
-
-      function updateDisplay() {
-        let matchCount = 0;
-        
-        // Handle featured article
-        if (featuredArticle) {
-          const title = featuredArticle.getAttribute('data-title') || '';
-          const category = featuredArticle.getAttribute('data-category') || '';
-          const matchesSearch = title.includes(searchQuery);
-          const matchesFilter = currentFilter === 'all' || category === currentFilter;
-          
-          if (matchesSearch && matchesFilter) {
-            featuredArticle.style.display = 'block';
-          } else {
-            featuredArticle.style.display = 'none';
-          }
-        }
-
-        // Handle grid articles
-        articleCards.forEach(card => {
-          const title = card.getAttribute('data-title') || '';
-          const category = card.getAttribute('data-category') || '';
-          
-          const matchesSearch = title.includes(searchQuery);
-          const matchesFilter = currentFilter === 'all' || category === currentFilter;
-          
-          if (matchesSearch && matchesFilter) {
-            if (matchCount < visibleCount) {
-              card.style.display = 'flex';
-            } else {
-              card.style.display = 'none';
-            }
-            matchCount++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        // Load More button logic
-        if (matchCount > visibleCount) {
-          if (loadMoreContainer) loadMoreContainer.style.display = 'block';
-        } else {
-          if (loadMoreContainer) loadMoreContainer.style.display = 'none';
-        }
-
-        // Empty state logic
-        const featuredIsVisible = featuredArticle && featuredArticle.style.display !== 'none';
-        if (matchCount === 0 && !featuredIsVisible) {
-          if (emptyState) emptyState.style.display = 'block';
-          if (articleGrid) articleGrid.style.display = 'none';
-        } else {
-          if (emptyState) emptyState.style.display = 'none';
-          if (articleGrid) articleGrid.style.display = 'grid';
-        }
-      }
-
-      function applyFilter(filterValue) {
-        currentFilter = filterValue;
-        visibleCount = itemsPerPage;
-        
-        // Sync tabs
-        let tabFound = false;
-        filterTabs.forEach(t => {
-          t.classList.remove('active');
-          if (t.getAttribute('data-filter') === filterValue) {
-             t.classList.add('active');
-             tabFound = true;
-          }
-        });
-        
-        // If the selected category is not in the visible tabs, highlight the "+ Lainnya" button
-        if(btnOpenCategoryModal) {
-            if(!tabFound && filterValue !== 'all') {
-                btnOpenCategoryModal.classList.add('active');
-            } else {
-                btnOpenCategoryModal.classList.remove('active');
-            }
-        }
-
-        // Sync modal radios
-        modalRadios.forEach(radio => {
-          radio.checked = (radio.value === filterValue);
-        });
-
-        updateDisplay();
-      }
-
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          searchQuery = e.target.value.toLowerCase();
-          visibleCount = itemsPerPage;
-          updateDisplay();
-        });
-      }
-
-      if (filterTabs) {
-        filterTabs.forEach(tab => {
-          if(tab.id !== 'btnOpenCategoryModal') {
-            tab.addEventListener('click', () => {
-                applyFilter(tab.getAttribute('data-filter').toLowerCase());
-            });
-          }
-        });
-      }
-
-      if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-          visibleCount += itemsPerPage;
-          updateDisplay();
-        });
-      }
       
       // Modal Logic
       if(btnOpenCategoryModal && categoryModal) {
@@ -590,16 +467,39 @@
       if(modalRadios) {
           modalRadios.forEach(radio => {
               radio.addEventListener('change', (e) => {
-                  applyFilter(e.target.value);
-                  setTimeout(() => {
-                      if(categoryModal) categoryModal.style.display = 'none';
-                  }, 150);
+                  let url = new URL(window.location.href);
+                  let val = e.target.value;
+                  if (val === 'all') {
+                      url.searchParams.delete('kategori');
+                  } else {
+                      url.searchParams.set('kategori', val);
+                  }
+                  // Reset to page 1 on filter change
+                  url.searchParams.delete('page');
+                  window.location.href = url.toString();
               });
           });
       }
 
-      // Initialize
-      updateDisplay();
+      // Update Lainnya Button
+      function updateLainnyaButton() {
+          if (!btnOpenCategoryModal) return;
+          let hiddenCount = 0;
+          filterTabs.forEach(tab => {
+              if (tab.id !== 'btnOpenCategoryModal' && window.getComputedStyle(tab).display === 'none') {
+                  hiddenCount++;
+              }
+          });
+          if (hiddenCount > 0) {
+              btnOpenCategoryModal.style.display = 'inline-block';
+              btnOpenCategoryModal.innerText = '+ ' + hiddenCount + ' Lainnya';
+          } else {
+              btnOpenCategoryModal.style.display = 'none';
+          }
+      }
+      
+      window.addEventListener('resize', updateLainnyaButton);
+      updateLainnyaButton();
     });
   </script>
 

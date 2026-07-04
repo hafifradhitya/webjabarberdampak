@@ -701,6 +701,7 @@
     @media (max-width: 768px) {
       .about-organization {
         padding: 56px 0;
+        background: linear-gradient(180deg, var(--primary-green) 0%, var(--primary-green) 25%, #f5faf5 25%, #f5faf5 100%);
       }
 
       .about-grid,
