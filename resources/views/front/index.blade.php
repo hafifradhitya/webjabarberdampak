@@ -528,8 +528,8 @@
     .modal-body {
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
       flex: 1;
+      min-height: 0;
     }
 
     .modal-left {
@@ -538,6 +538,7 @@
       text-align: center;
       border-bottom: 1px solid rgba(14, 59, 33, 0.08);
       position: relative;
+      flex-shrink: 0;
     }
 
     .modal-left::after {
@@ -554,6 +555,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     @media (min-width: 768px) {
@@ -650,6 +652,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .modal-desc h4 {
@@ -662,6 +665,9 @@
 
     .modal-desc-text {
       padding-right: 16px;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
     }
 
     .modal-desc-text::-webkit-scrollbar {
@@ -1067,20 +1073,18 @@
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="{{ asset('assets/gambarorganisasi/14.jpeg') }}"
+              <img src="{{ asset('assets/gambarorganisasi/edgina.jpeg') }}"
                 alt="Edgina Anastasia" class="profile-img">
               <div class="profile-name">Edgina Anastasia</div>
               <div class="profile-role">Bendahara</div>
               <div class="profile-divisi">BPH</div>
               <div class="profile-desc" style="display: none;">
-                Nama: Edgina Anastasia<br>
-                Instagram: xorain_cutee<br>
-                divisi: Bendahara<br><br>
-                seorang pelajar yang aktif dalam bidang akademik, organisasi, dan kepemudaan. Saya merupakan peraih
-                Medali Emas Olimpiade Bahasa Indonesia Tingkat Nasional dan Medali Perak Lomba Bahasa Indonesia Tingkat
-                Nasional. Saya juga pernah menjabat sebagai Bendahara MPK, Ketua Ekstrakurikuler Informatika Club, serta
-                Duta Inisiatif Indonesia. Saya memiliki minat dalam kepemimpinan, pengembangan diri, dan pemberdayaan
-                generasi muda, serta berkomitmen untuk terus berkarya dan memberikan dampak positif bagi masyarakat.
+                <strong>Nama:</strong> Edgina Anastasia<br>
+                <strong>Instagram:</strong> xorain_cutee<br>
+                <strong>Divisi:</strong> Bendahara<br><br>
+                Seorang pelajar yang aktif dalam bidang akademik, organisasi, dan kepemudaan. Peraih Medali Emas Olimpiade Bahasa Indonesia Tingkat Nasional dan Medali Perak Lomba Bahasa Indonesia Tingkat Nasional.<br><br>
+                Pernah menjabat sebagai Bendahara MPK, Ketua Ekstrakurikuler Informatika Club, serta Duta Inisiatif Indonesia. 
+                Memiliki minat yang besar dalam bidang kepemimpinan, pengembangan diri, dan pemberdayaan generasi muda, serta berkomitmen untuk terus berkarya dan memberikan dampak positif bagi masyarakat.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1157,14 +1161,46 @@
 
             <!-- Divisi PDD -->
             <div class="carousel-card">
-              <img src="https://ui-avatars.com/api/?name=M.+Fateeh&background=random&color=fff" alt="M. Fateeh"
+              <img src="{{ asset('assets/gambarorganisasi/fateeh.jpeg') }}" alt="M. Fateeh"
                 class="profile-img">
               <div class="profile-name">M. Fateeh</div>
               <div class="profile-role">Koordinator</div>
               <div class="profile-divisi">Divisi PDD</div>
               <div class="profile-desc" style="display: none;">
-                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
-                pemuda di Jawa Barat.
+                <strong>Nama:</strong> M. Fateeh<br>
+                <strong>Kampus:</strong> Institut Muslim Cendekia, Sukabumi<br>
+                <strong>Instagram:</strong> mfateeeh07<br><br>
+                <strong>Prestasi Akademik:</strong><br>
+                - Juara 1 Olimpiade Bahasa Arab Generasi Sains Nasional (OLGENSAINS)<br>
+                - Juara 2 Olimpiade Bahasa Arab Pelajar Pancasila Nasional (OP2N)<br>
+                - Juara 2 Olimpiade Bahasa Arab Kompetisi Siswa Sains Nasional (KS2N)<br>
+                - Juara 2 Olimpiade Bahasa Arab Indonesia Future Science Olympiad (IFSO)<br>
+                - Juara 3 Bahasa Arab Olimpiade Sains Madrasah Indonesia (OSMI) 2025<br>
+                - Juara 3 Bahasa Arab Olimpiade Kompetisi Sains Indonesia (KSI Vol. 2)<br>
+                - Juara 2 Kompetisi Desain Poster Islami (KDPI)<br>
+                - Juara Harapan 1 Pidato Bahasa Arab, Said Arabic Competition (SAC)<br>
+                - Juara Harapan 2 Bahasa Arab, Indonesian Science Language Olympiad (ISLO) 2026<br>
+                - Medali Emas Mahasiswa, Cendekia Language Competition (CLC) 2025<br>
+                - Medali Emas Olimpiade Bulughul Maram<br>
+                - Medali Emas Mahasiswa, Olimpiade Bahasa Arab (OLBA) 2025<br>
+                - Predikat Mumtaz Olimpiade Nahwu Shorof Online (ONS3) Mahasiswa<br>
+                - Medali Perak Olimpiade Akidah Akhlak Mahasiswa Tingkat Nasional (Olimnus Islamic 2025)<br>
+                - Medali Perunggu Bahasa Inggris Mahasiswa (OLAN 2025)<br>
+                - Predikat Mumtaz dan Gelar Non-Akademik C.MA., C.M.BA. pada uji kompetensi Internasional Program Pelatihan dan Sertifikasi Guru Bahasa Arab Profesional<br>
+                - Peserta Aktif Olimpiade Bahasa Arab Nasional TOAFL (Skor: 597)<br><br>
+                <strong>Pengalaman Organisasi:</strong><br>
+                - Ketua Putra Pencinta Alam (TRAPALA) 2018-2019<br>
+                - Founder Fatih Archery Tasikmalaya (2018)<br>
+                - Anggota Divisi Media Dakwah DEMA 2022-2023<br>
+                - Ketua Kamar Asrama (2024-2025)<br>
+                - Ketua Divisi Dakwah DEMA 2024-2025<br>
+                - Ketua UKM Archery Arraayah 2024-2025<br>
+                - Ketua Lomba OLISIA Nasional 2025<br>
+                - Anggota Divisi Media Komunitas Ciamis Mengaji 2025-2026<br>
+                - Anggota Divisi Media Arrayah Peduli 2025-2026<br>
+                - Ketua PUBDEKDOK Gemmi Persis Al-Ishlah 2025-2026<br>
+                - Anggota Pers Media Institut Muslim Cendekia (2026)<br>
+                - Anggota Syabab Creative Academy (SCA) 2026
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1244,26 +1280,44 @@
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://ui-avatars.com/api/?name=Zahwa+Mutiara+Tarisa&background=random&color=fff"
-                alt="Zahwa Mutiara Tarisa" class="profile-img">
-              <div class="profile-name">Zahwa Mutiara Tarisa</div>
+              <img src="{{ asset('assets/gambarorganisasi/zahwa.jpeg') }}"
+                alt="Nazwa Mutiara Tarisa" class="profile-img">
+              <div class="profile-name">Nazwa Mutiara Tarisa</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
-                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
-                pemuda di Jawa Barat.
+                <strong>Pengalaman Organisasi:</strong><br>
+                - Bagian Kebersihan OSIS SMP<br>
+                - Pengurus Rayon Kelas 9 SMA<br>
+                - Himpunan Mahasiswa (Hima) Agroteknologi<br>
+                - Unit Kegiatan Mahasiswa (UKM) Departemen Tilawah<br>
+                - Panitia Pekan Olahraga Mahasiswa (Porma)<br><br>
+                <strong>Prestasi:</strong><br>
+                - Juara 3 Olimpiade MIPA SD Tingkat Kabupaten<br>
+                - Medali Perunggu Olimpiade Kompetisi Sains Nasional (KSN-P) Biologi Tingkat Nasional<br>
+                - Medali Perunggu Olimpiade IOS Matematika Tingkat Nasional<br>
+                - Medali Emas Olimpiade PSPI Biologi Tingkat Nasional<br>
+                - Medali Perunggu Olimpiade ION Bahasa Indonesia Tingkat Nasional<br>
+                - Medali Emas Olimpiade NSC Biologi Tingkat Nasional<br>
+                - Medali Emas Olimpiade OSPENAS Bahasa Indonesia Tingkat Nasional<br>
+                - Medali Emas Olimpiade KSN Biologi Tingkat Nasional
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://ui-avatars.com/api/?name=Heln+Syakina+Azzahra&background=random&color=fff"
+              <img src="{{ asset('assets/gambarorganisasi/heln.jpeg') }}"
                 alt="Heln Syakina Azzahra" class="profile-img">
               <div class="profile-name">Heln Syakina Azzahra</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
-                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
-                pemuda di Jawa Barat.
+                <strong>Pengalaman & Pencapaian:</strong><br>
+                - Duta Motivator Muda Pendidikan Indonesia Batch 7<br>
+                - Pengurus Forum Anak Kabupaten Tasikmalaya (Hak dan Perlindungan Khusus)<br>
+                - Penyelenggara Seminar Youth Education Summit<br>
+                - Juara 1 Puisi PORSADIN<br>
+                - Juara 1 Kaligrafi Tingkat Kecamatan<br>
+                - Juara Puisi Daar El Fikri Language Contest (2 Kali)
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1289,19 +1343,18 @@
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="{{ asset('assets/gambarorganisasi/4.jpeg') }}" alt="Sinta Riyanti" class="profile-img">
+              <img src="{{ asset('assets/gambarorganisasi/sinta.jpeg') }}" alt="Sinta Riyanti" class="profile-img">
               <div class="profile-name">Sinta Riyanti</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
-                Nama : Sinta Riyanti<br>
-                ig : ssnta.girl<br>
-                Instansi : UIN Siber Syekh Nurjati Cirebon<br><br>
-                Halo semuanya, perkenalkan nama saya Sinta Riyantii. Sebagai Divisi Acara Komunitas Jabar Berdampak.
-                Saya memilih bergabung di Divisi Acara karena saya tertarik dengan proses perencanaan dan pelaksanaan
-                sebuah kegiatan. Saya senang bekerja sama dalam tim, belajar hal-hal baru, serta berusaha bertanggung
-                jawab terhadap tugas yang diberikan. Semoga di komunitas ini saya bisa memberikan kontribusi terbaik
-                sekaligus mendapatkan banyak pengalaman baru.
+                <strong>Nama:</strong> Sinta Riyanti<br>
+                <strong>Instagram:</strong> ssnta.girl<br>
+                <strong>Instansi:</strong> UIN Siber Syekh Nurjati Cirebon<br><br>
+                Halo semuanya, perkenalkan nama saya Sinta Riyanti dari Divisi Acara Komunitas Jabar Berdampak. 
+                Saya memilih bergabung di divisi ini karena sangat tertarik dengan proses perencanaan dan pelaksanaan sebuah kegiatan. 
+                Saya senang bekerja sama dalam tim, belajar hal-hal baru, serta selalu berusaha untuk bertanggung jawab penuh terhadap tugas yang diberikan. 
+                Semoga melalui komunitas ini, saya bisa memberikan kontribusi terbaik sekaligus mendapatkan banyak pengalaman baru yang berharga.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
