@@ -344,6 +344,8 @@
       }
     }
   </style>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ asset('assets/logo-jaber.png') }}">
 </head>
 <body>
 
@@ -518,7 +520,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-logo">Jabar Berdampak</div>
+          <img src="{{ asset('assets/logo-jaber.png') }}" alt="Logo Jabar Berdampak" class="footer-logo-img" style="max-width: 180px; height: auto; margin-bottom: 15px;">
           <p>Membangun masa depan yang berkelanjutan, satu komunitas pada satu waktu. Bergabunglah dalam perjalanan kami menuju bumi yang lebih hijau.</p>
         </div>
         <div class="footer-links">
