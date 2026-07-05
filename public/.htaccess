@@ -22,4 +22,10 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    
+    # SECURITY: Block access to the core folder
+    RewriteRule ^core/ - [F,L]
+
+    # SECURITY: Block access to dotfiles (.env, .git, etc)
+    RewriteRule (^\.|/\.) - [F,L]
 </IfModule>
