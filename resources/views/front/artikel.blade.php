@@ -435,7 +435,7 @@
   </footer>
 
   <!-- Category Filter Modal -->
-  <div class="modal-overlay" id="categoryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+  <div class="modal-overlay" id="categoryModal">
     <div class="modal-content" style="max-width: 400px; width: 90%; background: var(--bg-white); padding: 30px; border-radius: 20px; position: relative; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
       <button class="modal-close" id="closeCategoryBtn" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 2rem; cursor: pointer; color: var(--text-muted);">&times;</button>
       <h3 style="color: var(--primary-green); margin-bottom: 24px;">Semua Kategori</h3>
@@ -470,17 +470,17 @@
       if(btnOpenCategoryModal && categoryModal) {
           btnOpenCategoryModal.addEventListener('click', (e) => {
               e.preventDefault();
-              categoryModal.style.display = 'flex';
+              categoryModal.classList.add('active');
           });
       }
       if(closeCategoryBtn && categoryModal) {
           closeCategoryBtn.addEventListener('click', () => {
-              categoryModal.style.display = 'none';
+              categoryModal.classList.remove('active');
           });
       }
       if(categoryModal) {
           categoryModal.addEventListener('click', (e) => {
-              if (e.target === categoryModal) categoryModal.style.display = 'none';
+              if (e.target === categoryModal) categoryModal.classList.remove('active');
           });
       }
       
