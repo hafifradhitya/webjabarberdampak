@@ -36,7 +36,10 @@ class FrontController extends Controller
         $query = Artikel::where('status', 'Published');
 
         if ($request->has('kategori') && $request->kategori != 'all') {
-            $query->where('kategori', strtolower($request->kategori));
+            $kategoriInput = $request->kategori;
+            $kategorisArr = is_array($kategoriInput) ? $kategoriInput : explode(',', $kategoriInput);
+            $kategorisArr = array_map('strtolower', $kategorisArr);
+            $query->whereIn('kategori', $kategorisArr);
         }
 
         if ($request->has('search') && $request->search != '') {

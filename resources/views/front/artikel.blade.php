@@ -321,10 +321,13 @@
       
       <div class="program-controls" style="margin-bottom: 30px; justify-content: space-between; gap: 16px;">
         <div class="program-tabs" id="articleCategoryTabs" style="overflow-x: auto; white-space: nowrap; padding-bottom: 5px;">
-          @php $currentKategori = request('kategori', 'all'); @endphp
-          <a href="{{ url('berita-artikel') }}" class="article-tab program-tab {{ $currentKategori == 'all' ? 'active' : '' }}" style="text-decoration: none;">Semua</a>
+          @php 
+            $currentKategori = request('kategori', 'all'); 
+            $currentKategoriArr = $currentKategori == 'all' ? ['all'] : explode(',', $currentKategori);
+          @endphp
+          <a href="{{ url('berita-artikel') }}" class="article-tab program-tab {{ in_array('all', $currentKategoriArr) ? 'active' : '' }}" style="text-decoration: none;">Semua</a>
           @foreach($kategoris as $kategori)
-          <a href="{{ url('berita-artikel') }}?kategori={{ urlencode(strtolower($kategori)) }}" class="article-tab program-tab {{ $currentKategori == strtolower($kategori) ? 'active' : '' }}" style="text-decoration: none;">{{ $kategori }}</a>
+          <a href="{{ url('berita-artikel') }}?kategori={{ urlencode(strtolower($kategori)) }}" class="article-tab program-tab {{ in_array(strtolower($kategori), $currentKategoriArr) ? 'active' : '' }}" style="text-decoration: none;">{{ $kategori }}</a>
           @endforeach
           <button class="program-tab see-all-btn" id="btnOpenCategoryModal">+ Lainnya</button>
         </div>
@@ -442,11 +445,11 @@
       
       <div class="category-checkboxes" style="display: flex; flex-direction: column; gap: 15px; text-align: left; margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="radio" name="modalCategory" class="modal-cat-radio" value="all" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ $currentKategori == 'all' ? 'checked' : '' }}> Semua Kategori
+          <input type="checkbox" name="modalCategory" class="modal-cat-checkbox" value="all" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ in_array('all', $currentKategoriArr) ? 'checked' : '' }}> Semua Kategori
         </label>
         @foreach($kategoris as $kategori)
         <label style="display: flex; gap: 10px; cursor: pointer; align-items: center; font-weight: 500;">
-          <input type="radio" name="modalCategory" class="modal-cat-radio" value="{{ strtolower($kategori) }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ $currentKategori == strtolower($kategori) ? 'checked' : '' }}> {{ $kategori }}
+          <input type="checkbox" name="modalCategory" class="modal-cat-checkbox" value="{{ strtolower($kategori) }}" style="width: 18px; height: 18px; accent-color: var(--primary-green);" {{ in_array(strtolower($kategori), $currentKategoriArr) ? 'checked' : '' }}> {{ $kategori }}
         </label>
         @endforeach
       </div>
@@ -463,7 +466,7 @@
       const btnOpenCategoryModal = document.getElementById('btnOpenCategoryModal');
       const categoryModal = document.getElementById('categoryModal');
       const closeCategoryBtn = document.getElementById('closeCategoryBtn');
-      const modalRadios = document.querySelectorAll('.modal-cat-radio');
+      const modalCheckboxes = document.querySelectorAll('.modal-cat-checkbox');
       const btnApplyCategoryModal = document.getElementById('btnApplyCategoryModal');
       
       // Modal Logic
@@ -484,17 +487,29 @@
           });
       }
       
+      if(modalCheckboxes) {
+          modalCheckboxes.forEach(cb => {
+              cb.addEventListener('change', (e) => {
+                  if (e.target.value === 'all' && e.target.checked) {
+                      modalCheckboxes.forEach(other => { if (other.value !== 'all') other.checked = false; });
+                  } else if (e.target.value !== 'all' && e.target.checked) {
+                      modalCheckboxes.forEach(other => { if (other.value === 'all') other.checked = false; });
+                  }
+              });
+          });
+      }
+      
       if(btnApplyCategoryModal) {
           btnApplyCategoryModal.addEventListener('click', () => {
-              let selectedVal = 'all';
-              modalRadios.forEach(radio => {
-                  if(radio.checked) selectedVal = radio.value;
+              let selectedVals = [];
+              modalCheckboxes.forEach(cb => {
+                  if(cb.checked && cb.value !== 'all') selectedVals.push(cb.value);
               });
               let url = new URL(window.location.href);
-              if (selectedVal === 'all') {
+              if (selectedVals.length === 0) {
                   url.searchParams.delete('kategori');
               } else {
-                  url.searchParams.set('kategori', selectedVal);
+                  url.searchParams.set('kategori', selectedVals.join(','));
               }
               // Reset to page 1 on filter change
               url.searchParams.delete('page');
