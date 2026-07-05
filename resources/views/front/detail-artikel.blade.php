@@ -290,7 +290,7 @@
         <div class="footer-links">
           <h4>Lokasi</h4>
           <p>Jawa Barat, Indonesia</p>
-          <p>Email: jawabaratberdampak@gmail.com</p>
+          <p>Email: jabarberdampak423@gmail.com</p>
           <p>Telepon: 085719305028</p>
         </div>
       </div>
