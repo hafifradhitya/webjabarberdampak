@@ -450,6 +450,9 @@
         </label>
         @endforeach
       </div>
+      <div style="margin-top: 20px;">
+        <button id="btnApplyCategoryModal" style="background: var(--primary-green); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: background 0.3s;">Terapkan</button>
+      </div>
     </div>
   </div>
 
@@ -461,10 +464,12 @@
       const categoryModal = document.getElementById('categoryModal');
       const closeCategoryBtn = document.getElementById('closeCategoryBtn');
       const modalRadios = document.querySelectorAll('.modal-cat-radio');
+      const btnApplyCategoryModal = document.getElementById('btnApplyCategoryModal');
       
       // Modal Logic
       if(btnOpenCategoryModal && categoryModal) {
-          btnOpenCategoryModal.addEventListener('click', () => {
+          btnOpenCategoryModal.addEventListener('click', (e) => {
+              e.preventDefault();
               categoryModal.style.display = 'flex';
           });
       }
@@ -479,20 +484,21 @@
           });
       }
       
-      if(modalRadios) {
-          modalRadios.forEach(radio => {
-              radio.addEventListener('change', (e) => {
-                  let url = new URL(window.location.href);
-                  let val = e.target.value;
-                  if (val === 'all') {
-                      url.searchParams.delete('kategori');
-                  } else {
-                      url.searchParams.set('kategori', val);
-                  }
-                  // Reset to page 1 on filter change
-                  url.searchParams.delete('page');
-                  window.location.href = url.toString();
+      if(btnApplyCategoryModal) {
+          btnApplyCategoryModal.addEventListener('click', () => {
+              let selectedVal = 'all';
+              modalRadios.forEach(radio => {
+                  if(radio.checked) selectedVal = radio.value;
               });
+              let url = new URL(window.location.href);
+              if (selectedVal === 'all') {
+                  url.searchParams.delete('kategori');
+              } else {
+                  url.searchParams.set('kategori', selectedVal);
+              }
+              // Reset to page 1 on filter change
+              url.searchParams.delete('page');
+              window.location.href = url.toString();
           });
       }
 
