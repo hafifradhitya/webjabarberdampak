@@ -24,23 +24,25 @@ class UserController extends Controller
         $request->validate([
             'name'  => 'required',
             'email' => 'required|email|unique:users,email' . ($id ? ",$id" : ''),
+            'password' => 'nullable|min:8|confirmed',
         ], [
             'name.required'  => 'Nama tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.email'    => 'Email tidak valid',
             'email.unique'   => 'Email sudah terdaftar',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Password tidak sama dengan konfirmasi password',
         ]);
 
         $data = $request->only(['name', 'email']);
 
-        // Jika data baru, buat password default
         if (!$id) {
-            $data['password'] = Hash::make('password');
+            $data['password'] = Hash::make($request->filled('password') ? $request->password : 'password');
         }
 
         User::updateOrCreate(['id' => $id], $data);
 
-        toast()->success('User berhasil disimpan');
+        toast()->success($id ? 'User berhasil diperbarui' : 'User berhasil disimpan');
         return redirect()->route('users.index');
     }
 

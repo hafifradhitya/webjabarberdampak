@@ -1042,14 +1042,24 @@
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="https://ui-avatars.com/api/?name=Gita+Nurazizah&background=random&color=fff"
+              <img src="{{ asset('assets/gambarorganisasi/gita.jpeg') }}"
                 alt="Gita Nurazizah" class="profile-img">
               <div class="profile-name">Gita Nurazizah</div>
               <div class="profile-role">Sekretaris 1</div>
               <div class="profile-divisi">BPH</div>
               <div class="profile-desc" style="display: none;">
-                Anggota dari Jabar Berdampak yang berdedikasi tinggi untuk pelestarian lingkungan dan pemberdayaan
-                pemuda di Jawa Barat.
+                <strong>Biografi:</strong><br>
+                Gita Nurazizah merupakan mahasiswi Universitas Islam Negeri Siber Syekh Nurjati Cirebon yang aktif
+                dalam bidang kepemudaan, kepemimpinan, dan organisasi. Saat ini merupakan Founder Duta Inspirator Muda
+                Indonesia, sekaligus mengemban amanah sebagai Sekretaris Umum 2 HIMA-ILHA periode 2026-2027 dan
+                Pengurus Pusat Duta Prestasi Muda Indonesia. Berbagai prestasi tingkat nasional telah diraih di bidang
+                akademik, keagamaan, kepenulisan, dan desain poster sebagai wujud dedikasi dalam mengembangkan potensi
+                diri. Setiap proses menjadi kesempatan untuk terus belajar, bertumbuh, berkarya, serta menghadirkan
+                manfaat dan dampak positif bagi masyarakat.<br><br>
+                <strong>Deskripsi Singkat:</strong><br>
+                Percaya bahwa ilmu, kepemimpinan, dan kepedulian merupakan fondasi untuk menciptakan perubahan yang
+                bermakna. Berkomitmen untuk terus bertumbuh, menginspirasi, serta menghadirkan manfaat melalui karya,
+                kolaborasi, dan pengabdian kepada masyarakat.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>

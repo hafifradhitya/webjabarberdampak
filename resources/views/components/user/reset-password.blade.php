@@ -18,7 +18,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Ketika Password User direset maka password User tersebut akan menjadi default yaitu <strong>"password"</strong> </p>
+                    <p>Ketika password user direset, user tersebut bisa login kembali memakai email terdaftar dan password default <strong>password</strong>.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

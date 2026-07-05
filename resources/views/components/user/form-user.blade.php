@@ -32,6 +32,25 @@
                             <input type="text" name="name" class="form-control"
                                 value="{{ $id ? $name : old('name') }}">
                         </div>
+
+                        @unless ($id)
+                            <div class="alert alert-info my-3">
+                                User baru bisa login memakai email yang didaftarkan. Isi password awal di bawah, atau biarkan kosong untuk memakai password default <strong>password</strong>.
+                            </div>
+
+                            <div class="form-group my-1">
+                                <label>Password Awal</label>
+                                <input type="password" name="password" class="form-control" autocomplete="new-password" placeholder="Minimal 8 karakter">
+                                @error('password')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group my-1">
+                                <label>Konfirmasi Password Awal</label>
+                                <input type="password" name="password_confirmation" class="form-control" autocomplete="new-password" placeholder="Ulangi password awal">
+                            </div>
+                        @endunless
                     </div>
 
                     <div class="modal-footer justify-content-between">
