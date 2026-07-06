@@ -1012,11 +1012,27 @@
               <div class="profile-role">Ketua</div>
               <div class="profile-divisi">BPH</div>
               <div class="profile-desc" style="display: none;">
-                GRIYANDI<br>
-                INSTAGRAM: ya_ndhi<br><br>
-                MAHASISWA SEKOLAH TINGGI ILMU DAKWAH MOHAMMAD NATSIR BEKASI<br><br>
-                KETUA LEADERSHIP TRAINING CENTER STID MOHAMMAD NATSIR BEKASI<br><br>
-                FOUNDER JAWA BARAT BERDAMPAK
+                <strong>Tentang:</strong><br>
+                Griyandi<br>
+                Instagram: ya_ndhi<br><br>
+                Griyandi merupakan mahasiswa Sekolah Tinggi Ilmu Dakwah (STID) Mohammad Natsir yang aktif dalam
+                pengembangan kepemimpinan, literasi, dan pemberdayaan masyarakat. Saat ini, ia dipercaya mengemban
+                amanah sebagai Ketua Leadership Training Center (LTC) STID Mohammad Natsir, sebuah lembaga yang
+                berfokus pada pembinaan karakter dan kepemimpinan mahasiswa. Dalam perannya, Griyandi berkomitmen
+                membangun generasi yang berintegritas, berakhlak, dan memiliki semangat pengabdian kepada
+                masyarakat.<br><br>
+                Selain aktif di lingkungan kampus, Griyandi juga merupakan CEO & Founder Jawa Barat Berdampak, sebuah
+                inisiatif yang berorientasi pada pengembangan sumber daya manusia, kepemudaan, dan kontribusi sosial.
+                Dengan semangat belajar dan berkarya, ia terus berupaya menghadirkan manfaat melalui pendidikan,
+                kepemimpinan, dan aksi nyata.<br><br>
+                <strong>Motto Hidup:</strong><br>
+                "Menjadi manusia baik dan memahamkan manusia."<br><br>
+                <strong>Prestasi:</strong><br>
+                Ketua Leadership Training Center (LTC) STID Mohammad Natsir.<br>
+                Juara 2 Mahasiswa dengan Peminjaman Buku Terbanyak antar program studi di STID Mohammad Natsir.<br>
+                Peraih Medali Emas pada Kompetisi Nasional Indonesia Batch 13.<br>
+                CEO & Founder Jawa Barat Berdampak, sebuah komunitas yang bergerak dalam pengembangan kepemudaan,
+                kepemimpinan, dan dampak sosial.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1174,7 +1190,7 @@
               <img src="{{ asset('assets/gambarorganisasi/fateeh.jpeg') }}" alt="M. Fateeh"
                 class="profile-img">
               <div class="profile-name">M. Fateeh</div>
-              <div class="profile-role">Koordinator</div>
+              <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi PDD</div>
               <div class="profile-desc" style="display: none;">
                 <strong>Nama:</strong> M. Fateeh<br>
@@ -1218,7 +1234,7 @@
               <img src="{{ asset('assets/gambarorganisasi/9.jpeg') }}"
                 alt="Safa Azzaira Putri" class="profile-img">
               <div class="profile-name">Safa Azzaira Putri</div>
-              <div class="profile-role">Anggota</div>
+              <div class="profile-role">Ketua PDD</div>
               <div class="profile-divisi">Divisi PDD</div>
               <div class="profile-desc" style="display: none;">
                 Nama : Safa Azzaira Putri<br>
@@ -1235,7 +1251,7 @@
             <div class="carousel-card">
               <img src="{{ asset('assets/gambarorganisasi/13.jpeg') }}" alt="Nadia Sapitri" class="profile-img">
               <div class="profile-name">Nadia Sapitri</div>
-              <div class="profile-role">Koordinator</div>
+              <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
                 Hallo kk kk🤩🙌🏻<br>
@@ -1371,7 +1387,7 @@
             <div class="carousel-card">
               <img src="{{ asset('assets/gambarorganisasi/5.jpeg') }}" alt="Adinda Maimanah" class="profile-img">
               <div class="profile-name">Adinda Maimanah</div>
-              <div class="profile-role">Anggota</div>
+              <div class="profile-role">Ketua Acara</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
                 Nama : Adinda Maimanah<br>
@@ -1443,7 +1459,7 @@
         <div class="footer-links">
           <h4>Media Sosial</h4>
           <ul class="social-icons">
-            <li><a href="https://www.instagram.com/jabarberdampak?igsh=bjI4MjlkNGRxbTAz" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            <li><a href="https://www.instagram.com/jabarberdampak/" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -1468,6 +1484,7 @@
   <!-- Kodein Easter Egg Trigger -->
   <script>
     (function() {
+      const kodeinUrl = "{{ url('/kodein') }}";
       let secretCode = ["k", "o", "d", "e", "i", "n"];
       let inputPos = 0;
       document.addEventListener("keydown", function(e) {
@@ -1475,7 +1492,7 @@
         if (e.key.toLowerCase() === secretCode[inputPos]) {
           inputPos++;
           if (inputPos === secretCode.length) {
-            window.location.href = "{{ url("/kodein") }}";
+            window.location.href = kodeinUrl;
             inputPos = 0;
           }
         } else {
@@ -1491,7 +1508,7 @@
           clearTimeout(clickTimer);
           if (clickCount >= 5) {
             e.preventDefault();
-            window.location.href = "{{ url("/kodein") }}";
+            window.location.href = kodeinUrl;
           }
           clickTimer = setTimeout(() => { clickCount = 0; }, 500);
         });
