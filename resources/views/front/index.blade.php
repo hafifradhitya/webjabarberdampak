@@ -768,7 +768,7 @@
   <header class="sticky-header">
     <div class="container">
       <nav class="navbar">
-        <div class="logo">Jabar Berdampak</div>
+        <a href="{{ url('/') }}" class="logo" style="text-decoration: none;">Jabar Berdampak</a>
         <button class="hamburger">
           <span></span>
           <span></span>
@@ -1089,12 +1089,12 @@
                 <strong>Biografi:</strong><br>
                 Nabila Syafia Tanjung merupakan siswi kelas XI jurusan Akuntansi di SMKS Sandikta. Saat ini dipercaya
                 sebagai Sekretaris 2 Komunitas Jabar Berdampak. Memiliki ketertarikan pada bidang administrasi,
-                akuntansi, komunikasi, dan pengembangan diri. Senang mempelajari hal-hal baru serta terus berusaha
-                mengembangkan kemampuan melalui berbagai pengalaman dan kesempatan belajar.<br><br>
-                <strong>Perkenalan Singkat:</strong><br>
-                Halo, saya Nabila Syafia Tanjung. Senang dapat menjadi bagian dari Komunitas Jabar Berdampak sebagai
-                Sekretaris 2. Semoga melalui komunitas ini saya dapat terus belajar, berkolaborasi, dan memberikan
-                kontribusi positif bagi komunitas maupun masyarakat.
+                akuntansi, komunikasi, kepemimpinan, dan pengembangan diri. Aktif mengikuti berbagai kompetisi sebagai
+                sarana belajar serta meningkatkan kemampuan. Senang mempelajari hal-hal baru, berkolaborasi, dan
+                berkomitmen untuk memberikan kontribusi positif bagi masyarakat maupun lingkungan.<br><br>
+                <strong>Prestasi:</strong><br>
+                - Juara 3 Olimpiade Akuntansi Kelas 10<br>
+                - Peraih Medali Emas, Perak, dan Perunggu pada beberapa Olimpiade Online Tingkat Nasional.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1123,23 +1123,39 @@
               <div class="profile-role">Koordinator</div>
               <div class="profile-divisi">Divisi Humas</div>
               <div class="profile-desc" style="display: none;">
-                Nama Lengkap: Ai Risa Yuliandini<br>
-                Domisili: Desa Bojong, Kec. Rongga, Kab.Bandung barat, Provinsi Jawa barat<br>
-                Jenis Kelamin: Perempuan<br>
-                Status Keaktifan: Aktif<br>
-                Divisi yang Dipilih: HUMAS/Public Relation<br>
-                Username Instagram: @airisaofficial<br>
-                Username Youtube: Ai Risa Official<br>
-                Username TikTok: @airisaofficial<br>
-                Foto Diri: -<br><br>
-                Deskripsi Singkat Tentang Diri: Mahasiswa aktif, adaptif, kontributif, komunikatif, tanggung jawab,
-                pengalaman sebagai Brand Ambassador open your mind indonesia, Brand Ambassador Prodi Hubungan Masyarakat
-                dan Komunikasi digital, Narasumber podcast aksi menginspirasi, Narasumber Program Diksi, Host
-                VoxDigi/Mc/Moderator, pemateri sosialisasi sekolah²- lintas kecamatan. Pengalaman organisasi (Forum
-                Mahasiswa Rongga, Himpunan mahasiswa, PMII, FOSISI KBB, Komunitas seniman Rongga, dll) Hobi badminton,
-                alasan memilih divisi humas karena Divisi Humas selaras dengan program studi saya, sehingga saya ingin
-                mengimplementasikan ilmu yang dipelajari sekaligus mengembangkan kemampuan komunikasi dalam praktik
-                organisasi.
+                <strong>Nama:</strong> Ai Risa Yuliandini<br>
+                <strong>Divisi:</strong> HUMAS<br>
+                <strong>Instagram:</strong> @airisaofficial<br><br>
+                Saya adalah mahasiswa Politeknik HAS prodi Hubungan Masyarakat dan Komunikasi Digital yang aktif di
+                platform digital, serta terlibat dalam berbagai komunitas, organisasi internal maupun eksternal.
+                Memiliki rekam jejak digital yang tervalidasi serta dapat diverifikasi langsung melalui mesin pencari
+                Google maupun platform AI. Berbekal pengalaman akademik dan non-akademik, saya terbiasa berpikir
+                strategis, berkomunikasi efektif, dan bekerja kolaboratif. Bagi saya, proses belajar bukan sekadar
+                kewajiban, melainkan komitmen untuk terus bertumbuh secara intelektual dan emosional, agar mampu
+                memberikan kontribusi yang bermakna di lingkungan profesional maupun sosial.<br><br>
+                <strong>PENDIDIKAN</strong><br>
+                - POLITEKNIK Haji Anwar Sanusi (2024-sekarang)<br>
+                - SMA NEGERI 1 RONGGA (2020-2023)<br><br>
+                <strong>PENGALAMAN</strong><br>
+                - Komunitas Prestasi Muda Indonesia<br>
+                - CEO Founder Jabar Berdampak<br>
+                - Tamu undangan Pengurus Besar PMII di Auditorium Abdurrahman Saleh Radio Republik Indonesia, Jakarta
+                Pusat (2026)<br>
+                - Delegasi mahasiswa dalam Sosialisasi Pendidikan Pemilih Segmen Pemilih Pemula 2026 yang diselenggarakan
+                oleh KPU (2026)<br>
+                - Delegasi kader PMII dalam acara Sosialisasi P4GN yang diselenggarakan oleh Badan Narkotika Nasional
+                (2026)<br>
+                - Delegasi Mahasiswa dalam seminar Study In SG Promotion Forum Songgok university di Universitas
+                Pendidikan Indonesia (2025)<br>
+                - Delegasi kader PMII dalam acara Pelatihan Peningkatan Kompetensi Guru Madrasah tingkat Kabupaten
+                (2025)<br>
+                - Content creator youtube (Ai Risa Official)<br>
+                - BRAND AMBASSADOR OPEN YOUR MIND INDONESIA (2025)<br><br>
+                <strong>PRESTASI</strong><br>
+                - JUARA 1 DA'I TINGKAT NASIONAL (2026)<br>
+                - JUARA 3 TERBAIK FOTOGRAFI TINGKAT NASIONAL (2025)<br>
+                - JUARA 3 MENULIS QUOTE TINGKAT NASIONAL (2025)<br>
+                - PENULIS TERPILIH LOMBA PUISI TINGKAT NASIONAL (2025)
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1150,14 +1166,26 @@
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Humas</div>
               <div class="profile-desc" style="display: none;">
-                Jelita Maria Hasianna Siagian siswi SMKN 06 Kota Bekasi, jurusan Rekayasa Perangkat Lunak. Seorang ENTJ
-                yang selalu berani mencoba hal baru dan menerapkannya secara terstruktur, dari langkah kecil sampai jadi
-                sesuatu yang besar.<br>
-                Peringkat 1 Olimpiade Bahasa Inggris provinsi Jawa Barat.<br>
-                Medali Emas Olimpiade Matematika Nasional Pemuda Pancasila<br>
-                Ketua & Leader Karya Ilmiah Remaja<br>
-                Leader English Club<br>
-                Punya minat luas di musik, public speaking, matematika & sains, bahasa asing, sampai desain.
+                <strong>JELITA MARIA HASIANNA SIAGIAN</strong><br>
+                Siswi SMKN 06 Kota Bekasi — Jurusan Rekayasa Perangkat Lunak<br><br>
+                Seorang ENTJ dengan keberanian mencoba hal baru dan kemampuan mengeksekusinya secara terstruktur,
+                mengubah langkah kecil menjadi pencapaian besar. Memiliki minat lintas bidang: musik, public speaking,
+                matematika & sains, bahasa asing, hingga desain.<br><br>
+                <strong>Pengalaman Kepemimpinan</strong><br>
+                - Ketua & Leader, Karya Ilmiah Remaja<br>
+                - Leader, English Club<br>
+                - Juara 1, Leader of Ekstrakurikuler (tingkat sekolah)<br><br>
+                <strong>Prestasi Akademik & Non-Akademik</strong><br>
+                - Peringkat 1, Olimpiade Bahasa Inggris tingkat Provinsi, Jawa Barat<br>
+                - Medali Emas, Olimpiade Matematika Nasional — Olimpiade Pemuda Pancasila<br>
+                - Medali Emas, Olimpiade Bahasa Inggris — Puspresnas<br>
+                - Juara 1, Pidato Bahasa Inggris tingkat Kabupaten Bekasi<br>
+                - Juara 1, Menulis Esai "Hukum dan Kehidupan — Tidak Perlu Menggunakan Pisau"<br>
+                - Juara Harapan 1, Menulis Esai Filsafat — International Edu<br>
+                - Juara 3, Inovasi Penemuan Ilmiah dan Sains<br>
+                - Juara 3, Berpuisi Bahasa Inggris<br><br>
+                <strong>Media Sosial</strong><br>
+                Instagram: @jel.oceann
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1243,6 +1271,26 @@
                 Saya berasal dari sekolah SMKS Sandikta di Kota Bekasi, mempunyai ketertarikan dalam bidang organisasi,
                 editing, serta pengembangan diri. Saya senang mempelajari hal-hal baru dan aktif mengikuti berbagai
                 kegiatan yang dapat menambahkan pengalaman.
+              </div>
+              <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+            <div class="carousel-card">
+              <img src="{{ asset('assets/gambarorganisasi/siti.jpeg') }}" alt="Siti Rohimah" class="profile-img">
+              <div class="profile-name">Siti Rohimah</div>
+              <div class="profile-role">Anggota</div>
+              <div class="profile-divisi">Divisi PDD</div>
+              <div class="profile-desc" style="display: none;">
+                <strong>Nama:</strong> Siti Rohimah<br>
+                <strong>Instagram:</strong> siti_rohimah18<br>
+                <strong>Divisi Pilihan:</strong> PDD<br><br>
+                Saya mahasiswa Politeknik Haji Anwar Sanusi (Poltekhas), memiliki ketertarikan dalam bidang desain
+                digital. Saya senang bisa mempelajari hal-hal baru yang dapat menambah pengembangan diri saya.<br><br>
+                <strong>Organisasi:</strong><br>
+                Himpunan Mahasiswa Prodi Hubungan Masyarakat & Komunikasi Digital (HMKD) - Div. Kominfo<br><br>
+                <strong>Prestasi:</strong><br>
+                - Juara 1 lomba poster tingkat mahasiswa Politeknik Haji Anwar Sanusi<br>
+                - Juara 3 lomba tulis puisi mahasiswa tingkat nasional<br>
+                - Juara 2 lomba esai mahasiswa tingkat nasional
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1348,39 +1396,27 @@
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
             <div class="carousel-card">
-              <img src="{{ asset('assets/gambarorganisasi/1.jpeg') }}" alt="Ri'ayah Hilmiyaty 'Adilah" class="profile-img">
-              <div class="profile-name">Ri'ayah Hilmiyaty 'A.</div>
-              <div class="profile-role">Anggota</div>
-              <div class="profile-divisi">Divisi Acara</div>
-              <div class="profile-desc" style="display: none;">
-                Nama Lengkap: Ri’ayah Hilmiyaty ‘Adilah<br>
-                Domisili: Purwakarta<br>
-                Jenis Kelamin: Perempuan<br>
-                Instagram/TikTok: @riaaaayyy<br>
-                Divisi: Acara<br>
-                Status Keaktifan: Aktif<br><br>
-                Jelasin kamu gimana orangnya:<br>
-                Aku seorang ESFP yang komunikatif, adaptif, dan penuh energi🤩. Aku senang berinteraksi dengan orang
-                baru dan menghidupkan suasana kelompok.<br>
-                Meskipun pembawaanku santai, seru, dan ekspresif, aku tetap tipe orang yang terstruktur, fokus, dan
-                bertanggung jawab penuh kalau udah diberi amanah untuk mengeksekusi suatu tugas atau project. Let's
-                collaborate and make things happen!
-              </div>
-              <a href="#" class="btn-detail">Lihat Detail</a>
-            </div>
-            <div class="carousel-card">
               <img src="{{ asset('assets/gambarorganisasi/sinta.jpeg') }}" alt="Sinta Riyanti" class="profile-img">
               <div class="profile-name">Sinta Riyanti</div>
               <div class="profile-role">Anggota</div>
               <div class="profile-divisi">Divisi Acara</div>
               <div class="profile-desc" style="display: none;">
                 <strong>Nama:</strong> Sinta Riyanti<br>
+                <strong>Divisi:</strong> Acara<br>
                 <strong>Instagram:</strong> ssnta.girl<br>
-                <strong>Instansi:</strong> UIN Siber Syekh Nurjati Cirebon<br><br>
-                Halo semuanya, perkenalkan nama saya Sinta Riyanti dari Divisi Acara Komunitas Jabar Berdampak. 
-                Saya memilih bergabung di divisi ini karena sangat tertarik dengan proses perencanaan dan pelaksanaan sebuah kegiatan. 
-                Saya senang bekerja sama dalam tim, belajar hal-hal baru, serta selalu berusaha untuk bertanggung jawab penuh terhadap tugas yang diberikan. 
-                Semoga melalui komunitas ini, saya bisa memberikan kontribusi terbaik sekaligus mendapatkan banyak pengalaman baru yang berharga.
+                <strong>TikTok:</strong> sin.snta<br>
+                <strong>Domisili:</strong> Subang<br><br>
+                Halo sahabat jabar, saya Sinta Riyanti. Di Komunitas Jabar Berdampak, saya bergabung di Divisi Acara
+                karena saya senang terlibat dalam proses merancang hingga menyukseskan sebuah kegiatan. Saya suka belajar
+                hal baru, bekerja sama dalam tim, dan selalu berusaha memberikan yang terbaik di setiap tanggung jawab
+                yang saya emban.<br><br>
+                Sedikit tentang saya, saya pernah meraih Juara 2 Tahfiz 5 Juz tingkat kecamatan, menjadi siswa terbaik
+                sekaligus juara umum di SMA. Saat ini saya aktif di HIMA Ilmu Hadis sebagai anggota Divisi Intelektual,
+                aktif di PMII dan KOPRI, serta ikut bergabung di Komunitas Anak Negeri Cinta Literasi. Untuk itu saya
+                percaya bahwa setiap organisasi adalah tempat untuk belajar, bertumbuh, dan memberi manfaat.<br><br>
+                Senang bisa menjadi bagian dari Komunitas Jabar Berdampak. Semoga kita bisa saling belajar,
+                berkolaborasi, dan menciptakan dampak yang positif bersama.<br><br>
+                <em>"Kesempatan itu bukan diberikan, tapi datang jika kamu menginginkannya"</em>
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
