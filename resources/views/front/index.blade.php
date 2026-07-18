@@ -1106,11 +1106,30 @@
               <div class="profile-divisi">BPH</div>
               <div class="profile-desc" style="display: none;">
                 <strong>Nama:</strong> Edgina Anastasia<br>
-                <strong>Instagram:</strong> xorain_cutee<br>
-                <strong>Divisi:</strong> Bendahara<br><br>
-                Seorang pelajar yang aktif dalam bidang akademik, organisasi, dan kepemudaan. Peraih Medali Emas Olimpiade Bahasa Indonesia Tingkat Nasional dan Medali Perak Lomba Bahasa Indonesia Tingkat Nasional.<br><br>
-                Pernah menjabat sebagai Bendahara MPK, Ketua Ekstrakurikuler Informatika Club, serta Duta Inisiatif Indonesia. 
-                Memiliki minat yang besar dalam bidang kepemimpinan, pengembangan diri, dan pemberdayaan generasi muda, serta berkomitmen untuk terus berkarya dan memberikan dampak positif bagi masyarakat.
+                <strong>Provinsi:</strong> Jawa Barat<br>
+                <strong>Divisi:</strong> Bendahara<br>
+                <strong>Instagram:</strong> @xorain_cutee<br><br>
+                <strong>Tentang Saya</strong><br>
+                Halo, saya Edgina Anastasia, siswi SMA Negeri 1 Kota Cirebon yang saat ini duduk di bangku kelas XII.
+                Saya dipercaya mengemban amanah sebagai Bendahara Komunitas Jabar Berdampak.<br><br>
+                Saya memiliki ketertarikan yang besar dalam bidang teknologi, komunikasi, organisasi, public speaking,
+                kepemimpinan, serta pengembangan diri. Bagi saya, setiap pengalaman adalah kesempatan untuk terus
+                belajar, bertumbuh, dan memberikan dampak positif bagi lingkungan sekitar.<br><br>
+                Selama menempuh pendidikan, saya aktif mengikuti berbagai organisasi, program kepemudaan, serta
+                kompetisi tingkat nasional yang telah membentuk kemampuan kepemimpinan, kolaborasi, dan tanggung
+                jawab.<br><br>
+                <strong>Prestasi</strong><br>
+                - 🥇 Medali Emas Olimpiade Bahasa Indonesia Tingkat Nasional.<br>
+                - 🥈 Medali Perak Olimpiade Bahasa Indonesia Tingkat Nasional.<br><br>
+                <strong>Pengalaman Organisasi</strong><br>
+                1. Bidang 2 OSIS SMP Negeri 1 Kota Cirebon.<br>
+                2. Bendahara Majelis Perwakilan Kelas (MPK) SMA Negeri 1 Kota Cirebon.<br>
+                3. Anggota OSIS Jawa Barat.<br>
+                4. Ketua Informatics Club SMA Negeri 1 Kota Cirebon.<br>
+                5. Anggota Komunitas Prestasi Muda Indonesia.<br>
+                6. CEO & Founder Jabar Berdampak.<br>
+                7. Duta Inisiatif Indonesia.<br>
+                8. Pengurus Divisi Sumber Daya Manusia Duta Inisiatif Indonesia.
               </div>
               <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
@@ -1430,7 +1449,7 @@
                 Asal : Cirebon<br>
                 Ig : dnd_mnh<br>
                 Divisi : acara<br><br>
-                Halo semua👐🏻, perkenalkan nama saya adinda Maimanah, sekarang ini sayang sedang mengikuti komunitas
+                Halo semua👐🏻, perkenalkan nama saya adinda Maimanah, sekarang ini saya sedang mengikuti komunitas
                 Jabar berdampak sebagai divisi acara, saya memiliki ketertarikan dalam publick speaking, melatih skill
                 kepemimpinan dan komunikasi saya, saya berkontribusi dengan komunitas agar dapat memberikan manfaat bagi
                 masyarakat sekitar, senang bisa bergabung dan belajar bersama mohon dukungannya semua😊
